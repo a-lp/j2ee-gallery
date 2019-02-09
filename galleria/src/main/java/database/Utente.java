@@ -19,8 +19,8 @@ public class Utente {
 	private String nickname;
 	@Column(length = 30)
 	private String password;
-	@Column(length = 3)
-	private Integer permessi = 1;
+	@Column
+	private Short permessi = 1;
 	@OneToMany
 	@JoinColumn
 	private Set<Fotografie> preferiti;
@@ -37,7 +37,7 @@ public class Utente {
 		super();
 	}
 
-	public Utente(Integer id, String nickname, String password, Integer permessi) {
+	public Utente(Integer id, String nickname, String password, Short permessi) {
 		super();
 		this.id = id;
 		this.nickname = nickname;
@@ -51,7 +51,7 @@ public class Utente {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -75,7 +75,7 @@ public class Utente {
 		return permessi;
 	}
 
-	public void setPermessi(int permessi) {
+	public void setPermessi(Short permessi) {
 		this.permessi = permessi;
 	}
 

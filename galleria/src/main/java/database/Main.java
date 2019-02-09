@@ -20,6 +20,7 @@ public class Main {
 		}
 	}
 	
+	@SuppressWarnings("finally")
 	public static Utente update(Utente u) {
 		Utente res=null;
 		try {
