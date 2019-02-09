@@ -36,7 +36,7 @@ public class Main {
 	}
 
 	public static void main(String[] args) {
-		Utente u = new Utente(null, "Giorno", "Giovanna", null);
+		/*Utente u = new Utente(null, "Giorno", "Giovanna", null);
 		System.out.println("Aggiungo " + u);
 		add(u);
 		u.setPermessi(99);
@@ -46,7 +46,7 @@ public class Main {
 		}
 		else {
 			System.out.println("Aggiornamento con successo");
-		}
+		}*/
 		em.close();
 		emf.close();
 	}
