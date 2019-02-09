@@ -11,7 +11,7 @@ public class Fotografie {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
-	@Column
+	@Column(unique=true)
 	private String nome;
 	
 	public Integer getId() {
