@@ -20,6 +20,10 @@ public class Utente {
 	@Column(length=3)
 	private Integer permessi=1;
 	
+	public Utente() {
+		super();
+	}
+	
 	public Utente(Integer id, String nome, String password, Integer permessi) {
 		super();
 		this.id = id;
