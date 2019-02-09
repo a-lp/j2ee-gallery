@@ -13,7 +13,7 @@ public class Utente {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
-	@Column(length=30)
+	@Column(length=30, unique=true)
 	private String nome;
 	@Column(length=30)
 	private String password;
@@ -29,7 +29,9 @@ public class Utente {
 		this.id = id;
 		this.nome = nome;
 		this.password = password;
-		this.permessi = permessi;
+		if(!(permessi==null)) {
+			this.permessi = permessi;
+		}
 	}
 
 	public Utente(Integer id, String nome, String password) {
