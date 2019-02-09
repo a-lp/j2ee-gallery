@@ -23,13 +23,13 @@ public class Utente {
 	private Short permessi = 1;
 	@OneToMany
 	@JoinColumn
-	private Set<Fotografie> preferiti;
+	private Set<Fotografia> preferiti;
 
-	public Set<Fotografie> getPreferiti() {
+	public Set<Fotografia> getPreferiti() {
 		return preferiti;
 	}
 
-	public void setPreferiti(Set<Fotografie> preferiti) {
+	public void setPreferiti(Set<Fotografia> preferiti) {
 		this.preferiti = preferiti;
 	}
 

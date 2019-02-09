@@ -11,7 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 
 @Entity
-public class Fotografie {
+public class Fotografia {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
@@ -55,11 +55,11 @@ public class Fotografie {
 		return id;
 	}
 
-	public Fotografie() {
+	public Fotografia() {
 		super();
 	}
 
-	public Fotografie(Integer id, String nome) {
+	public Fotografia(Integer id, String nome) {
 		super();
 		this.id = id;
 		this.nome = nome;

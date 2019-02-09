@@ -9,10 +9,10 @@ public class Main {
 	private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("database-galleria");
 	private static EntityManager em = emf.createEntityManager();
 
-	public static void add(Utente u) {
+	public static void add(Object u) {
 		try {
 			em.getTransaction().begin();
-			em.persist(u); // controllo se Ã¨ presente "u" nel database quindi aggiorno i suoi campi
+			em.persist(u); // controllo se è presente "u" nel database quindi aggiorno i suoi campi
 			em.getTransaction().commit();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -21,11 +21,11 @@ public class Main {
 	}
 	
 	@SuppressWarnings("finally")
-	public static Utente update(Utente u) {
-		Utente res=null;
+	public static Object update(Object u) {
+		Object res=null;
 		try {
 			em.getTransaction().begin();
-			res=em.merge(u); // controllo se Ã¨ presente "u" nel database quindi aggiorno i suoi campi
+			res=em.merge(u); // controllo se è presente "u" nel database quindi aggiorno i suoi campi
 			em.getTransaction().commit();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -37,17 +37,17 @@ public class Main {
 	}
 
 	public static void main(String[] args) {
-		/*Utente u = new Utente(null, "Giorno", "Giovanna", null);
+		Utente u = new Utente(null, "Giorno", "Giovanna", null);
 		System.out.println("Aggiungo " + u);
 		add(u);
-		u.setPermessi(99);
+		u.setPermessi((short)99);
 		System.out.println("Aggiorno " + u);
 		if((update(u))==null){
 			System.out.println("Aggiornamento fallito");
 		}
 		else {
 			System.out.println("Aggiornamento con successo");
-		}*/
+		}
 		em.close();
 		emf.close();
 	}
