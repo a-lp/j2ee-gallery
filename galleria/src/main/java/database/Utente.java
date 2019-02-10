@@ -19,7 +19,7 @@ public class Utente {
 	@Column(length = 30, unique = true)
 	private String nickname;
 	@Column(length = 30)
-	private String password;	//TODO: cifrare le password
+	private String password; // TODO: cifrare le password
 	@Column
 	private Short permessi = 1;
 	@OneToMany

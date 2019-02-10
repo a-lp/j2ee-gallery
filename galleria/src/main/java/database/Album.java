@@ -44,5 +44,4 @@ public class Album {
 		return "Album [id=" + id + ", nome=" + nome + "]";
 	}
 
-	
 }

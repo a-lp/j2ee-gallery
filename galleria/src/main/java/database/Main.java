@@ -43,7 +43,7 @@ public class Main {
 			s.close();
 			s = new Scanner(new File("src/main/resources/tag.txt"));
 			while (s.hasNextLine()) {
-				String tmp=s.nextLine();
+				String tmp = s.nextLine();
 				tags.add(tmp);
 				add(new Tag(tmp));
 			}
@@ -77,7 +77,7 @@ public class Main {
 				System.out.println(tags.get(j));
 				tag.add(new Tag(tags.get(j)));
 			}
-			add(new Fotografia(url, dimensione, altezza, larghezza, tag, descrizione.substring(0, endIndex)));
+			update(new Fotografia(url, dimensione, altezza, larghezza, tag, descrizione.substring(0, endIndex)));
 		}
 	}
 

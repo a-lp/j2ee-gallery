@@ -16,7 +16,7 @@ public class Tag {
 	private Integer id;
 	@Column
 	private String tag;
-	
+
 	public Tag() {
 		super();
 	}
@@ -25,18 +25,21 @@ public class Tag {
 		super();
 		this.tag = tag;
 	}
-	
+
 	public Integer getId() {
 		return id;
 	}
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
+
 	public String getTag() {
 		return tag;
 	}
+
 	public void setTag(String tag) {
 		this.tag = tag;
 	}
-	
+
 }

@@ -27,23 +27,24 @@ public class Fotografia {
 	private Short altezza;
 	@Column
 	private Short larghezza;
-	@ManyToMany(cascade = {CascadeType.ALL})
+	@ManyToMany(cascade = { CascadeType.ALL })
 	@JoinColumn()
 	private Set<Tag> categorie;
 	@Column
 	private String descrizione;
-	
+
 	public Fotografia() {
 		super();
 	}
 
-	public Fotografia(String nome, Double dimensione, Short altezza, Short larghezza, Set<Tag> categorie, String descrizione) {
+	public Fotografia(String nome, Double dimensione, Short altezza, Short larghezza, Set<Tag> categorie,
+			String descrizione) {
 		super();
 		this.nome = nome;
 		this.dimensione = dimensione;
 		this.altezza = altezza;
 		this.larghezza = larghezza;
-		this.descrizione=descrizione;
+		this.descrizione = descrizione;
 		this.categorie = categorie;
 	}
 
@@ -111,5 +112,4 @@ public class Fotografia {
 		this.descrizione = descrizione;
 	}
 
-	
 }
