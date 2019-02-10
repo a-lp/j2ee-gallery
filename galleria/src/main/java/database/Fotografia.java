@@ -3,6 +3,7 @@ package database;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,6 +11,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+
+import org.hibernate.annotations.Cascade;
 
 @Entity
 public class Fotografia {
@@ -24,8 +27,8 @@ public class Fotografia {
 	private Short altezza;
 	@Column
 	private Short larghezza;
-	@ManyToMany
-	@JoinColumn
+	@ManyToMany(cascade = {CascadeType.ALL})
+	@JoinColumn()
 	private Set<Tag> categorie;
 	@Column
 	private String descrizione;
@@ -41,8 +44,6 @@ public class Fotografia {
 		this.altezza = altezza;
 		this.larghezza = larghezza;
 		this.descrizione=descrizione;
-		if (this.categorie == null)
-			this.categorie = new HashSet<>();
 		this.categorie = categorie;
 	}
 
