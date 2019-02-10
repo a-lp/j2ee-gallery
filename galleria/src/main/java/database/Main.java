@@ -8,6 +8,10 @@ public class Main {
 	// EntityFactor per la gestione delle instanze con il database
 	private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("database-galleria");
 	private static EntityManager em = emf.createEntityManager();
+	
+	public static void tester() {
+		
+	}
 
 	public static void add(Object u) {
 		try {
