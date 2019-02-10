@@ -1,6 +1,7 @@
 package database;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -25,8 +26,39 @@ public class Fotografia {
 	private Short larghezza;
 	@ManyToMany
 	@JoinColumn
-	private List<Tag> tag;
+	private Set<Tag> tag;
 	
+	public Fotografia() {
+		super();
+	}
+	
+	public Fotografia(String nome, Double dimensione, Short altezza, Short larghezza, Set<Tag> tag) {
+		super();
+		this.nome = nome;
+		this.dimensione = dimensione;
+		this.altezza = altezza;
+		this.larghezza = larghezza;
+		if(this.tag==null)
+			this.tag=new HashSet<>();
+		this.tag = tag;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
 	public Double getDimensione() {
 		return dimensione;
 	}
@@ -51,29 +83,16 @@ public class Fotografia {
 		this.larghezza = larghezza;
 	}
 
-	public Integer getId() {
-		return id;
+	public Set<Tag> getTag() {
+		return tag;
 	}
 
-	public Fotografia() {
-		super();
+	public void setTag(Set<Tag> tag) {
+		if(this.tag==null)
+			this.tag=new HashSet<>();
+		this.tag = tag;
 	}
-
-	public Fotografia(Integer id, String nome) {
-		super();
-		this.id = id;
-		this.nome = nome;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-}
+	
+	
+	
+}	
