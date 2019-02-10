@@ -77,9 +77,15 @@ public class Main {
 				System.out.println(tags.get(j));
 				tag.add(new Tag(tags.get(j)));
 			}
-			update(new Fotografia(url, dimensione, altezza, larghezza, tag, descrizione.substring(0, endIndex)));
+			List<Fotografia> query = em.createQuery("from Fotografia f where f.nome=:url",Fotografia.class)
+					.setParameter("url", url)
+					.getResultList();
+			Fotografia tmp = query.get(0);
+			tmp.setCategorie(new HashSet<Tag>());
+			update(tmp);
 		}
 	}
+	
 
 	public static void add(Object u) {
 		try {
