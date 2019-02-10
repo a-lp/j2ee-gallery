@@ -27,17 +27,20 @@ public class Fotografia {
 	@ManyToMany
 	@JoinColumn
 	private Set<Tag> categorie;
-
+	@Column
+	private String descrizione;
+	
 	public Fotografia() {
 		super();
 	}
 
-	public Fotografia(String nome, Double dimensione, Short altezza, Short larghezza, Set<Tag> categorie) {
+	public Fotografia(String nome, Double dimensione, Short altezza, Short larghezza, Set<Tag> categorie, String descrizione) {
 		super();
 		this.nome = nome;
 		this.dimensione = dimensione;
 		this.altezza = altezza;
 		this.larghezza = larghezza;
+		this.descrizione=descrizione;
 		if (this.categorie == null)
 			this.categorie = new HashSet<>();
 		this.categorie = categorie;
@@ -97,6 +100,14 @@ public class Fotografia {
 	public String toString() {
 		return "Fotografia [id=" + id + ", nome=" + nome + ", dimensione=" + dimensione + ", altezza=" + altezza
 				+ ", larghezza=" + larghezza + ", categorie=" + categorie + "]";
+	}
+
+	public String getDescrizione() {
+		return descrizione;
+	}
+
+	public void setDescrizione(String descrizione) {
+		this.descrizione = descrizione;
 	}
 
 	
