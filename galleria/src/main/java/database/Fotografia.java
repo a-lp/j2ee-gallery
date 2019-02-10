@@ -26,21 +26,21 @@ public class Fotografia {
 	private Short larghezza;
 	@ManyToMany
 	@JoinColumn
-	private Set<Tag> tag;
-	
+	private Set<Tag> categorie;
+
 	public Fotografia() {
 		super();
 	}
-	
-	public Fotografia(String nome, Double dimensione, Short altezza, Short larghezza, Set<Tag> tag) {
+
+	public Fotografia(String nome, Double dimensione, Short altezza, Short larghezza, Set<Tag> categorie) {
 		super();
 		this.nome = nome;
 		this.dimensione = dimensione;
 		this.altezza = altezza;
 		this.larghezza = larghezza;
-		if(this.tag==null)
-			this.tag=new HashSet<>();
-		this.tag = tag;
+		if (this.categorie == null)
+			this.categorie = new HashSet<>();
+		this.categorie = categorie;
 	}
 
 	public Integer getId() {
@@ -83,16 +83,21 @@ public class Fotografia {
 		this.larghezza = larghezza;
 	}
 
-	public Set<Tag> getTag() {
-		return tag;
+	public Set<Tag> getCategorie() {
+		return categorie;
 	}
 
-	public void setTag(Set<Tag> tag) {
-		if(this.tag==null)
-			this.tag=new HashSet<>();
-		this.tag = tag;
+	public void setCategorie(Set<Tag> categorie) {
+		if (this.categorie == null)
+			this.categorie = new HashSet<>();
+		this.categorie = categorie;
 	}
+
+	@Override
+	public String toString() {
+		return "Fotografia [id=" + id + ", nome=" + nome + ", dimensione=" + dimensione + ", altezza=" + altezza
+				+ ", larghezza=" + larghezza + ", categorie=" + categorie + "]";
+	}
+
 	
-	
-	
-}	
+}

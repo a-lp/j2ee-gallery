@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 @Entity
@@ -24,6 +25,9 @@ public class Utente {
 	@OneToMany
 	@JoinColumn
 	private Set<Fotografia> preferiti;
+	@ManyToMany
+	@JoinColumn
+	private Set<Fotografia> album;
 
 	public Set<Fotografia> getPreferiti() {
 		return preferiti;
@@ -37,9 +41,8 @@ public class Utente {
 		super();
 	}
 
-	public Utente(Integer id, String nickname, String password, Short permessi) {
+	public Utente(String nickname, String password, Short permessi) {
 		super();
-		this.id = id;
 		this.nickname = nickname;
 		this.password = password;
 		if (!(permessi == null)) {

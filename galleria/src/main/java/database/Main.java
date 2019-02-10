@@ -37,7 +37,7 @@ public class Main {
 	}
 
 	public static void main(String[] args) {
-		Utente u = new Utente(null, "Giorno", "Giovanna", null);
+		Utente u = new Utente("Giorno", "Giovanna", null);
 		System.out.println("Aggiungo " + u);
 		add(u);
 		u.setPermessi((short)99);
