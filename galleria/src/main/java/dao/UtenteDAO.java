@@ -13,13 +13,20 @@ import javax.persistence.criteria.Root;
 
 import database.Utente;
 import database.Utente_;
-
+import utility.Password;
 @Stateless
 public class UtenteDAO implements Serializable {
 	@PersistenceContext
 	EntityManager em;
 
 	public void add(Utente u) {
+		try {
+			u.setPassword(Password.getSaltedHash(u.getPassword()));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("add");
+		}
 		em.persist(u);
 	}
 

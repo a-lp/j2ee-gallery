@@ -17,7 +17,7 @@ public class Utente {
 	private Integer id;
 	@Column(length = 30, unique = true)
 	private String email;
-	@Column(length = 30)
+	@Column(length = 512)
 	private String password; // TODO: cifrare le password (HASH va bene)
 	@Column
 	private Short permessi = 1;
