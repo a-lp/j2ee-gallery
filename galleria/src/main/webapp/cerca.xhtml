@@ -14,14 +14,14 @@
 
 	<h:form>
 		<h3>E-Mail</h3>
-		<h:inputText value="#{utenteController.utente.email}" />
+		<h:inputText value="#{utenteController.ricerca}" />
 		<br />
 		<h:commandButton value="Login">
 			<f:ajax event="click" execute="@all" render="tabella" />
 		</h:commandButton>
 	</h:form>
 
-	<h:dataTable id="tabella" value="#{utenteController.findByEmail('ajeje')}"
+	<h:dataTable render="utenteController.ricercaCompleta" id="tabella" value="#{utenteController.byEmail}"
 		var="p">
 
 		<h:column>

@@ -16,6 +16,19 @@ public class UtenteController implements Serializable {
 	@Inject
 	UtenteDAO dao;
 	private Utente utente = new Utente();
+	private String ricerca="";
+
+	public String getRicerca() {
+		return ricerca;
+	}
+	
+	public boolean isRicercaCompleta() {
+		return "".equals(ricerca);
+	}
+
+	public void setRicerca(String ricerca) {
+		this.ricerca = ricerca;
+	}
 
 	public Utente getUtente() {
 		return utente;
@@ -34,8 +47,8 @@ public class UtenteController implements Serializable {
 		return dao.findAll();
 	}
 
-	public Utente findByEmail(String email) {
-		return dao.findByEmail(email);
+	public Utente getByEmail() {
+		return dao.findByEmail(ricerca);
 	}
 
 }
