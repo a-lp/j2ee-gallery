@@ -18,7 +18,7 @@ public class Utente {
 	@Column(length = 30, unique = true, nullable = false)
 	private String email = "";
 	@Column(length = 512, nullable = false)
-	private String password = ""; // TODO: cifrare le password (HASH va bene)
+	private String password = "";
 	@Column
 	private Short permessi = 1;
 	@OneToMany // TODO definire cascade e fetch.lazy
