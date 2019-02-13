@@ -9,7 +9,8 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
+@Inheritance(strategy = InheritanceType.JOINED)		//TODO cosa è sta cosa?
+
 public class Tag {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

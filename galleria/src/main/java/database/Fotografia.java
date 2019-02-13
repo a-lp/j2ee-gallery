@@ -12,13 +12,15 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 
+//TODO servlet che mappa posizione relativa della richiesta a posizione assoluta e sputa byte al client. Non restituire la URL della posizione nel server.
+
 @Entity
 public class Fotografia {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	@Column(unique = true)
-	private String nome;
+	private String nome;		//non restituire la URL ma usare la servlet per convertirla in bytestream e restituire quello
 	@Column
 	private Double dimensione;
 	@Column
@@ -27,7 +29,7 @@ public class Fotografia {
 	private Short larghezza;
 	@ManyToMany(cascade = { CascadeType.ALL })
 	@JoinColumn()
-	private Set<Tag> categorie;
+	private Set<Tag> categorie;		//TODO si può anche fare Embeddable
 	@Column
 	private String descrizione;
 

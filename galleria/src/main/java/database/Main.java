@@ -19,6 +19,8 @@ public class Main {
 	private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("database-galleria");
 	private static EntityManager em = emf.createEntityManager();
 
+	//TODO: hibernate ricerca stile google Hibernate Search - Lucene. Utile per query
+	
 	public static void tester() {
 		List<String> nomi = new ArrayList<String>();
 		List<String> cognomi = new ArrayList<String>();
