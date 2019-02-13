@@ -5,7 +5,7 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html">
 <head>
-<title>JSF Tutorial!</title>
+<title>Ricerca</title>
 </head>
 
 <body>
@@ -14,20 +14,21 @@
 
 	<h:form>
 		<h3>E-Mail</h3>
-		<h:inputText value="#{utenteController.ricerca}" />
+		<h:inputText id="ricerca-id" value="#{utenteController.utente.email}" />
 		<br />
-		<h:commandButton value="Login">
+		<h:commandButton value="Cerca">
 			<f:ajax event="click" execute="@all" render="tabella" />
 		</h:commandButton>
 	</h:form>
-
-	<h:dataTable render="utenteController.ricercaCompleta" id="tabella" value="#{utenteController.byEmail}"
-		var="p">
+	
+	<h:dataTable rendered='#{utenteController.utente.email!=""}' id="tabella" value="#{utenteController.byEmail}" var="p">
 
 		<h:column>
-			<f:facet name="header">Email</f:facet>
-		#{p.email} </h:column>
-		<h:column>#{p.password} </h:column>
+			<f:facet name="header">Email</f:facet> #{p.email} </h:column>
+		<h:column>
+			<f:facet name="header">Password</f:facet> #{p.password} </h:column>
+		<h:column>
+			<f:facet name="header">Permessi</f:facet> #{p.permessi==1 ? 'Utente' : "Admin"} </h:column>
 
 	</h:dataTable>
 </body>

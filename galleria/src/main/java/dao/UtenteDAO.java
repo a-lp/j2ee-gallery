@@ -14,6 +14,7 @@ import javax.persistence.criteria.Root;
 import database.Utente;
 import database.Utente_;
 import utility.Password;
+
 @Stateless
 public class UtenteDAO implements Serializable {
 	@PersistenceContext
@@ -21,7 +22,7 @@ public class UtenteDAO implements Serializable {
 
 	public void add(Utente u) {
 		try {
-			u.setPassword(Password.getSaltedHash(u.getPassword()));
+			u.setPassword(Password.getSaltedHash(u.getPassword())); // calcolo hashing della password
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

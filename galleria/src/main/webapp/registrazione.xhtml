@@ -5,7 +5,7 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html">
 <head>
-<title>JSF Tutorial!</title>
+<title>Registrazione</title>
 </head>
 
 <body>
@@ -14,9 +14,12 @@
 
 	<h:form>
 		<h3>E-Mail</h3>
-		<h:inputText value="#{utenteController.utente.email}" />
+		<h:inputText id="inputName" value="#{utenteController.utente.email}"/>
+		<h:outputText id="email-already-used" value="#{not utenteController.valoreUnico ? 'E-mail in uso' : ''}" />
+		<h:outputText id="email-error" value="#{utenteController.utente.email=='' ? 'Inserire Email' : ''}" />
 		<h3>Password</h3>
 		<h:inputText value="#{utenteController.utente.password}" />
+		<h:outputText id="password-error" value="#{utenteController.utente.password=='' ? 'Inserire Password' : ''}" />
 		<br />
 		<br />
 		<h:commandButton value="Registrati" action="#{utenteController.save}"></h:commandButton>
@@ -24,7 +27,7 @@
 
 	<br />
 
-	<h:dataTable id="tabella" value="#{utenteController.utenti}" var="p">
+	<h:dataTable rendered='#{utenteController.utenti!=null}' id="tabella" value="#{utenteController.utenti}" var="p">
 
 		<h:column>
 			<f:facet name="header">Email</f:facet> #{p.email} </h:column>
