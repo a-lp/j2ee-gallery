@@ -116,7 +116,8 @@ public class Main {
 	}
 
 	public static void main(String[] args) {
-		tester();
+		System.out.println("Main");
+		//tester();
 		/*
 		 * Utente u = new Utente("Giorno", "Giovanna", null);
 		 * System.out.println("Aggiungo " + u); add(u); u.setPermessi((short)99);
@@ -124,8 +125,8 @@ public class Main {
 		 * System.out.println("Aggiornamento fallito"); } else {
 		 * System.out.println("Aggiornamento con successo"); }
 		 */
-		em.close();
-		emf.close();
+		//em.close();
+		//emf.close();
 	}
 
 }

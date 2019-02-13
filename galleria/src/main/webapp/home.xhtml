@@ -9,14 +9,15 @@
    </head>
    
    <body>
-      <h2>h:inputText example</h2>
+      <h2>Registrazione utente</h2>
       <hr />
       
       <h:form>
-         <h3>Read-Only input text box</h3>
-         <h:inputText value = "#{utenteController.utente.nickname}"/>
-         <h3>Read-Only input text box</h3>
+         <h3>E-Mail</h3>
+         <h:inputText value = "#{utenteController.utente.email}"/>
+         <h3>Password</h3>
          <h:inputText value = "#{utenteController.utente.password}"/>
+         <br/>
          <h:commandButton value="Login" action="#{utenteController.save}"></h:commandButton>
       </h:form >
    

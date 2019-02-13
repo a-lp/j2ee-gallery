@@ -6,7 +6,7 @@
 
 
 	<persistence-unit name="MyPU" transaction-type="JTA">
-		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		<jta-data-source>java:/MySqlDS</jta-data-source>
 		<properties>
 			<property name="hibernate.show_sql" value="true" />

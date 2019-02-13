@@ -3,8 +3,7 @@ package dao;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.enterprise.context.SessionScoped;
-import javax.inject.Named;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -12,8 +11,7 @@ import javax.persistence.criteria.CriteriaQuery;
 
 import database.Tag;
 
-@Named
-@SessionScoped
+@Stateless
 public class TagDAO implements Serializable {
 	@PersistenceContext
 	EntityManager em;

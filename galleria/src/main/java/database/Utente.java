@@ -8,7 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 @Entity
@@ -17,111 +16,48 @@ public class Utente {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	@Column(length = 30, unique = true)
-	private String username;
+	private String email;
 	@Column(length = 30)
-	private String password; 			// TODO: cifrare le password (HASH va bene)
+	private String password; // TODO: cifrare le password (HASH va bene)
 	@Column
 	private Short permessi = 1;
-	@OneToMany							//TODO definire cascade e fetch.lazy
+	@OneToMany // TODO definire cascade e fetch.lazy
 	@JoinColumn
 	private Set<Fotografia> preferiti;
-
 	
-	
-	public Set<Fotografia> getPreferiti() {
-		return preferiti;
-	}
-
-	public void setPreferiti(Set<Fotografia> preferiti) {
-		this.preferiti = preferiti;
-	}
-
 	public Utente() {
 		super();
 	}
-
-	public Utente(String nickname, String password, Short permessi) {
-		super();
-		this.username = nickname;
-		this.password = password;
-		if (!(permessi == null)) {
-			this.permessi = permessi;
-		}
-	}
-
-	public int getId() {
+	
+	public Integer getId() {
 		return id;
 	}
-
 	public void setId(Integer id) {
 		this.id = id;
 	}
-
-	public String getNickname() {
-		return username;
+	public String getEmail() {
+		return email;
 	}
-
-	public void setNickname(String nickname) {
-		this.username = nickname;
+	public void setEmail(String email) {
+		this.email = email;
 	}
-
 	public String getPassword() {
 		return password;
 	}
-
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
-	public int getPermessi() {
+	public Short getPermessi() {
 		return permessi;
 	}
-
 	public void setPermessi(Short permessi) {
 		this.permessi = permessi;
 	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((username == null) ? 0 : username.hashCode());
-		result = prime * result + ((password == null) ? 0 : password.hashCode());
-		return result;
+	public Set<Fotografia> getPreferiti() {
+		return preferiti;
 	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Utente other = (Utente) obj;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		if (username == null) {
-			if (other.username != null)
-				return false;
-		} else if (!username.equals(other.username))
-			return false;
-		if (password == null) {
-			if (other.password != null)
-				return false;
-		} else if (!password.equals(other.password))
-			return false;
-		return true;
+	public void setPreferiti(Set<Fotografia> preferiti) {
+		this.preferiti = preferiti;
 	}
-
-	@Override
-	public String toString() {
-		return "Utente [id=" + id + ", nickname=" + username + ", password=" + password + ", permessi=" + permessi
-				+ "]";
-	}
-
+	
 }

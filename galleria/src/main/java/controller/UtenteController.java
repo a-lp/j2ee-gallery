@@ -12,10 +12,9 @@ import database.Utente;
 
 @Named
 @SessionScoped
-public class UtenteController implements Serializable  {
+public class UtenteController implements Serializable {
 	@Inject
 	UtenteDAO dao;
-
 	private Utente utente = new Utente();
 
 	public Utente getUtente() {
@@ -33,6 +32,10 @@ public class UtenteController implements Serializable  {
 
 	public List<Utente> getUtenti() {
 		return dao.findAll();
+	}
+
+	public Utente findByEmail(String email) {
+		return dao.findByEmail(email);
 	}
 
 }

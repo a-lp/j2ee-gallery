@@ -3,11 +3,15 @@ package controller;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import dao.FotografiaDAO;
 import database.Fotografia;
 
+@Named
+@SessionScoped
 public class FotografiaController implements Serializable  {
 	@Inject
 	FotografiaDAO dao;
