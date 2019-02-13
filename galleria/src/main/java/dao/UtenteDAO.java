@@ -53,4 +53,12 @@ public class UtenteDAO implements Serializable {
 			return null;
 		}
 	}
+
+	public Short getPermessi(String email) {
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<Utente> q = cb.createQuery(Utente.class);
+		Root<Utente> root = q.from(Utente.class);
+		q.where(cb.like(root.get(Utente_.email), email));
+		return em.createQuery(q).getSingleResult().getPermessi();
+	}
 }

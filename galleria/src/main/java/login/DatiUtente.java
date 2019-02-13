@@ -9,10 +9,21 @@ import javax.faces.event.ComponentSystemEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import dao.UtenteDAO;
+
 @Named
 @SessionScoped
 public class DatiUtente implements Serializable {
 	private Credenziali utenteLoggato;
+	@Inject
+	UtenteDAO dao;
+	
+	public Short getPermessi() {
+		if(utenteLoggato.getEmail()!=null) {			
+			return dao.getPermessi(utenteLoggato.getEmail());
+		}
+		return 99;
+	}
 
 	public Credenziali getUtenteLoggato() {
 		return utenteLoggato;

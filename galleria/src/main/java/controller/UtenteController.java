@@ -48,5 +48,10 @@ public class UtenteController implements Serializable {
 	public boolean isValoreUnico() {
 		return dao.findByEmail(this.utente.getEmail()) == null;
 	}
+	
+	public Short getPermessi() {
+		return dao.getPermessi(this.utente.getEmail());
+	}
+
 
 }
