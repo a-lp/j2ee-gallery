@@ -5,7 +5,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import DAO.AlbumDAO;
+import dao.AlbumDAO;
 import database.Album;
 
 public class AlbumController implements Serializable {

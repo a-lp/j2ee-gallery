@@ -5,7 +5,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import DAO.TagDAO;
+import dao.TagDAO;
 import database.Tag;
 
 public class TagController implements Serializable  {

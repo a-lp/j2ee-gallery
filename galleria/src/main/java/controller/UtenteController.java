@@ -7,7 +7,7 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import DAO.UtenteDAO;
+import dao.UtenteDAO;
 import database.Utente;
 
 @Named

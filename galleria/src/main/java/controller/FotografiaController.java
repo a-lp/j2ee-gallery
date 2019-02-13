@@ -5,7 +5,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import DAO.FotografiaDAO;
+import dao.FotografiaDAO;
 import database.Fotografia;
 
 public class FotografiaController implements Serializable  {
