@@ -17,7 +17,7 @@ public class Utente {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	@Column(length = 30, unique = true)
-	private String nickname;
+	private String username;
 	@Column(length = 30)
 	private String password; 			// TODO: cifrare le password (HASH va bene)
 	@Column
@@ -42,7 +42,7 @@ public class Utente {
 
 	public Utente(String nickname, String password, Short permessi) {
 		super();
-		this.nickname = nickname;
+		this.username = nickname;
 		this.password = password;
 		if (!(permessi == null)) {
 			this.permessi = permessi;
@@ -58,11 +58,11 @@ public class Utente {
 	}
 
 	public String getNickname() {
-		return nickname;
+		return username;
 	}
 
 	public void setNickname(String nickname) {
-		this.nickname = nickname;
+		this.username = nickname;
 	}
 
 	public String getPassword() {
@@ -86,7 +86,7 @@ public class Utente {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((nickname == null) ? 0 : nickname.hashCode());
+		result = prime * result + ((username == null) ? 0 : username.hashCode());
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
 		return result;
 	}
@@ -105,10 +105,10 @@ public class Utente {
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
-		if (nickname == null) {
-			if (other.nickname != null)
+		if (username == null) {
+			if (other.username != null)
 				return false;
-		} else if (!nickname.equals(other.nickname))
+		} else if (!username.equals(other.username))
 			return false;
 		if (password == null) {
 			if (other.password != null)
@@ -120,7 +120,7 @@ public class Utente {
 
 	@Override
 	public String toString() {
-		return "Utente [id=" + id + ", nickname=" + nickname + ", password=" + password + ", permessi=" + permessi
+		return "Utente [id=" + id + ", nickname=" + username + ", password=" + password + ", permessi=" + permessi
 				+ "]";
 	}
 

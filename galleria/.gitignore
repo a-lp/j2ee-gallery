@@ -2,3 +2,6 @@
 /.classpath
 /.project
 /.settings/
+/taget/
+/.apt_generated_tests/
+/.apt_generated/
