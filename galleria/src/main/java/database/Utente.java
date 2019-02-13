@@ -19,16 +19,15 @@ public class Utente {
 	@Column(length = 30, unique = true)
 	private String nickname;
 	@Column(length = 30)
-	private String password; // TODO: cifrare le password (HASH va bene)
+	private String password; 			// TODO: cifrare le password (HASH va bene)
 	@Column
 	private Short permessi = 1;
-	@OneToMany			//TODO definire cascade e fetch.lazy
+	@OneToMany							//TODO definire cascade e fetch.lazy
 	@JoinColumn
 	private Set<Fotografia> preferiti;
-	@ManyToMany
-	@JoinColumn			//TODO creare una classe album separata
-	private Set<Fotografia> album;
 
+	
+	
 	public Set<Fotografia> getPreferiti() {
 		return preferiti;
 	}
@@ -58,11 +57,11 @@ public class Utente {
 		this.id = id;
 	}
 
-	public String getnickname() {
+	public String getNickname() {
 		return nickname;
 	}
 
-	public void setnickname(String nickname) {
+	public void setNickname(String nickname) {
 		this.nickname = nickname;
 	}
 
