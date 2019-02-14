@@ -9,14 +9,15 @@
 	<title>Home</title>
 </h:head>
 <h:body>
-	<h:outputText rendered="#{datiUtente.logged}" id="saluti" value="#{datiUtente.permessi==1 ? 'Utente':'Supremo'}" />
+	<h:outputText rendered="#{datiUtente.logged}" id="saluti"
+		value="#{datiUtente.permessi==1 ? 'Utente':'Supremo'}" />
 	
 	loggato: #{datiUtente.utenteLoggato.email}
 	
-	<br/>
+	<br />
 	#{credenziali.email}
-	<br/>
-	
-	
+	<br />
+
+
 </h:body>
 </html>

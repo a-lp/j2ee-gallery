@@ -17,9 +17,9 @@ public class DatiUtente implements Serializable {
 	private Credenziali utenteLoggato;
 	@Inject
 	UtenteDAO dao;
-	
+
 	public Short getPermessi() {
-		if(utenteLoggato.getEmail()!=null) {			
+		if (utenteLoggato.getEmail() != null) {
 			return dao.getPermessi(utenteLoggato.getEmail());
 		}
 		return 99;
@@ -34,33 +34,26 @@ public class DatiUtente implements Serializable {
 		this.utenteLoggato.setPassword(utenteLoggato.getPassword());
 		this.utenteLoggato.setEmail(utenteLoggato.getEmail());
 	}
-	
-	public  boolean isLogged()
-	{
-		return this.utenteLoggato!=null;
+
+	public boolean isLogged() {
+		return this.utenteLoggato != null;
 	}
-	
-	
-	public void checkIsLogged(ComponentSystemEvent event){
+
+	public void checkIsLogged(ComponentSystemEvent event) {
 		/*
-		
-		
-		
-		if (!"admin".equals(fc.getExternalContext().getSessionMap().get("role"))){
-*/
+		 * 
+		 * 
+		 * 
+		 * if (!"admin".equals(fc.getExternalContext().getSessionMap().get("role"))){
+		 */
 		FacesContext fc = FacesContext.getCurrentInstance();
-		if (this.utenteLoggato!=null)
-		{
-			ConfigurableNavigationHandler nav 
-			   = (ConfigurableNavigationHandler) 
-				fc.getApplication().getNavigationHandler();
-			
+		if (this.utenteLoggato != null) {
+			ConfigurableNavigationHandler nav = (ConfigurableNavigationHandler) fc.getApplication()
+					.getNavigationHandler();
+
 			nav.performNavigation("home");
 		}
-				
-	  }
-	
-	
+
+	}
 
 }
-

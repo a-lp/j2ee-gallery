@@ -20,8 +20,9 @@
 			<f:ajax event="click" execute="@all" render="tabella" />
 		</h:commandButton>
 	</h:form>
-	
-	<h:dataTable rendered='#{utenteController.utente.email!=""}' id="tabella" value="#{utenteController.byEmail}" var="p">
+
+	<h:dataTable rendered='#{utenteController.utente.email!=""}'
+		id="tabella" value="#{utenteController.byEmail}" var="p">
 
 		<h:column>
 			<f:facet name="header">Email</f:facet> #{p.email} </h:column>
