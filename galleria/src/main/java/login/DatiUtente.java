@@ -44,7 +44,14 @@ public class DatiUtente implements Serializable {
 	}
 
 	public boolean isLogged() {
-		return this.utenteLoggato != null;
+		if(this.utenteLoggato!=null) {
+			if(dao.findByEmail(this.utenteLoggato.getEmail())==null) {
+				this.utenteLoggato=null;
+				return false;
+			}
+			return true;
+		}
+		return false;
 	}
 	
 	public String logout() {

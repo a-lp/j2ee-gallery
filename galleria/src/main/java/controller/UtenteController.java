@@ -10,6 +10,8 @@ import javax.inject.Named;
 import dao.UtenteDAO;
 import database.Utente;
 
+//TODO aggiungere una classe per gestire le richieste in input. Si clonano le email
+
 @Named
 @SessionScoped
 public class UtenteController implements Serializable {
@@ -31,9 +33,9 @@ public class UtenteController implements Serializable {
 
 	public String save() {
 		if (!"".equals(this.utente.getEmail()) && !"".equals(this.utente.getPassword()) && this.isValoreUnico()) {
-			dao.add(utente); // aggiungo nuovo utente
-			utente = new Utente(); // creo un nuovo utente vuoto
-			return "registrazione"; // torno alla pagina di registrazione
+			dao.add(utente); 				// aggiungo nuovo utente
+			utente = new Utente(); 			// creo un nuovo utente vuoto
+			return "registrazione"; 		// torno alla pagina di registrazione
 		}
 		return "registrazione";
 	}
