@@ -24,6 +24,10 @@ public class DatiUtente implements Serializable {
 		}
 		return 99;
 	}
+	
+	public boolean isAdmin() {
+		return getPermessi()==99;
+	}
 
 	public Credenziali getUtenteLoggato() {
 		return utenteLoggato;

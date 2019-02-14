@@ -16,6 +16,10 @@ public class UtenteController implements Serializable {
 	@Inject
 	UtenteDAO dao;
 	private Utente utente = new Utente();
+	
+	public void elimina(String email) {
+		dao.elimina(email);
+	}
 
 	public Utente getUtente() {
 		return utente;

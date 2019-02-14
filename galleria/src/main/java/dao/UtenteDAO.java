@@ -19,6 +19,10 @@ import utility.Password;
 public class UtenteDAO implements Serializable {
 	@PersistenceContext
 	EntityManager em;
+	
+	public void elimina(String email) {
+		em.remove(findByEmail(email));
+	}
 
 	public void add(Utente u) {
 		try {

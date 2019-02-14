@@ -30,7 +30,13 @@
 			<f:facet name="header">Password</f:facet> #{p.password} </h:column>
 		<h:column>
 			<f:facet name="header">Permessi</f:facet> #{p.permessi==1 ? 'Utente' : "Admin"} </h:column>
-
+		<h:column rendered="#{datiUtente.admin}">
+			<h:form id="form">
+			<h:commandButton value="Elimina" type="submit"
+				action="#{utenteController.elimina(p.email)}">
+			</h:commandButton>
+			</h:form>
+		</h:column>
 	</h:dataTable>
 </body>
 </html>
