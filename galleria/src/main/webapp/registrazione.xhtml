@@ -11,6 +11,18 @@
 <body>
 	<h2>Registrazione utente</h2>
 	<hr />
+	<h:link rendered="#{not datiUtente.logged}" value="Login"
+		outcome="login" />
+		<br />
+	<h:form rendered="#{datiUtente.logged}" id="form-logout">
+		<h:commandLink  value="Logout"
+			outcome="login" action="#{datiUtente.logout}" />
+	</h:form>
+	<br />
+	<h:link value="Home" outcome="home" />
+	<br />
+	<h:link value="Cerca" outcome="cerca" />
+	<br />
 
 	<h:form>
 		<h3>E-Mail</h3>
@@ -29,18 +41,6 @@
 	</h:form>
 
 	<br />
-
-	<h:dataTable rendered='#{utenteController.utenti!=null}' id="tabella"
-		value="#{utenteController.utenti}" var="p">
-
-		<h:column>
-			<f:facet name="header">Email</f:facet> #{p.email} </h:column>
-		<h:column>
-			<f:facet name="header">Password</f:facet>#{p.password} </h:column>
-		<h:column>
-			<f:facet name="header">Permessi</f:facet>#{p.permessi} </h:column>
-
-	</h:dataTable>
 
 </body>
 </html>

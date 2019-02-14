@@ -11,7 +11,18 @@
 <body>
 	<h2>Ricerca utente</h2>
 	<hr />
-
+	<h:link rendered="#{not datiUtente.logged}" value="Login"
+		outcome="login" />
+		<br />
+	<h:form rendered="#{datiUtente.logged}" id="form-logout">
+		<h:commandLink  value="Logout"
+			outcome="login" action="#{datiUtente.logout}" />
+	</h:form>
+	<br />
+	<h:link value="Home" outcome="home" />
+	<br />
+	<h:link value="Registrati" outcome="registrazione" />
+	<br />
 	<h:form>
 		<h3>E-Mail</h3>
 		<h:inputText id="ricerca-id" value="#{utenteController.utente.email}" />
@@ -21,20 +32,43 @@
 		</h:commandButton>
 	</h:form>
 
-	<h:dataTable rendered='#{utenteController.utente.email!=""}'
-		id="tabella" value="#{utenteController.byEmail}" var="p">
+	<h:dataTable
+		rendered='#{utenteController.utente.email!="" and utenteController.byEmail!=null}'
+		id="tabella-ricerca" value="#{utenteController.byEmail}" var="p">
 
+		<br />
+		<h1>Ricerca</h1>
 		<h:column>
 			<f:facet name="header">Email</f:facet> #{p.email} </h:column>
 		<h:column>
 			<f:facet name="header">Password</f:facet> #{p.password} </h:column>
 		<h:column>
 			<f:facet name="header">Permessi</f:facet> #{p.permessi==1 ? 'Utente' : "Admin"} </h:column>
-		<h:column rendered="#{datiUtente.admin}">
+		<h:column rendered="#{datiUtente.logged and datiUtente.admin}">
 			<h:form id="form">
-			<h:commandButton value="Elimina" type="submit"
-				action="#{utenteController.elimina(p.email)}">
-			</h:commandButton>
+				<h:commandButton value="Elimina" type="submit"
+					action="#{utenteController.elimina(p.email)}">
+				</h:commandButton>
+			</h:form>
+		</h:column>
+	</h:dataTable>
+	<h:dataTable
+		rendered='#{datiUtente.admin and utenteController.utenti!=null}'
+		id="tabella-utenti" value="#{utenteController.utenti}" var="p">
+
+		<br />
+		<h1>Tabella Utenti</h1>
+		<h:column>
+			<f:facet name="header">Email</f:facet> #{p.email} </h:column>
+		<h:column>
+			<f:facet name="header">Password</f:facet>#{p.password} </h:column>
+		<h:column>
+			<f:facet name="header">Permessi</f:facet>#{p.permessi} </h:column>
+		<h:column rendered="#{datiUtente.logged and datiUtente.admin}">
+			<h:form id="form">
+				<h:commandButton value="Elimina" type="submit"
+					action="#{utenteController.elimina(p.email)}">
+				</h:commandButton>
 			</h:form>
 		</h:column>
 	</h:dataTable>

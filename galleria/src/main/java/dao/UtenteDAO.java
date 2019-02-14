@@ -20,7 +20,7 @@ public class UtenteDAO implements Serializable {
 	@PersistenceContext
 	EntityManager em;
 	
-	public void elimina(String email) {
+	public void elimina(String email) {		//TODO gestire la cancellazione di utenti loggati
 		em.remove(findByEmail(email));
 	}
 

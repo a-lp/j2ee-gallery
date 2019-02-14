@@ -12,8 +12,15 @@ public class LoginController {
 	@Inject
 	DatiUtente datiUtente;
 
+	public boolean controlloCredenziali() {
+		return datiUtente.controlloCredenziali(credenziali);
+	}
+	
 	public String login() {
-		datiUtente.setUtenteLoggato(credenziali);
-		return "home";
+		if(controlloCredenziali()) {
+			datiUtente.setUtenteLoggato(credenziali);
+			return "home";
+		}
+		else return "login";
 	}
 }

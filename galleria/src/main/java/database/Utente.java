@@ -16,9 +16,9 @@ public class Utente {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	@Column(length = 30, unique = true, nullable = false)
-	private String email = "";
+	private String email;
 	@Column(length = 512, nullable = false)
-	private String password = "";
+	private String password;
 	@Column
 	private Short permessi = 1;
 	@OneToMany // TODO definire cascade e fetch.lazy

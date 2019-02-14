@@ -17,7 +17,7 @@ public class UtenteController implements Serializable {
 	UtenteDAO dao;
 	private Utente utente = new Utente();
 	
-	public void elimina(String email) {
+	public void elimina(String email) {		//TODO gestire la cancellazione di utenti loggati
 		dao.elimina(email);
 	}
 

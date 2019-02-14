@@ -10,6 +10,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import dao.UtenteDAO;
+import database.Utente;
+import utility.Password;
 
 @Named
 @SessionScoped
@@ -26,6 +28,8 @@ public class DatiUtente implements Serializable {
 	}
 	
 	public boolean isAdmin() {
+		if(utenteLoggato==null)
+			return false;
 		return getPermessi()==99;
 	}
 
@@ -41,6 +45,11 @@ public class DatiUtente implements Serializable {
 
 	public boolean isLogged() {
 		return this.utenteLoggato != null;
+	}
+	
+	public String logout() {
+		this.utenteLoggato=null;
+		return "login";
 	}
 
 	public void checkIsLogged(ComponentSystemEvent event) {
@@ -58,6 +67,19 @@ public class DatiUtente implements Serializable {
 			nav.performNavigation("home");
 		}
 
+	}
+
+
+	public boolean controlloCredenziali(Credenziali credenziali) {
+		Utente user = dao.findByEmail(credenziali.getEmail());
+		try {
+			if(user!=null && Password.check(credenziali.getPassword(),user.getPassword()))
+				return true;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
 	}
 
 }
