@@ -5,7 +5,7 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html">
 
-<f:event listener="#{richiestaController.isLogged()}" type="preRenderView" />
+<f:event listener="#{richiestaController.checkIsLogged()}" type="preRenderView" />
 
 <h:head>
 	<title>Login</title>
@@ -13,12 +13,13 @@
 <h:body>
 	<h2>Login</h2>
 	<hr />
-	
-	<h:link value="Home" outcome="home" />
-	<br />
-	<h:link value="Registrati" outcome="registrazione" />
-	<br />
-	<h:link value="Cerca" outcome="cerca" />
+	<h:form id="form-logout-login">
+		<h:commandLink rendered="#{richiestaController.logged}"  value="Logout"
+				outcome="login" action="#{richiestaController.logout}" />
+		<h:link value="Home" outcome="home" />    |  
+		<h:link value="Registrati" outcome="registrazione" />    |  
+		<h:link value="Cerca" outcome="cerca" />    |  
+	</h:form>
 	<br/>
 	<h:form rendered="#{not richiestaController.logged}">
 

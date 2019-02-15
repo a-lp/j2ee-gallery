@@ -51,7 +51,6 @@ public class Main {
 			}
 			s.close();
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		Collections.shuffle(nomi);
@@ -95,7 +94,6 @@ public class Main {
 			em.persist(u); // controllo se è presente "u" nel database quindi aggiorno i suoi campi
 			em.getTransaction().commit();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -108,7 +106,6 @@ public class Main {
 			res = em.merge(u); // controllo se è presente "u" nel database quindi aggiorno i suoi campi
 			em.getTransaction().commit();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			return res;

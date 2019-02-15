@@ -57,7 +57,6 @@ public class Scraper {
 			 * cognomi_file.write(a.childNode(0).toString() + "\n"); } cognomi_file.close();
 			 */
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

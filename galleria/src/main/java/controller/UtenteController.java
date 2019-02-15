@@ -19,7 +19,7 @@ public class UtenteController implements Serializable {
 	@Inject
 	RichiestaUtente richiesta;
 	
-	public void elimina(String email) {		//TODO gestire la cancellazione di utenti loggati
+	public void elimina(String email) {
 		dao.elimina(email);
 	}
 

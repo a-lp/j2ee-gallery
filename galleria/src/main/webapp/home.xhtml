@@ -10,21 +10,20 @@
 <h:body>
 	<h2>HomePage</h2>
 	<hr />
-	<h:link rendered="#{not richiestaController.logged}" value="Login"
-		outcome="login" />
-		<br />
-	<h:form rendered="#{richiestaController.logged}" id="form-logout">
-		<h:commandLink  value="Logout"
-			outcome="login" action="#{richiestaController.logout}" />
+	<h:form id="form-logout-login">
+		<h:link rendered="#{not richiestaController.logged}" value="Login"
+			outcome="login" />
+		<h:commandLink rendered="#{richiestaController.logged}"  value="Logout"
+				 action="#{richiestaController.logout()}" />
+		    |  
+		<h:link value="Registrati" outcome="registrazione" />    |  
+		<h:link value="Cerca" outcome="cerca" />    |  
 	</h:form>
-	<h:link value="Registrati" outcome="registrazione" />
-	<br />
-	<h:link value="Cerca" outcome="cerca" />
 	<br />
 	<h:outputText rendered="#{richiestaController.logged}" id="saluti"
 		value="#{richiestaController.admin ? 'Admin':'Plebeo'}" />
 	
-	loggato: #{richiestaController.utenteLoggato.email}
+	#{richiestaController.logged? "loggato: ".concat(richiestaController.utenteLoggato.email):""}
 
 </h:body>
 </html>

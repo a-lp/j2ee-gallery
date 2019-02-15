@@ -9,7 +9,7 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)		//TODO cosa è sta cosa?
+@Inheritance(strategy = InheritanceType.JOINED)		//Come viene generata la tabella per l'associazione Molti a Molti con fotografia
 
 public class Tag {
 	@Id

@@ -5,7 +5,6 @@ import java.io.Serializable;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.ConfigurableNavigationHandler;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ComponentSystemEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -66,18 +65,14 @@ public class RichiestaController implements Serializable {
 		}
 	}
 
-	public String logout() {
+	public void logout() {
 		this.utenteLoggato = null;
-		return "login";
 	}
 
-	public void checkIsLogged(ComponentSystemEvent event) {
-		/*
-		 * 
-		 * 
-		 * 
-		 * if (!"admin".equals(fc.getExternalContext().getSessionMap().get("role"))){
-		 */
+	/**
+	 * Metodo per bloccare l'accesso agli utenti loggati che vogliono visitare la pagina login.xhtml
+	 */
+	public void checkIsLogged() {
 		FacesContext fc = FacesContext.getCurrentInstance();
 		if (this.utenteLoggato != null) {
 			ConfigurableNavigationHandler nav = (ConfigurableNavigationHandler) fc.getApplication()
@@ -85,25 +80,6 @@ public class RichiestaController implements Serializable {
 
 			nav.performNavigation("home");
 		}
-
 	}
 
-	/**
-	 * @deprecated
-	 * @param credenziali
-	 * @return True se la password inserita è corretta, False se la password
-	 *         inserita non corrisponde a quella memorizzata nel DB oppure non vi
-	 *         sono utenti loggati
-	 */
-	public boolean controlloCredenziali() {
-		Utente user = dao.findByEmail(richiestaUtente.getEmail());
-		try {
-			if (user != null && Password.check(richiestaUtente.getPassword(), user.getPassword()))
-				return true;
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return false;
-	}
 }

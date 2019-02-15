@@ -11,17 +11,15 @@
 <body>
 	<h2>Registrazione utente</h2>
 	<hr />
-	<h:link rendered="#{not richiestaController.logged}" value="Login"
-		outcome="login" />
-		<br />
-	<h:form rendered="#{richiestaController.logged}" id="form-logout">
-		<h:commandLink  value="Logout"
-			outcome="login" action="#{richiestaController.logout}" />
+	<h:form id="form-logout-login">
+		<h:link rendered="#{not richiestaController.logged}" value="Login"
+			outcome="login" />
+		<h:commandLink rendered="#{richiestaController.logged}"  value="Logout"
+				outcome="login" action="#{richiestaController.logout}" />
+		    |  
+		<h:link value="Home" outcome="home" />    |  
+		<h:link value="Cerca" outcome="cerca" />    |  
 	</h:form>
-	<br />
-	<h:link value="Home" outcome="home" />
-	<br />
-	<h:link value="Cerca" outcome="cerca" />
 	<br />
 
 	<h:form>

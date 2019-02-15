@@ -11,24 +11,21 @@
 <body>
 	<h2>Ricerca utente</h2>
 	<hr />
-	<h:link rendered="#{not richiestaController.logged}" value="Login"
-		outcome="login" />
-		<br />
-	<h:form rendered="#{richiestaController.logged}" id="form-logout">
-		<h:commandLink  value="Logout"
-			outcome="login" action="#{richiestaController.logout}" />
+	<h:form id="form-logout-login">
+		<h:link rendered="#{not richiestaController.logged}" value="Login"
+			outcome="login" />
+		<h:commandLink rendered="#{richiestaController.logged}"  value="Logout"
+				outcome="login" action="#{richiestaController.logout}" />
+		    |  
+		<h:link value="Home" outcome="home" />    |  
+		<h:link value="Registrati" outcome="registrazione" />    |  
 	</h:form>
 	<br />
-	<h:link value="Home" outcome="home" />
-	<br />
-	<h:link value="Registrati" outcome="registrazione" />
-	<br />
-	<h:form>
+	<h:form id="form-ricerca">
 		<h3>E-Mail</h3>
 		<h:inputText id="ricerca-id" value="#{richiestaUtente.email}" />
 		<br />
 		<h:commandButton value="Cerca">
-			<f:ajax event="click" execute="@this" render="tabella" />
 		</h:commandButton>
 	</h:form>
 
