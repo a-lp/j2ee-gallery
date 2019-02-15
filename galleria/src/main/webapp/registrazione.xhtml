@@ -11,12 +11,12 @@
 <body>
 	<h2>Registrazione utente</h2>
 	<hr />
-	<h:link rendered="#{not datiUtente.logged}" value="Login"
+	<h:link rendered="#{not richiestaController.logged}" value="Login"
 		outcome="login" />
 		<br />
-	<h:form rendered="#{datiUtente.logged}" id="form-logout">
+	<h:form rendered="#{richiestaController.logged}" id="form-logout">
 		<h:commandLink  value="Logout"
-			outcome="login" action="#{datiUtente.logout}" />
+			outcome="login" action="#{richiestaController.logout}" />
 	</h:form>
 	<br />
 	<h:link value="Home" outcome="home" />
@@ -26,15 +26,15 @@
 
 	<h:form>
 		<h3>E-Mail</h3>
-		<h:inputText id="inputName" value="#{utenteController.utente.email}" />
+		<h:inputText id="inputName" value="#{richiestaUtente.email}" />
 		<h:outputText id="email-already-used"
 			value="#{not utenteController.valoreUnico ? 'E-mail in uso' : ''}" />
 		<h:outputText id="email-error"
-			value="#{utenteController.utente.email=='' ? 'Inserire Email' : ''}" />
+			value="#{richiestaUtente.email=='' ? 'Inserire Email' : ''}" />
 		<h3>Password</h3>
-		<h:inputText value="#{utenteController.utente.password}" />
+		<h:inputSecret value="#{richiestaUtente.password}" />
 		<h:outputText id="password-error"
-			value="#{utenteController.utente.password=='' ? 'Inserire Password' : ''}" />
+			value="#{richiestaUtente.password=='' ? 'Inserire Password' : ''}" />
 		<br />
 		<br />
 		<h:commandButton value="Registrati" action="#{utenteController.save}"></h:commandButton>

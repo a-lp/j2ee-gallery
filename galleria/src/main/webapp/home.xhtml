@@ -10,21 +10,21 @@
 <h:body>
 	<h2>HomePage</h2>
 	<hr />
-	<h:link rendered="#{not datiUtente.logged}" value="Login"
+	<h:link rendered="#{not richiestaController.logged}" value="Login"
 		outcome="login" />
 		<br />
-	<h:form rendered="#{datiUtente.logged}" id="form-logout">
+	<h:form rendered="#{richiestaController.logged}" id="form-logout">
 		<h:commandLink  value="Logout"
-			outcome="login" action="#{datiUtente.logout}" />
+			outcome="login" action="#{richiestaController.logout}" />
 	</h:form>
 	<h:link value="Registrati" outcome="registrazione" />
 	<br />
 	<h:link value="Cerca" outcome="cerca" />
 	<br />
-	<h:outputText rendered="#{datiUtente.logged}" id="saluti"
-		value="#{datiUtente.permessi==1 ? 'Utente':'Supremo'}" />
+	<h:outputText rendered="#{richiestaController.logged}" id="saluti"
+		value="#{richiestaController.admin ? 'Admin':'Plebeo'}" />
 	
-	loggato: #{datiUtente.utenteLoggato.email}
+	loggato: #{richiestaController.utenteLoggato.email}
 
 </h:body>
 </html>

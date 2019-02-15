@@ -1,5 +1,6 @@
 package database;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -23,10 +24,19 @@ public class Utente {
 	private Short permessi = 1;
 	@OneToMany // TODO definire cascade e fetch.lazy
 	@JoinColumn
-	private Set<Fotografia> preferiti;
+	private Set<Fotografia> preferiti = new HashSet<Fotografia>();
 
 	public Utente() {
 		super();
+	}
+
+	public Utente(Utente u) {
+		super();
+		this.id = u.getId();
+		this.email = u.getEmail();
+		this.password = u.getPassword();
+		this.permessi = u.getPermessi();
+		this.preferiti = u.getPreferiti();
 	}
 
 	public Integer getId() {

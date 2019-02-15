@@ -9,31 +9,27 @@ import javax.inject.Named;
 
 import dao.UtenteDAO;
 import database.Utente;
+import login.RichiestaUtente;
 
 @Named
 @SessionScoped
 public class UtenteController implements Serializable {
 	@Inject
 	UtenteDAO dao;
-	private Utente utente = new Utente();
+	@Inject
+	RichiestaUtente richiesta;
 	
 	public void elimina(String email) {		//TODO gestire la cancellazione di utenti loggati
 		dao.elimina(email);
 	}
 
-	public Utente getUtente() {
-		return utente;
-	}
-
-	public void setUtente(Utente utente) {
-		this.utente = utente;
-	}
-
 	public String save() {
-		if (!"".equals(this.utente.getEmail()) && !"".equals(this.utente.getPassword()) && this.isValoreUnico()) {
-			dao.add(utente); // aggiungo nuovo utente
-			utente = new Utente(); // creo un nuovo utente vuoto
-			return "registrazione"; // torno alla pagina di registrazione
+		if (!"".equals(richiesta.getEmail()) && !"".equals(richiesta.getPassword()) && this.isValoreUnico()) {
+			Utente u = new Utente();
+			u.setEmail(richiesta.getEmail());
+			u.setPassword(richiesta.getPassword());
+			dao.add(u); // aggiungo nuovo richiesta
+			return "home";
 		}
 		return "registrazione";
 	}
@@ -46,15 +42,15 @@ public class UtenteController implements Serializable {
 	}
 
 	public Utente getByEmail() {
-		return dao.findByEmail(this.utente.getEmail());
+		return dao.findByEmail(richiesta.getEmail());
 	}
 
 	public boolean isValoreUnico() {
-		return dao.findByEmail(this.utente.getEmail()) == null;
+		return dao.findByEmail(richiesta.getEmail()) == null;
 	}
 
 	public Short getPermessi() {
-		return dao.getPermessi(this.utente.getEmail());
+		return dao.getPermessi(richiesta.getEmail());
 	}
 
 }

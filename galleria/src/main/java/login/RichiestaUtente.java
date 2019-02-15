@@ -1,13 +1,21 @@
 package login;
 
+import java.io.Serializable;
+
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 
+/**
+ * 
+ * Classe per la gestione delle richieste da parte dell'utente. I valori gestiti
+ * sono email, password e query di ricerca.
+ */
 @Named
 @RequestScoped
-public class Credenziali {
+public class RichiestaUtente implements Serializable {
 	private String email;
 	private String password;
+	private String ricerca;
 
 	public String getEmail() {
 		return email;
@@ -25,8 +33,12 @@ public class Credenziali {
 		this.password = password;
 	}
 
-	@Override
-	public String toString() {
-		return "Credenziali [email=" + email + ", password=" + password + "]";
+	public String getRicerca() {
+		return ricerca;
 	}
+
+	public void setRicerca(String ricerca) {
+		this.ricerca = ricerca;
+	}
+
 }

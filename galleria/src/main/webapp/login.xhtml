@@ -5,7 +5,7 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html">
 
-<f:event listener="#{datiUtente.checkIsLogged}" type="preRenderView" />
+<f:event listener="#{richiestaController.isLogged()}" type="preRenderView" />
 
 <h:head>
 	<title>Login</title>
@@ -20,14 +20,14 @@
 	<br />
 	<h:link value="Cerca" outcome="cerca" />
 	<br/>
-	<h:form rendered="#{not datiUtente.logged}">
+	<h:form rendered="#{not richiestaController.logged}">
 
-		<h:inputText value="#{credenziali.email}" />
+		<h:inputText value="#{richiestaUtente.email}" />
 		<br />
-		<h:inputSecret value="#{credenziali.password}" />
+		<h:inputSecret value="#{richiestaUtente.password}" />
 		<br />
-		#{credenziali.password==""?"":credenziali.password}
-		<h:commandButton value="Login" action="#{loginController.login}"></h:commandButton>
+		#{richiestaUtente.password==""?"":richiestaUtente.password}
+		<h:commandButton value="Login" action="#{richiestaController.setUtenteLoggato()}"></h:commandButton>
 	</h:form>
 </h:body>
 </html>
