@@ -10,14 +10,17 @@
 <h:body>
 	<h2>HomePage</h2>
 	<hr />
-	<h:form id="form-logout-login">
+	<h:form>
 		<h:link rendered="#{not richiestaController.logged}" value="Login"
 			outcome="login" />
-		<h:commandLink rendered="#{richiestaController.logged}"  value="Logout"
-				 action="#{richiestaController.logout()}" />
+		<h:commandLink rendered="#{richiestaController.logged}" value="Logout"
+			action="#{richiestaController.logout()}" />
 		    |  
-		<h:link value="Registrati" outcome="registrazione" />    |  
+		<h:commandLink action="#{navigationController.showPage('registrazione')}" value="Registrazione">
+			<f:param name="page" value="registrazione" />
+		</h:commandLink>    |  
 		<h:link value="Cerca" outcome="cerca" />    |  
+		<h:link value="Galleria" outcome="galleria" />    |  
 	</h:form>
 	<br />
 	<h:outputText rendered="#{richiestaController.logged}" id="saluti"

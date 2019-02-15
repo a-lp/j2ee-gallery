@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+<head>
+<title>Ricerca</title>
+</head>
+
+<body>
+	<h2>Ricerca Fotografie</h2>
+	<hr />
+	<h:form id="form-logout-login">
+		<h:link rendered="#{not richiestaController.logged}" value="Login"
+			outcome="login" />
+		<h:commandLink rendered="#{richiestaController.logged}" value="Logout"
+			outcome="login" action="#{richiestaController.logout}" />
+		    |  
+		<h:link value="Home" outcome="home" />    |  
+		<h:link value="Registrati" outcome="registrazione" />    |  
+	</h:form>
+	<br />
+	<h:form id="form-ricerca">
+		<h3>Ricerca Fotografia</h3>
+		<h:inputText id="ricerca-id" value="#{richiestaUtente.ricerca}" />
+		<br />
+		<h:commandButton value="Cerca">
+		</h:commandButton>
+	</h:form>
+
+		<h:dataTable
+			rendered='#{richiestaUtente.ricerca!="" and fotografiaController.byId!=null}'
+			id="tabella-ricerca" value="#{fotografiaController.byId}" var="p">
+
+			<br />
+			<h1>Ricerca</h1>
+			<h:column>
+				<f:facet name="header">Nome</f:facet> #{p.nome} </h:column>
+			<h:column>
+				<f:facet name="header">Descrzione</f:facet> #{p.descrizione} </h:column>
+			<h:column>
+				<f:facet name="header">URL</f:facet> #{p.url} </h:column>
+<!-- 			TODO modificare il fetch lazy -->
+<!--			<h:column> -->
+<!-- 				<f:facet name="header">Tag</f:facet> #{p.categorie} </h:column> -->
+			<h:column>
+				<f:facet name="header">Altezza</f:facet> #{p.altezza} </h:column>
+			<h:column>
+				<f:facet name="header">Larghezza</f:facet> #{p.larghezza} </h:column>
+			<h:column rendered="#{richiestaController.logged and richiestaController.admin}">
+				<h:form id="form">
+					<h:commandButton value="Elimina" type="submit"
+						action="#{fotografiaController.elimina(p.id)}">
+					</h:commandButton>
+				</h:form>
+			</h:column>
+		</h:dataTable> 
+
+	<h:dataTable
+		rendered='#{richiestaController.admin and fotografiaController.fotografie!=null}'
+		id="tabella-utenti" value="#{fotografiaController.fotografie}" var="p">
+
+		<br />
+		<h1>Tabella Fotografie</h1>
+		<h:column>
+			<f:facet name="header">Nome</f:facet> #{p.nome} </h:column>
+		<h:column>
+			<f:facet name="header">Descrzione</f:facet> #{p.descrizione} </h:column>
+		<h:column>
+			<f:facet name="header">URL</f:facet> #{p.url} </h:column>
+<!-- 		<h:column> -->
+<!-- 			<f:facet name="header">Tag</f:facet> #{p.categorie} </h:column> -->
+		<h:column>
+			<f:facet name="header">Altezza</f:facet> #{p.altezza} </h:column>
+		<h:column>
+			<f:facet name="header">Larghezza</f:facet> #{p.larghezza} </h:column>
+		<h:column
+			rendered="#{richiestaController.logged and richiestaController.admin}">
+			<h:form id="form">
+				<h:commandButton value="Elimina" type="submit"
+					action="#{fotografiaController.elimina(p.id)}">
+				</h:commandButton>
+			</h:form>
+		</h:column>
+	</h:dataTable>
+</body>
+</html>
