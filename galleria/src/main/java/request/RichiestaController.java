@@ -70,7 +70,8 @@ public class RichiestaController implements Serializable {
 	}
 
 	/**
-	 * Metodo per bloccare l'accesso agli utenti loggati che vogliono visitare la pagina login.xhtml
+	 * Metodo per bloccare l'accesso agli utenti loggati che vogliono visitare la
+	 * pagina login.xhtml
 	 */
 	public void checkIsLogged() {
 		FacesContext fc = FacesContext.getCurrentInstance();
@@ -82,4 +83,10 @@ public class RichiestaController implements Serializable {
 		}
 	}
 
+	public void goToIndex() {
+		System.out.println("go to index");
+		FacesContext fc = FacesContext.getCurrentInstance();
+		ConfigurableNavigationHandler nav = (ConfigurableNavigationHandler) fc.getApplication().getNavigationHandler();
+		nav.performNavigation("home");
+	}
 }
