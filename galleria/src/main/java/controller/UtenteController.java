@@ -9,7 +9,7 @@ import javax.inject.Named;
 
 import dao.UtenteDAO;
 import database.Utente;
-import login.RichiestaUtente;
+import request.RichiestaUtente;
 
 @Named
 @SessionScoped
