@@ -42,8 +42,8 @@
 			<h:column>
 				<f:facet name="header">URL</f:facet> #{p.url} </h:column>
 <!-- 			TODO modificare il fetch lazy -->
-<!--			<h:column> -->
-<!-- 				<f:facet name="header">Tag</f:facet> #{p.categorie} </h:column> -->
+			<h:column>
+				<f:facet name="header">Tag</f:facet> #{p.tag} </h:column>
 			<h:column>
 				<f:facet name="header">Altezza</f:facet> #{p.altezza} </h:column>
 			<h:column>
@@ -58,8 +58,8 @@
 		</h:dataTable> 
 
 	<h:dataTable
-		rendered='#{richiestaController.admin and fotografiaController.fotografie!=null}'
-		id="tabella-utenti" value="#{fotografiaController.fotografie}" var="p">
+		rendered='#{richiestaController.admin and fotografiaController.getMaxFotografie(10)!=null}'
+		id="tabella-utenti" value="#{fotografiaController.getMaxFotografie(10)}" var="p">
 
 		<br />
 		<h1>Tabella Fotografie</h1>
@@ -69,8 +69,8 @@
 			<f:facet name="header">Descrzione</f:facet> #{p.descrizione} </h:column>
 		<h:column>
 			<f:facet name="header">URL</f:facet> #{p.url} </h:column>
-<!-- 		<h:column> -->
-<!-- 			<f:facet name="header">Tag</f:facet> #{p.categorie} </h:column> -->
+		<h:column>
+			<f:facet name="header">Tag</f:facet> #{p.tag} </h:column>
 		<h:column>
 			<f:facet name="header">Altezza</f:facet> #{p.altezza} </h:column>
 		<h:column>

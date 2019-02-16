@@ -52,4 +52,11 @@ public class FotografiaDAO implements Serializable {
 			return null;
 		}
 	}
+	
+	public List<Fotografia> findMax(int n){
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<Fotografia> q = cb.createQuery(Fotografia.class);
+		q.from(Fotografia.class);
+		return em.createQuery(q).setFirstResult(0).setMaxResults(n).getResultList();
+	}
 }

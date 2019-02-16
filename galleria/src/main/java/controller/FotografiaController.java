@@ -47,4 +47,8 @@ public class FotografiaController implements Serializable {
 	public List<Fotografia> getFotografie() {
 		return dao.findAll();
 	}
+	
+	public List<Fotografia> getMaxFotografie(int max) {
+		return dao.findMax(max);
+	}
 }

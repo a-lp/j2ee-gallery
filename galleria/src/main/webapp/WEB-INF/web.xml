@@ -14,5 +14,17 @@
 		<servlet-name>FacesServlet</servlet-name>
 		<url-pattern>*.xhtml </url-pattern>
 	</servlet-mapping>
+	
+	
+	<servlet>
+		<servlet-name>Foto</servlet-name>
+		<servlet-class>controller.FotoServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>Foto</servlet-name>
+		<url-pattern>/foto/*</url-pattern>
+	</servlet-mapping>
+	
 
 </web-app>

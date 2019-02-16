@@ -6,6 +6,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -30,7 +31,7 @@ public class Fotografia {
 	private Short altezza;
 	@Column
 	private Short larghezza;
-	@ManyToMany(cascade = { CascadeType.ALL })
+	@ManyToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
 	@JoinColumn()
 	private Set<Tag> categorie; // TODO si può anche fare Embeddable
 	@Column
@@ -102,6 +103,15 @@ public class Fotografia {
 
 	public Set<Tag> getCategorie() {
 		return categorie;
+	}
+	
+	public String getTag() {
+		String result="[";
+		for(Tag t : this.categorie) {
+			result+=t.getTag()+",";
+		}
+		result=result.substring(0,result.length()-1)+"]";
+		return result;
 	}
 
 	public void setCategorie(Set<Tag> categorie) {
