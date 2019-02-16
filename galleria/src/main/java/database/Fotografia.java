@@ -13,8 +13,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 
-//TODO servlet che mappa posizione relativa della richiesta a posizione assoluta e sputa byte al client. Non restituire la URL della posizione nel server.
-
 @Entity
 public class Fotografia {
 	@Id

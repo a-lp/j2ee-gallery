@@ -19,7 +19,6 @@ public class Scraper {
 		Elements tmp;
 		try {
 			// FOTO
-			// TODO scrapare i tag da qua https://www.photoawards.com/categories/
 			File input = new File("D:\\Documenti\\Progetto MAP\\file.html");
 			FileWriter foto_file = new FileWriter(new File("src/main/resources/foto.txt"));
 			foto_html = Jsoup.parse(input, "UTF-8", "https://images.nasa.gov/");
