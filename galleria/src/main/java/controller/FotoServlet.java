@@ -36,22 +36,22 @@ public class FotoServlet extends HttpServlet {
 			ServletOutputStream out;
 			out = resp.getOutputStream();
 			Fotografia f = dao.find(id);
+
 			URL url_type = new URL(f.getUrl());
-			BufferedImage img = ImageIO.read(url_type);
+			/*BufferedImage img = ImageIO.read(url_type);
 			File file = new File("tmp.jpg");
 			ImageIO.write(img, "jpg", file);
-			FileInputStream fin = new FileInputStream(file);
+			FileInputStream fin = new FileInputStream(url_type.openStream());*/
 
-			BufferedInputStream bin = new BufferedInputStream(fin);
+			BufferedInputStream bin = new BufferedInputStream(url_type.openStream());
 			BufferedOutputStream bout = new BufferedOutputStream(out);
 			int ch = 0;
-			;
 			while ((ch = bin.read()) != -1) {
 				bout.write(ch);
 			}
 
 			bin.close();
-			fin.close();
+			//fin.close();
 			bout.close();
 			out.close();
 		} catch (NumberFormatException e) {

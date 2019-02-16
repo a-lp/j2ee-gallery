@@ -42,6 +42,7 @@
 
 	</dependencies>
 	<build>
+		<finalName>galleria</finalName>
 		<plugins>
 
 			<plugin>

@@ -29,46 +29,56 @@
 		</h:commandButton>
 	</h:form>
 
-		<h:dataTable
-			rendered='#{richiestaUtente.ricerca!="" and fotografiaController.byId!=null}'
-			id="tabella-ricerca" value="#{fotografiaController.byId}" var="p">
+	<h:dataTable
+		rendered='#{richiestaUtente.ricerca!="" and fotografiaController.byId!=null}'
+		id="tabella-ricerca" value="#{fotografiaController.byId}" var="p">
 
-			<br />
-			<h1>Ricerca</h1>
-			<h:column>
-				<f:facet name="header">Nome</f:facet> #{p.nome} </h:column>
-			<h:column>
-				<f:facet name="header">Descrzione</f:facet> #{p.descrizione} </h:column>
-			<h:column>
-				<f:facet name="header">URL</f:facet> #{p.url} </h:column>
-<!-- 			TODO modificare il fetch lazy -->
-			<h:column>
-				<f:facet name="header">Tag</f:facet> #{p.tag} </h:column>
-			<h:column>
-				<f:facet name="header">Altezza</f:facet> #{p.altezza} </h:column>
-			<h:column>
-				<f:facet name="header">Larghezza</f:facet> #{p.larghezza} </h:column>
-			<h:column rendered="#{richiestaController.logged and richiestaController.admin}">
-				<h:form id="form">
-					<h:commandButton value="Elimina" type="submit"
-						action="#{fotografiaController.elimina(p.id)}">
-					</h:commandButton>
-				</h:form>
-			</h:column>
-		</h:dataTable> 
+		<br />
+		<h1>Ricerca</h1>
+		<h:column>
+			<f:facet name="header">Nome</f:facet> #{p.nome} </h:column>
+		<h:column>
+			<f:facet name="header">Descrizione</f:facet> #{p.descrizione} </h:column>
+		<h:column>
+			<f:facet name="header">Foto</f:facet>
+			<h:outputLink value="http://localhost:8080/foto/#{p.id}">
+				<h:outputText value="Apri" />
+			</h:outputLink>
+		</h:column>
+		<!-- 			TODO modificare il fetch lazy -->
+		<h:column>
+			<f:facet name="header">Tag</f:facet> #{p.tag} </h:column>
+		<h:column>
+			<f:facet name="header">Altezza</f:facet> #{p.altezza} </h:column>
+		<h:column>
+			<f:facet name="header">Larghezza</f:facet> #{p.larghezza} </h:column>
+		<h:column
+			rendered="#{richiestaController.logged and richiestaController.admin}">
+			<h:form id="form">
+				<h:commandButton value="Elimina" type="submit"
+					action="#{fotografiaController.elimina(p.id)}">
+				</h:commandButton>
+			</h:form>
+		</h:column>
+	</h:dataTable>
 
 	<h:dataTable
 		rendered='#{richiestaController.admin and fotografiaController.getMaxFotografie(10)!=null}'
-		id="tabella-utenti" value="#{fotografiaController.getMaxFotografie(10)}" var="p">
+		id="tabella-utenti"
+		value="#{fotografiaController.getMaxFotografie(10)}" var="p">
 
 		<br />
 		<h1>Tabella Fotografie</h1>
 		<h:column>
 			<f:facet name="header">Nome</f:facet> #{p.nome} </h:column>
 		<h:column>
-			<f:facet name="header">Descrzione</f:facet> #{p.descrizione} </h:column>
+			<f:facet name="header">Descrizione</f:facet> #{p.descrizione} </h:column>
 		<h:column>
-			<f:facet name="header">URL</f:facet> #{p.url} </h:column>
+			<f:facet name="header">Foto</f:facet>
+			<h:outputLink value="http://localhost:8080/foto/#{p.id}">
+				<h:outputText value="Apri" />
+			</h:outputLink>
+		</h:column>
 		<h:column>
 			<f:facet name="header">Tag</f:facet> #{p.tag} </h:column>
 		<h:column>
