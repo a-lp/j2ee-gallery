@@ -20,6 +20,7 @@ public class FotografiaController implements Serializable {
 	RichiestaUtente richiesta;
 
 	public void elimina(Integer id) {
+		System.out.println("*****Elimina CONTROLLER***");
 		this.dao.elimina(id);
 	}
 
@@ -50,5 +51,9 @@ public class FotografiaController implements Serializable {
 	
 	public List<Fotografia> getMaxFotografie(int max) {
 		return dao.findMax(max);
+	}
+	
+	public void prova() {
+		System.out.println("*********PROVA*******");
 	}
 }

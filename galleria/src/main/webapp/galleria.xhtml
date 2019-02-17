@@ -4,11 +4,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html">
-<head>
-<title>Ricerca</title>
-</head>
+<h:head>
+	<title>Ricerca</title>
+</h:head>
 
-<body>
+<h:body>
 	<h2>Ricerca Fotografie</h2>
 	<hr />
 	<h:form id="form-logout-login">
@@ -28,12 +28,15 @@
 		<h:commandButton value="Cerca">
 		</h:commandButton>
 	</h:form>
+
 	<h3>Foto Cercata</h3>
-	<h:dataTable
-		id="tabella-ricerca" value="#{fotografiaController.byId}" var="p">
+	<h:dataTable value="#{fotografiaController.byId}" id="tabella-ricerca"
+		var="p">
 
 		<br />
 		<h1>Ricerca</h1>
+		<h:column>
+			<f:facet name="header">ID</f:facet> #{p.id} </h:column>
 		<h:column>
 			<f:facet name="header">Nome</f:facet> #{p.nome} </h:column>
 		<h:column>
@@ -44,30 +47,38 @@
 				<h:outputText value="Apri" />
 			</h:outputLink>
 		</h:column>
-		<!-- 			TODO modificare il fetch lazy -->
 		<h:column>
 			<f:facet name="header">Tag</f:facet> #{p.tag} </h:column>
 		<h:column>
 			<f:facet name="header">Altezza</f:facet> #{p.altezza} </h:column>
 		<h:column>
 			<f:facet name="header">Larghezza</f:facet> #{p.larghezza} </h:column>
-		<h:column
-			rendered="#{richiestaController.logged and richiestaController.admin}">
-			<h:form id="form">
-				<h:commandButton value="Elimina" type="submit"
-					action="#{fotografiaController.elimina(p.id)}">
+		<h:column rendered="#{richiestaController.admin}">
+			<h:form>
+				<h:commandButton value="Elimina" type="submit">
+					<f:setPropertyActionListener
+						target="#{fotografiaController.elimina}" value="#{p.id}" />
+				</h:commandButton>
+			</h:form>
+			<h:form>
+				<h:commandButton value="Aggiungi" type="submit"
+					action="#{richiestaController.aggiungiPreferiti}">
+					<f:setPropertyActionListener
+						target="#{richiestaController.aggiungiPreferiti}" value="#{p.id}" />
+					<f:ajax event="click" execute="@all" render="tabella-ricerca" />
 				</h:commandButton>
 			</h:form>
 		</h:column>
 	</h:dataTable>
-	<h3>Admin</h3>
-	<h:dataTable
-		rendered='#{richiestaController.admin}'
+
+	<h:dataTable rendered='#{richiestaController.admin}'
 		id="tabella-utenti"
 		value="#{fotografiaController.getMaxFotografie(10)}" var="p">
 
 		<br />
 		<h1>Tabella Fotografie</h1>
+		<h:column>
+			<f:facet name="header">ID</f:facet> #{p.id} </h:column>
 		<h:column>
 			<f:facet name="header">Nome</f:facet> #{p.nome} </h:column>
 		<h:column>
@@ -90,8 +101,14 @@
 				<h:commandButton value="Elimina" type="submit"
 					action="#{fotografiaController.elimina(p.id)}">
 				</h:commandButton>
+				<h:commandButton value="Aggiungi" type="submit"
+					action="#{richiestaController.aggiungiPreferiti(p.id)}">
+					<f:ajax event="click" execute="@all" render="tabella-ricerca" />
+				</h:commandButton>
 			</h:form>
 		</h:column>
 	</h:dataTable>
-</body>
+
+
+</h:body>
 </html>

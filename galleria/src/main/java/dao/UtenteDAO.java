@@ -2,6 +2,7 @@ package dao;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -78,6 +79,18 @@ public class UtenteDAO implements Serializable {
 		//aggiunta foto ai preferiti
 		u.getPreferiti().add(e);
 		//aggiornamento DB
+		update(u);
+	}
+
+	public Set<Fotografia> getPreferiti(String email) {
+		Utente u = findByEmail(email);
+		if(u==null) return null;
+		return u.getPreferiti();
+	}
+
+	public void eliminaPreferito(String email, Fotografia foto) {
+		Utente u = findByEmail(email);
+		u.getPreferiti().remove(foto);
 		update(u);
 	}
 }

@@ -4,11 +4,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html">
-<head>
+<h:head>
 <title>Ricerca</title>
-</head>
+</h:head>
 
-<body>
+<h:body>
 	<h2>Ricerca utente</h2>
 	<hr />
 	<h:form id="form-logout-login">
@@ -50,6 +50,7 @@
 			</h:form>
 		</h:column>
 	</h:dataTable>
+	<h3>Sezione Admin</h3>
 	<h:dataTable
 		rendered='#{richiestaController.admin and utenteController.utenti!=null}'
 		id="tabella-utenti" value="#{utenteController.utenti}" var="p">
@@ -70,5 +71,5 @@
 			</h:form>
 		</h:column>
 	</h:dataTable>
-</body>
+</h:body>
 </html>

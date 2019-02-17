@@ -2,12 +2,14 @@ package controller;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import dao.UtenteDAO;
+import database.Fotografia;
 import database.Utente;
 import request.RichiestaUtente;
 
@@ -52,5 +54,13 @@ public class UtenteController implements Serializable {
 	public Short getPermessi() {
 		return dao.getPermessi(richiesta.getEmail());
 	}
-
+	
+	public Set<Fotografia> getPreferiti(){
+		return dao.getPreferiti(richiesta.getEmail());
+	}
+	
+	public void eliminaPreferito(Fotografia foto) {
+		System.out.println("***********************************ELIMINA PREFERITO***************************");
+		dao.eliminaPreferito(richiesta.getEmail(),foto);
+	}
 }

@@ -114,7 +114,7 @@ public class Fotografia {
 
 	public void setCategorie(Set<Tag> categorie) {
 		if (this.categorie == null)
-			this.categorie = new HashSet<>();
+			this.categorie = new HashSet<Tag>();
 		this.categorie = categorie;
 	}
 

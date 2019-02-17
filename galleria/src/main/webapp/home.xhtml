@@ -16,7 +16,9 @@
 		<h:commandLink rendered="#{richiestaController.logged}" value="Logout"
 			action="#{richiestaController.logout()}" />
 		    |  
-		<h:commandLink action="#{navigationController.showPage('registrazione')}" value="Registrazione">
+		<h:commandLink
+			action="#{navigationController.showPage('registrazione')}"
+			value="Registrazione">
 			<f:param name="page" value="registrazione" />
 		</h:commandLink>    |  
 		<h:link value="Cerca" outcome="cerca" />    |  
@@ -27,6 +29,38 @@
 		value="#{richiestaController.admin ? 'Admin':'Plebeo'}" />
 	
 	#{richiestaController.logged? "loggato: ".concat(richiestaController.utenteLoggato.email):""}
+	<h:dataTable
+		rendered="#{richiestaController.logged}"
+		id="tabella-preferiti"
+		value="#{utenteController.preferiti}" var="p">
 
+		<br />
+		<h1>Preferiti</h1>
+		<h:column>
+			<f:facet name="header">ID</f:facet> #{p.id} </h:column>
+		<h:column>
+			<f:facet name="header">Nome</f:facet> #{p.nome} </h:column>
+		<h:column>
+			<f:facet name="header">Descrizione</f:facet> #{p.descrizione} </h:column>
+		<h:column>
+			<f:facet name="header">Foto</f:facet>
+			<h:outputLink value="http://localhost:8080/galleria/foto/#{p.id}">
+				<h:outputText value="Apri" />
+			</h:outputLink>
+		</h:column>
+		<h:column>
+			<f:facet name="header">Tag</f:facet> #{p.tag} </h:column>
+		<h:column>
+			<f:facet name="header">Altezza</f:facet> #{p.altezza} </h:column>
+		<h:column>
+			<f:facet name="header">Larghezza</f:facet> #{p.larghezza} </h:column>
+		<h:column>
+			<h:form>
+				<h:commandButton value="Elimina" type="submit"
+					action="#{utenteController.eliminaPreferito(p)}">
+				</h:commandButton>
+			</h:form>
+		</h:column>
+	</h:dataTable>
 </h:body>
 </html>

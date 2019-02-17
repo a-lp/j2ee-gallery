@@ -13,8 +13,6 @@ import javax.persistence.criteria.Root;
 
 import database.Fotografia;
 import database.Fotografia_;
-import database.Utente;
-import database.Utente_;
 
 @Stateless
 public class FotografiaDAO implements Serializable {
@@ -37,6 +35,7 @@ public class FotografiaDAO implements Serializable {
 	}
 
 	public void elimina(Integer id) {
+		System.out.println("********************************************************************");
 		Fotografia foto = em.find(Fotografia.class, id);
 		em.remove(foto);
 	}
