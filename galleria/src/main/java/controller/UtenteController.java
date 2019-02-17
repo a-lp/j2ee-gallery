@@ -59,6 +59,7 @@ public class UtenteController implements Serializable {
 		return dao.getPreferiti(richiesta.getEmail());
 	}
 	
+	//TODO fixare la rimozione (non funziona nei datatable ottenuti dalle ricerche e nella home)
 	public void eliminaPreferito(Fotografia foto) {
 		System.out.println("***********************************ELIMINA PREFERITO***************************");
 		dao.eliminaPreferito(richiesta.getEmail(),foto);
