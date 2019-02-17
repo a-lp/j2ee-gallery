@@ -1,6 +1,7 @@
 package request;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Set;
 
 import javax.enterprise.context.SessionScoped;
@@ -84,7 +85,7 @@ public class RichiestaController implements Serializable {
 			nav.performNavigation("home");
 		}
 	}
-
+	//TODO sistemare l'aggiunta ai preferiti da galleria.xhtml, in particolare dalla tabella dei risultati di ricerca. Il metodo non viene richiamato
 	public void aggiungiPreferiti(Integer foto_id) {
 		System.out.println("*************AGG PREF: " + this.utenteLoggato.getEmail() + "," + foto_id);
 		dao.aggiungiPreferiti(this.utenteLoggato.getEmail(), foto_id);
@@ -100,6 +101,10 @@ public class RichiestaController implements Serializable {
 	public Set<Fotografia> getPreferiti() {
 		Set<Fotografia> result = dao.getPreferiti(utenteLoggato.getEmail());
 		return result;
+	}
+	
+	public List<Fotografia> getFotografie() {
+		return fdao.findAll();
 	}
 
 }

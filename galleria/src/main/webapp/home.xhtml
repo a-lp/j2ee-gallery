@@ -27,15 +27,18 @@
 	<h1>Preferiti</h1>
 	<h:panelGroup id="preferiti">
 		<ui:repeat rendered="#{richiestaController.logged}"
-			id="tabella-preferiti" value="#{richiestaController.preferiti}" var="p">
-
+			id="tabella-preferiti" value="#{richiestaController.preferiti}"
+			var="p">
+			<h:outputLink value="http://localhost:8080/galleria/foto/#{p.id}">
+				<h:outputText value="Apri" />
+			</h:outputLink>    | 
 			<h:outputText value="#{p.id}" />    | 
 			<h:outputText value="#{p.nome}" />    | 
-			<h:commandButton value="Elimina #{p.id}"
+			<h:commandButton value="Elimina dai preferiti"
 				action="#{richiestaController.eliminaPreferito(p.id)}">
 				<f:ajax event="click" execute="@all" render="preferiti" />
 			</h:commandButton>
-			<hr/>
+			<hr />
 		</ui:repeat>
 	</h:panelGroup>
 </h:body>

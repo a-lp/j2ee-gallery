@@ -25,9 +25,12 @@ public class FotografiaController implements Serializable {
 	}
 
 	public Fotografia getById() {
+		System.out.println("**********"+richiesta.getRicerca()+"***********");
 		if("".equals(richiesta.getRicerca()) || richiesta.getRicerca()==null)
 			return null;
-		return this.dao.find(Integer.parseInt(richiesta.getRicerca())); // TODO controllare che la ricerca sia un numero
+		Fotografia f=dao.find(Integer.parseInt(richiesta.getRicerca())); // TODO controllare che la ricerca sia un numero
+		System.out.println(f);
+		return f;
 	}
 
 	private Fotografia fotografia = new Fotografia();

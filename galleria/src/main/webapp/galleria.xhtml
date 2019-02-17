@@ -3,7 +3,8 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html">
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
 <h:head>
 	<title>Ricerca</title>
 </h:head>
@@ -11,7 +12,7 @@
 <h:body>
 	<h2>Ricerca Fotografie</h2>
 	<hr />
-	<h:form id="form-logout-login">
+	<h:form>
 		<h:link rendered="#{not richiestaController.logged}" value="Login"
 			outcome="login" />
 		<h:commandLink rendered="#{richiestaController.logged}" value="Logout"
@@ -20,95 +21,61 @@
 		<h:link value="Home" outcome="home" />    |  
 		<h:link value="Registrati" outcome="registrazione" />    |  
 	</h:form>
+
 	<br />
 	<h:form id="form-ricerca">
 		<h3>Ricerca Fotografia</h3>
 		<h:inputText id="ricerca-id" value="#{richiestaUtente.ricerca}" />
-		<br />
-		<h:commandButton value="Cerca">
-		</h:commandButton>
+			<br />
+			<h:commandButton value="Cerca">
+			</h:commandButton>
+
+			<h3>Foto Cercata</h3>
+			<h:panelGroup id="preferiti2">
+				<ui:repeat id="tabellaRicerca" value="#{fotografiaController.byId}"
+					var="p">
+					<h:outputLink value="http://localhost:8080/galleria/foto/#{p.id}">
+						<h:outputText value="Apri" />
+					</h:outputLink>    | 
+			<h:outputText value="#{p.id}" />    | 
+			<h:outputText value="#{p.nome}" />    | 
+			<h:outputText value="#{p.tag}" />    | 
+			<h:form>
+					<h:commandButton value="Elimina"
+						action="#{fotografiaController.elimina(p.id)}">
+						<f:ajax event="click" execute="@all" render="preferiti2" />
+					</h:commandButton>
+					<h:commandButton value="Aggiungi Preferiti"
+						action="#{richiestaController.aggiungiPreferiti(p.id)}">
+						<f:ajax event="click" execute="@all" render="preferiti2" />
+					</h:commandButton>
+				</h:form>
+				<hr />
+				</ui:repeat>
+			</h:panelGroup>
 	</h:form>
-
-	<h3>Foto Cercata</h3>
-	<h:dataTable value="#{fotografiaController.byId}" id="tabella-ricerca"
-		var="p">
-
-		<br />
-		<h1>Ricerca</h1>
-		<h:column>
-			<f:facet name="header">ID</f:facet> #{p.id} </h:column>
-		<h:column>
-			<f:facet name="header">Nome</f:facet> #{p.nome} </h:column>
-		<h:column>
-			<f:facet name="header">Descrizione</f:facet> #{p.descrizione} </h:column>
-		<h:column>
-			<f:facet name="header">Foto</f:facet>
+	<h3>Sezione Admin</h3>
+	<h:panelGroup id="preferiti">
+		<ui:repeat rendered="#{richiestaController.admin}"
+			id="tabella-preferiti2" value="#{fotografiaController.fotografie}"
+			var="p">
 			<h:outputLink value="http://localhost:8080/galleria/foto/#{p.id}">
 				<h:outputText value="Apri" />
-			</h:outputLink>
-		</h:column>
-		<h:column>
-			<f:facet name="header">Tag</f:facet> #{p.tag} </h:column>
-		<h:column>
-			<f:facet name="header">Altezza</f:facet> #{p.altezza} </h:column>
-		<h:column>
-			<f:facet name="header">Larghezza</f:facet> #{p.larghezza} </h:column>
-		<h:column rendered="#{richiestaController.admin}">
-			<h:form>
-				<h:commandButton value="Elimina" type="submit">
-					<f:setPropertyActionListener
-						target="#{fotografiaController.elimina}" value="#{p.id}" />
-				</h:commandButton>
-			</h:form>
-			<h:form>
-				<h:commandButton value="Aggiungi" type="submit"
-					action="#{richiestaController.aggiungiPreferiti}">
-					<f:setPropertyActionListener
-						target="#{richiestaController.aggiungiPreferiti}" value="#{p.id}" />
-					<f:ajax event="click" execute="@all" render="tabella-ricerca" />
-				</h:commandButton>
-			</h:form>
-		</h:column>
-	</h:dataTable>
-
-	<h:dataTable rendered='#{richiestaController.admin}'
-		id="tabella-utenti"
-		value="#{fotografiaController.getMaxFotografie(10)}" var="p">
-
-		<br />
-		<h1>Tabella Fotografie</h1>
-		<h:column>
-			<f:facet name="header">ID</f:facet> #{p.id} </h:column>
-		<h:column>
-			<f:facet name="header">Nome</f:facet> #{p.nome} </h:column>
-		<h:column>
-			<f:facet name="header">Descrizione</f:facet> #{p.descrizione} </h:column>
-		<h:column>
-			<f:facet name="header">Foto</f:facet>
-			<h:outputLink value="http://localhost:8080/foto/#{p.id}">
-				<h:outputText value="Apri" />
-			</h:outputLink>
-		</h:column>
-		<h:column>
-			<f:facet name="header">Tag</f:facet> #{p.tag} </h:column>
-		<h:column>
-			<f:facet name="header">Altezza</f:facet> #{p.altezza} </h:column>
-		<h:column>
-			<f:facet name="header">Larghezza</f:facet> #{p.larghezza} </h:column>
-		<h:column
-			rendered="#{richiestaController.logged and richiestaController.admin}">
-			<h:form id="form">
-				<h:commandButton value="Elimina" type="submit"
-					action="#{fotografiaController.elimina(p.id)}">
-				</h:commandButton>
-				<h:commandButton value="Aggiungi" type="submit"
-					action="#{richiestaController.aggiungiPreferiti(p.id)}">
-					<f:ajax event="click" execute="@all" render="tabella-ricerca" />
-				</h:commandButton>
-			</h:form>
-		</h:column>
-	</h:dataTable>
-
+			</h:outputLink>    | 
+			<h:outputText value="#{p.id}" />    | 
+			<h:outputText value="#{p.nome}" />    | 
+			<h:outputText value="#{p.tag}" />    | 
+			<h:commandButton value="Elimina"
+				action="#{fotografiaController.elimina(p.id)}">
+				<f:ajax event="click" execute="@all" render="tabella2" />
+			</h:commandButton>
+			<h:commandButton value="Aggiungi Preferiti"
+				action="#{richiestaController.aggiungiPreferiti(p.id)}">
+				<f:ajax event="click" execute="@all" render="tabella2" />
+			</h:commandButton>
+			<hr />
+		</ui:repeat>
+	</h:panelGroup>
 
 </h:body>
 </html>
