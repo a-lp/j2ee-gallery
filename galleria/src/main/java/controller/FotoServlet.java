@@ -27,7 +27,7 @@ public class FotoServlet extends HttpServlet {
 		Integer id;
 		if(url.length>1) {			
 			try {
-				id = Integer.parseInt(url[1]);
+				id = Integer.parseInt(url[2]);
 				// conversione foto
 				resp.setContentType("image/jpeg");
 				ServletOutputStream out;
@@ -49,8 +49,8 @@ public class FotoServlet extends HttpServlet {
 					bout.close();
 					out.close();
 				}
-			} catch (Exception e) {
-				resp.getWriter().write("Errore: l'id inserito non è di tipo numerico.");
+			} catch (NumberFormatException e) {
+				resp.getWriter().write("Errore: l'id inserito non è di tipo numerico.\n" + url[0]+" - " + url[2]);
 			}
 		}
 	}

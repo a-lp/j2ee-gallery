@@ -28,9 +28,8 @@
 		<h:commandButton value="Cerca">
 		</h:commandButton>
 	</h:form>
-
+	<h3>Foto Cercata</h3>
 	<h:dataTable
-		rendered='#{richiestaUtente.ricerca!="" and fotografiaController.byId!=null}'
 		id="tabella-ricerca" value="#{fotografiaController.byId}" var="p">
 
 		<br />
@@ -41,7 +40,7 @@
 			<f:facet name="header">Descrizione</f:facet> #{p.descrizione} </h:column>
 		<h:column>
 			<f:facet name="header">Foto</f:facet>
-			<h:outputLink value="http://localhost:8080/foto/#{p.id}">
+			<h:outputLink value="http://localhost:8080/galleria/foto/#{p.id}">
 				<h:outputText value="Apri" />
 			</h:outputLink>
 		</h:column>
@@ -61,9 +60,9 @@
 			</h:form>
 		</h:column>
 	</h:dataTable>
-
+	<h3>Admin</h3>
 	<h:dataTable
-		rendered='#{richiestaController.admin and fotografiaController.getMaxFotografie(10)!=null}'
+		rendered='#{richiestaController.admin}'
 		id="tabella-utenti"
 		value="#{fotografiaController.getMaxFotografie(10)}" var="p">
 

@@ -3,13 +3,16 @@ package database;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 
 @Entity
 public class Utente {
@@ -22,8 +25,8 @@ public class Utente {
 	private String password;
 	@Column
 	private Short permessi = 1;
-	@OneToMany // TODO definire cascade e fetch.lazy
-	@JoinColumn
+	@ManyToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
+	@JoinTable(name="preferiti_utente", joinColumns=@JoinColumn(name="utente_id"), inverseJoinColumns=@JoinColumn(name="fotografia_id"))
 	private Set<Fotografia> preferiti = new HashSet<Fotografia>();
 
 	public Utente() {

@@ -81,5 +81,10 @@ public class RichiestaController implements Serializable {
 			nav.performNavigation("home");
 		}
 	}
+	
+	public void aggiungiPreferiti(Integer foto_id) {
+		System.out.println("*************AGG PREF: "+this.utenteLoggato.getEmail()+","+foto_id);
+		dao.aggiungiPreferiti(this.utenteLoggato.getEmail(),foto_id);
+	}
 
 }

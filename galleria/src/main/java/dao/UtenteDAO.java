@@ -11,6 +11,8 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
+import database.Fotografia;
+import database.Fotografia_;
 import database.Utente;
 import database.Utente_;
 import utility.Password;
@@ -62,5 +64,20 @@ public class UtenteDAO implements Serializable {
 		Root<Utente> root = q.from(Utente.class);
 		q.where(cb.like(root.get(Utente_.email), email));
 		return em.createQuery(q).getSingleResult().getPermessi();
+	}
+	
+	public void aggiungiPreferiti(String email, Integer foto_id) {
+		//ricerca utente
+		Utente u = findByEmail(email);
+		//ricerca foto
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<Fotografia> q = cb.createQuery(Fotografia.class);
+		Root<Fotografia> root = q.from(Fotografia.class);
+		q.where(cb.equal(root.get(Fotografia_.id), foto_id));
+		Fotografia e=em.createQuery(q).getSingleResult();
+		//aggiunta foto ai preferiti
+		u.getPreferiti().add(e);
+		//aggiornamento DB
+		update(u);
 	}
 }
