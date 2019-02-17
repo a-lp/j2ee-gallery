@@ -1,6 +1,7 @@
 package request;
 
 import java.io.Serializable;
+import java.util.Set;
 
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.ConfigurableNavigationHandler;
@@ -8,7 +9,9 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import dao.FotografiaDAO;
 import dao.UtenteDAO;
+import database.Fotografia;
 import database.Utente;
 import utility.Password;
 
@@ -19,6 +22,8 @@ public class RichiestaController implements Serializable {
 	RichiestaUtente richiestaUtente; // richiesta dell'utente
 	@Inject
 	UtenteDAO dao; // classe per l'esecuzione di query nel database
+	@Inject
+	FotografiaDAO fdao;
 	private Utente utenteLoggato;
 
 	public boolean isAdmin() {
@@ -31,7 +36,7 @@ public class RichiestaController implements Serializable {
 		return utenteLoggato;
 	}
 
-	public String setUtenteLoggato() {
+	public void setUtenteLoggato() {
 		Utente tmp = dao.findByEmail(richiestaUtente.getEmail()); // controllo se nel database sono presenti le
 																	// credenziali utente
 		if (tmp != null) {
@@ -41,13 +46,10 @@ public class RichiestaController implements Serializable {
 					this.utenteLoggato = new Utente(tmp); // instanzio l'utente loggato a partire da quello trovato
 															// dalla query precedente
 				}
-				return "home";
 			} catch (Exception e) {
 				e.printStackTrace();
-				return "login";
 			}
 		}
-		return "login";
 	}
 
 	/**
@@ -70,7 +72,8 @@ public class RichiestaController implements Serializable {
 	}
 
 	/**
-	 * Metodo per bloccare l'accesso agli utenti loggati che vogliono visitare la pagina login.xhtml
+	 * Metodo per bloccare l'accesso agli utenti loggati che vogliono visitare la
+	 * pagina login.xhtml
 	 */
 	public void checkIsLogged() {
 		FacesContext fc = FacesContext.getCurrentInstance();
@@ -81,10 +84,22 @@ public class RichiestaController implements Serializable {
 			nav.performNavigation("home");
 		}
 	}
-	
+
 	public void aggiungiPreferiti(Integer foto_id) {
-		System.out.println("*************AGG PREF: "+this.utenteLoggato.getEmail()+","+foto_id);
-		dao.aggiungiPreferiti(this.utenteLoggato.getEmail(),foto_id);
+		System.out.println("*************AGG PREF: " + this.utenteLoggato.getEmail() + "," + foto_id);
+		dao.aggiungiPreferiti(this.utenteLoggato.getEmail(), foto_id);
+	}
+
+	// TODO fixare la rimozione (non funziona nei datatable ottenuti dalle ricerche
+	// e nella home)
+	public void eliminaPreferito(Integer foto_id) {
+		System.out.println("***********************************ELIMINA PREFERITO***************************");
+		dao.eliminaPreferito(utenteLoggato.getEmail(), fdao.find(foto_id));
+	}
+	
+	public Set<Fotografia> getPreferiti() {
+		Set<Fotografia> result = dao.getPreferiti(utenteLoggato.getEmail());
+		return result;
 	}
 
 }

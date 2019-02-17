@@ -2,11 +2,12 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html">
-
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
 <h:head>
 	<title>Home</title>
 </h:head>
+
 <h:body>
 	<h2>HomePage</h2>
 	<hr />
@@ -14,53 +15,28 @@
 		<h:link rendered="#{not richiestaController.logged}" value="Login"
 			outcome="login" />
 		<h:commandLink rendered="#{richiestaController.logged}" value="Logout"
-			action="#{richiestaController.logout()}" />
+			action="#{richiestaController.logout}" />
 		    |  
-		<h:commandLink
-			action="#{navigationController.showPage('registrazione')}"
-			value="Registrazione">
-			<f:param name="page" value="registrazione" />
-		</h:commandLink>    |  
+		<h:link value="Registrati" outcome="registrazione" />    |  
 		<h:link value="Cerca" outcome="cerca" />    |  
 		<h:link value="Galleria" outcome="galleria" />    |  
 	</h:form>
-	<br />
-	<h:outputText rendered="#{richiestaController.logged}" id="saluti"
-		value="#{richiestaController.admin ? 'Admin':'Plebeo'}" />
-	
+	<br />	
 	#{richiestaController.logged? "loggato: ".concat(richiestaController.utenteLoggato.email):""}
-	<h:dataTable
-		rendered="#{richiestaController.logged}"
-		id="tabella-preferiti"
-		value="#{utenteController.preferiti}" var="p">
+	<br />
+	<h1>Preferiti</h1>
+	<h:panelGroup id="preferiti">
+		<ui:repeat rendered="#{richiestaController.logged}"
+			id="tabella-preferiti" value="#{richiestaController.preferiti}" var="p">
 
-		<br />
-		<h1>Preferiti</h1>
-		<h:column>
-			<f:facet name="header">ID</f:facet> #{p.id} </h:column>
-		<h:column>
-			<f:facet name="header">Nome</f:facet> #{p.nome} </h:column>
-		<h:column>
-			<f:facet name="header">Descrizione</f:facet> #{p.descrizione} </h:column>
-		<h:column>
-			<f:facet name="header">Foto</f:facet>
-			<h:outputLink value="http://localhost:8080/galleria/foto/#{p.id}">
-				<h:outputText value="Apri" />
-			</h:outputLink>
-		</h:column>
-		<h:column>
-			<f:facet name="header">Tag</f:facet> #{p.tag} </h:column>
-		<h:column>
-			<f:facet name="header">Altezza</f:facet> #{p.altezza} </h:column>
-		<h:column>
-			<f:facet name="header">Larghezza</f:facet> #{p.larghezza} </h:column>
-		<h:column>
-			<h:form>
-				<h:commandButton value="Elimina" type="submit"
-					action="#{utenteController.eliminaPreferito(p)}">
-				</h:commandButton>
-			</h:form>
-		</h:column>
-	</h:dataTable>
+			<h:outputText value="#{p.id}" />    | 
+			<h:outputText value="#{p.nome}" />    | 
+			<h:commandButton value="Elimina #{p.id}"
+				action="#{richiestaController.eliminaPreferito(p.id)}">
+				<f:ajax event="click" execute="@all" render="preferiti" />
+			</h:commandButton>
+			<hr/>
+		</ui:repeat>
+	</h:panelGroup>
 </h:body>
 </html>

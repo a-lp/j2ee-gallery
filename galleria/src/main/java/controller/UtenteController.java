@@ -20,7 +20,7 @@ public class UtenteController implements Serializable {
 	UtenteDAO dao;
 	@Inject
 	RichiestaUtente richiesta;
-	
+
 	public void elimina(String email) {
 		dao.elimina(email);
 	}
@@ -54,14 +54,16 @@ public class UtenteController implements Serializable {
 	public Short getPermessi() {
 		return dao.getPermessi(richiesta.getEmail());
 	}
-	
-	public Set<Fotografia> getPreferiti(){
-		return dao.getPreferiti(richiesta.getEmail());
+
+	public Set<Fotografia> getPreferiti() {
+		Set<Fotografia> result = dao.getPreferiti(richiesta.getEmail());
+		return result;
 	}
-	
-	//TODO fixare la rimozione (non funziona nei datatable ottenuti dalle ricerche e nella home)
-	public void eliminaPreferito(Fotografia foto) {
-		System.out.println("***********************************ELIMINA PREFERITO***************************");
-		dao.eliminaPreferito(richiesta.getEmail(),foto);
-	}
+
+	/*
+	 * TODO fixare la rimozione (non funziona nei datatable ottenuti dalle ricerche
+	 * e nella home) public void eliminaPreferito(Integer foto_id) { System.out.
+	 * println("***********************************ELIMINA PREFERITO***************************"
+	 * ); dao.eliminaPreferito(richiesta.getEmail(),foto_id); }
+	 */
 }
