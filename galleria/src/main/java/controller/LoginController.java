@@ -1,4 +1,4 @@
-package request;
+package controller;
 
 import java.io.Serializable;
 
@@ -12,7 +12,7 @@ import javax.inject.Named;
  */
 @Named
 @RequestScoped
-public class RichiestaUtente implements Serializable {
+public class LoginController implements Serializable {
 	private String email;
 	private String password;
 	private String ricerca;

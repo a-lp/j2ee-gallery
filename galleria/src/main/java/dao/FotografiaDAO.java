@@ -35,11 +35,15 @@ public class FotografiaDAO implements Serializable {
 	}
 
 	public void elimina(Integer id) {
-		System.out.println("********************************************************************");
 		Fotografia foto = em.find(Fotografia.class, id);
 		em.remove(foto);
 	}
 
+	/**
+	 * Metodo per la ricerca di una fotografia con parametro id.
+	 * @param Integer 
+	 * @return Fotografia con id uguale al parametro o null.
+	 */
 	public Fotografia find(Integer id) {
 		try {
 			CriteriaBuilder cb = em.getCriteriaBuilder();

@@ -3,9 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html">
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
 
-<f:event listener="#{richiestaController.checkIsLogged()}" type="preRenderView" />
+<f:event listener="#{sessionController.checkIsLogged()}" type="preRenderView" />
 
 <h:head>
 	<title>Login</title>
@@ -14,22 +15,19 @@
 	<h2>Login</h2>
 	<hr />
 	<h:form id="form-logout-login">
-		<h:commandLink rendered="#{richiestaController.logged}"  value="Logout"
-				outcome="login" action="#{richiestaController.logout}" />
 		<h:link value="Home" outcome="home" />    |  
 		<h:link value="Registrati" outcome="registrazione" />    |  
 		<h:link value="Cerca" outcome="cerca" />    |  
 		<h:link value="Galleria" outcome="galleria" />    |  
 	</h:form>
 	<br/>
-	<h:form rendered="#{not richiestaController.logged}">
+	<h:form>
 
-		<h:inputText value="#{richiestaUtente.email}" />
+		<h:inputText value="#{loginController.email}" />
 		<br />
-		<h:inputSecret value="#{richiestaUtente.password}" />
+		<h:inputSecret value="#{loginController.password}" />
 		<br />
-		#{richiestaUtente.password==""?"":richiestaUtente.password}
-		<h:commandButton value="Login" action="#{richiestaController.setUtenteLoggato()}"></h:commandButton>
+		<h:commandButton value="Login" action="#{sessionController.login}"></h:commandButton>
 	</h:form>
 </h:body>
 </html>

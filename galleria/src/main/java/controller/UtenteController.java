@@ -11,7 +11,6 @@ import javax.inject.Named;
 import dao.UtenteDAO;
 import database.Fotografia;
 import database.Utente;
-import request.RichiestaUtente;
 
 @Named
 @SessionScoped
@@ -19,7 +18,7 @@ public class UtenteController implements Serializable {
 	@Inject
 	UtenteDAO dao;
 	@Inject
-	RichiestaUtente richiesta;
+	LoginController richiesta;
 
 	public void elimina(String email) {
 		dao.elimina(email);

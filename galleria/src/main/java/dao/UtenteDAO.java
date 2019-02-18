@@ -13,7 +13,6 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
 import database.Fotografia;
-import database.Fotografia_;
 import database.Utente;
 import database.Utente_;
 import utility.Password;
@@ -22,8 +21,8 @@ import utility.Password;
 public class UtenteDAO implements Serializable {
 	@PersistenceContext
 	EntityManager em;
-	
-	public void elimina(String email) {	
+
+	public void elimina(String email) {
 		em.remove(findByEmail(email));
 	}
 
@@ -47,6 +46,10 @@ public class UtenteDAO implements Serializable {
 		return em.createQuery(q).getResultList();
 	}
 
+	public Utente find(Integer id) {
+		return em.find(Utente.class, id);
+	}
+
 	public Utente findByEmail(String email) {
 		try {
 			CriteriaBuilder cb = em.getCriteriaBuilder();
@@ -66,31 +69,25 @@ public class UtenteDAO implements Serializable {
 		q.where(cb.like(root.get(Utente_.email), email));
 		return em.createQuery(q).getSingleResult().getPermessi();
 	}
-	
-	public void aggiungiPreferiti(String email, Integer foto_id) {
-		//ricerca utente
-		Utente u = findByEmail(email);
-		//ricerca foto
-		CriteriaBuilder cb = em.getCriteriaBuilder();
-		CriteriaQuery<Fotografia> q = cb.createQuery(Fotografia.class);
-		Root<Fotografia> root = q.from(Fotografia.class);
-		q.where(cb.equal(root.get(Fotografia_.id), foto_id));
-		Fotografia e=em.createQuery(q).getSingleResult();
-		//aggiunta foto ai preferiti
-		u.getPreferiti().add(e);
-		//aggiornamento DB
-		update(u);
+
+	public void aggiungiPreferiti(Utente u, Fotografia f) {
+		u.getPreferiti().add(f);
+	}
+
+	public Set<Fotografia> getPreferiti(Utente u) {
+		if (u == null)
+			return null;
+		return u.getPreferiti();
 	}
 
 	public Set<Fotografia> getPreferiti(String email) {
 		Utente u = findByEmail(email);
-		if(u==null) return null;
+		if (u == null)
+			return null;
 		return u.getPreferiti();
 	}
 
-	public void eliminaPreferito(String email, Fotografia foto) {
-		Utente u = findByEmail(email);
+	public void eliminaPreferito(Utente u, Fotografia foto) {
 		u.getPreferiti().remove(foto);
-		update(u);
 	}
 }

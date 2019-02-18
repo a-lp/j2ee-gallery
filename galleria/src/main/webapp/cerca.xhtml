@@ -12,10 +12,10 @@
 	<h2>Ricerca utente</h2>
 	<hr />
 	<h:form id="form-logout-login">
-		<h:link rendered="#{not richiestaController.logged}" value="Login"
+		<h:link rendered="#{not sessionController.logged}" value="Login"
 			outcome="login" />
-		<h:commandLink rendered="#{richiestaController.logged}" value="Logout"
-			outcome="login" action="#{richiestaController.logout}" />
+		<h:commandLink rendered="#{sessionController.logged}" value="Logout"
+			outcome="login" action="#{sessionController.logout}" />
 		    |  
 		<h:link value="Home" outcome="home" />    |  
 		<h:link value="Registrati" outcome="registrazione" />    |  
@@ -24,26 +24,24 @@
 	<br />
 	<h:form id="form-ricerca">
 		<h3>E-Mail</h3>
-		<h:inputText id="ricerca-id" value="#{richiestaUtente.email}" />
+		<h:inputText id="ricerca-id" value="#{sessionController.ricerca}" />
 		<br />
 		<h:commandButton value="Cerca">
+			<f:ajax event="click" execute="@all" render="tabella-ricerca" />
 		</h:commandButton>
 	</h:form>
-
-	<h:dataTable
-		rendered='#{richiestaUtente.email!="" and utenteController.byEmail!=null}'
-		id="tabella-ricerca" value="#{utenteController.byEmail}" var="p">
+	<h1>Ricerca Utente</h1>
+	<h:dataTable id="tabella-ricerca" value="#{sessionController.byEmail}"
+		var="p">
 
 		<br />
-		<h1>Ricerca</h1>
 		<h:column>
 			<f:facet name="header">Email</f:facet> #{p.email} </h:column>
 		<h:column>
 			<f:facet name="header">Password</f:facet> #{p.password} </h:column>
 		<h:column>
 			<f:facet name="header">Permessi</f:facet> #{p.permessi==1 ? 'Utente' : "Admin"} </h:column>
-		<h:column
-			rendered="#{richiestaController.logged and richiestaController.admin}">
+		<h:column rendered="#{sessionController.admin}">
 			<h:form id="form">
 				<h:commandButton value="Elimina" type="submit"
 					action="#{utenteController.elimina(p.email)}">
@@ -51,9 +49,10 @@
 			</h:form>
 		</h:column>
 	</h:dataTable>
+	<hr/>
 	<h3>Sezione Admin</h3>
 	<h:dataTable
-		rendered='#{richiestaController.admin and utenteController.utenti!=null}'
+		rendered='#{sessionController.admin}'
 		id="tabella-utenti" value="#{utenteController.utenti}" var="p">
 
 		<br />
@@ -64,8 +63,7 @@
 			<f:facet name="header">Password</f:facet>#{p.password} </h:column>
 		<h:column>
 			<f:facet name="header">Permessi</f:facet>#{p.permessi} </h:column>
-		<h:column
-			rendered="#{richiestaController.logged and richiestaController.admin}">
+		<h:column rendered="#{sessionController.admin}">
 			<h:form id="form">
 				<h:commandButton value="Elimina" type="submit"
 					action="#{utenteController.elimina(p.email)}">

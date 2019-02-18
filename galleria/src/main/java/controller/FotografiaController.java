@@ -9,7 +9,6 @@ import javax.inject.Named;
 
 import dao.FotografiaDAO;
 import database.Fotografia;
-import request.RichiestaUtente;
 
 @Named
 @SessionScoped
@@ -17,7 +16,7 @@ public class FotografiaController implements Serializable {
 	@Inject
 	FotografiaDAO dao;
 	@Inject
-	RichiestaUtente richiesta;
+	LoginController richiesta;
 
 	public void elimina(Integer id) {
 		System.out.println("*****Elimina CONTROLLER***");
