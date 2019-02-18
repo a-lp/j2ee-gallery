@@ -11,34 +11,37 @@
 <h:body>
 	<h2>HomePage</h2>
 	<hr />
-	<h:form>
+	<h:form id="formNavigazione">
 		<h:link rendered="#{not sessionController.logged}" value="Login"
 			outcome="login" />
 		<h:commandLink rendered="#{sessionController.logged}" value="Logout"
 			action="#{sessionController.logout}" />
 		    |  
+		<h:link value="Home" outcome="home" />    |  
 		<h:link value="Registrati" outcome="registrazione" />    |  
-		<h:link value="Cerca" outcome="cerca" />    |  
 		<h:link value="Galleria" outcome="galleria" />    |  
 	</h:form>
 	<br />	
-	#{richiestaController.logged? "loggato: ".concat(sessionController.utente.email):""}
+	#{sessionController.logged? "loggato: ".concat(sessionController.utenteLoggato.email):""}
 	<br />
 	<h1>Preferiti</h1>
 	<h:panelGroup id="preferiti">
-		<ui:repeat rendered="#{sessionController.logged}"
-			id="tabella-preferiti" value="#{sessionController.preferiti}" var="p">
-			<h:outputLink value="http://localhost:8080/galleria/foto/#{p.id}">
-				<h:outputText value="Apri" />
-			</h:outputLink>    | 
+		<h:form id="elimina-preferito">
+			<ui:repeat rendered="#{sessionController.logged}"
+				id="tabella-preferiti" value="#{sessionController.preferiti}"
+				var="p">
+				<h:outputLink value="http://localhost:8080/galleria/foto/#{p.id}">
+					<h:outputText value="Apri" />
+				</h:outputLink>    | 
 			<h:outputText value="#{p.id}" />    | 
 			<h:outputText value="#{p.nome}" />    | 
-			<h:commandButton value="Elimina dai preferiti"
-				action="#{sessionController.eliminaPreferito(p.id)}">
-				<f:ajax event="click" execute="@all" render="preferiti" />
-			</h:commandButton>
-			<hr />
-		</ui:repeat>
+				<h:commandButton value="Elimina dai preferiti"
+					action="#{sessionController.eliminaPreferito(p.id)}">
+					<f:ajax event="click" execute="@all" render="preferiti" />
+				</h:commandButton>
+				<hr />
+			</ui:repeat>
+		</h:form>
 	</h:panelGroup>
 </h:body>
 </html>

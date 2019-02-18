@@ -114,15 +114,29 @@ public class SessionController implements Serializable {
 		}
 	}
 
+	public String registrati() {
+		if (!"".equals(loginUtente.getEmail()) && !"".equals(loginUtente.getPassword())
+				&& (dao.findByEmail(loginUtente.getEmail()) == null)) {
+			Utente u = new Utente();
+			u.setEmail(loginUtente.getEmail());
+			u.setPassword(loginUtente.getPassword());
+			dao.add(u);
+			login();
+			return "home";
+		}
+		return "registrazione";
+	}
+
 	// ***************** SEZIONE UTENTE *****************//
 	public Utente getByEmail() {
-		if("".equals(ricerca)) return null;
+		if ("".equals(ricerca))
+			return null;
 		else {
-			Utente u = dao.findByEmail(ricerca); 	
+			Utente u = dao.findByEmail(ricerca);
 			return u;
 		}
 	}
-	
+
 	// ***************** SEZIONE FOTOGRAFIE *****************//
 
 	public List<Fotografia> getFotografie() {
@@ -149,15 +163,25 @@ public class SessionController implements Serializable {
 
 	// ***************** SEZIONE PREFERITI *****************//
 	public void aggiungiPreferiti(Integer foto_id) {
-		dao.aggiungiPreferiti(utente, fdao.find(foto_id));
+		Utente u = dao.find(utente.getId());
+		u.getPreferiti().add(fdao.find(foto_id));
+		System.out.println("************" + foto_id + "\n********" + utente);
+		dao.update(u);
 	}
 
 	public void eliminaPreferito(Integer foto_id) {
-		dao.eliminaPreferito(utente, fdao.find(foto_id));
+		Utente u = dao.find(utente.getId());
+		u.getPreferiti().remove(fdao.find(foto_id));
+		System.out.println("************" + foto_id + "\n********" + utente);
+		dao.update(u);
 	}
 
 	public Set<Fotografia> getPreferiti() {
 		return dao.getPreferiti(utente);
+	}
+
+	public boolean isPreferito(Fotografia f) {
+		return dao.find(this.utente.getId()).getPreferiti().contains(f);
 	}
 
 }

@@ -30,7 +30,7 @@
 			<f:ajax event="click" execute="@all" render="tabella-ricerca" />
 		</h:commandButton>
 	</h:form>
-	<h1>Ricerca Utente</h1>
+	<h3>Ricerca Utente</h3>
 	<h:dataTable id="tabella-ricerca" value="#{sessionController.byEmail}"
 		var="p">
 
@@ -49,11 +49,10 @@
 			</h:form>
 		</h:column>
 	</h:dataTable>
-	<hr/>
+	<hr />
 	<h3>Sezione Admin</h3>
-	<h:dataTable
-		rendered='#{sessionController.admin}'
-		id="tabella-utenti" value="#{utenteController.utenti}" var="p">
+	<h:dataTable rendered='#{sessionController.admin}' id="tabella-utenti"
+		value="#{utenteController.utenti}" var="p">
 
 		<br />
 		<h1>Tabella Utenti</h1>

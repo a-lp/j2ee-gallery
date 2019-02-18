@@ -12,27 +12,27 @@
 <h:body>
 	<h2>Ricerca Fotografie</h2>
 	<hr />
-	<h:form>
-		<h:link rendered="#{not richiestaController.logged}" value="Login"
-			outcome="login" />
-		<h:commandLink rendered="#{richiestaController.logged}" value="Logout"
-			outcome="login" action="#{richiestaController.logout}" />
+	<h:link rendered="#{not sessionController.logged}" value="Login"
+		outcome="login" />
+	<h:commandLink rendered="#{sessionController.logged}" value="Logout"
+		outcome="login" action="#{sessionController.logout}" />
 		    |  
 		<h:link value="Home" outcome="home" />    |  
 		<h:link value="Registrati" outcome="registrazione" />    |  
-	</h:form>
 
 	<br />
 	<h:form id="form-ricerca">
 		<h3>Ricerca Fotografia</h3>
-		<h:inputText id="ricerca-id" value="#{richiestaController.ricerca}" />
+		<h:inputText id="ricerca-id" value="#{sessionController.ricerca}" />
 		<br />
 		<h:commandButton value="Cerca">
 		</h:commandButton>
-
-		<h3>Foto Cercata</h3>
+	</h:form>
+	Ricerca #{sessionController.ricerca}
+	<h3>Foto Cercata</h3>
+	<h:form id="panelGroup">
 		<h:panelGroup id="preferiti2">
-			<ui:repeat id="tabellaRicerca" value="#{richiestaController.byId}"
+			<ui:repeat id="tabellaRicerca" value="#{sessionController.byId}"
 				var="p">
 				<h:outputLink value="http://localhost:8080/galleria/foto/#{p.id}">
 					<h:outputText value="Apri" />
@@ -40,23 +40,21 @@
 			<h:outputText value="#{p.id}" />    | 
 			<h:outputText value="#{p.nome}" />    | 
 			<h:outputText value="#{p.tag}" />    | 
-					<h:commandButton value="Elimina"
-					action="#{richiestaController.elimina(p.id)}">
-					<f:ajax event="click" execute="@all" render="preferiti preferiti2" />
-				</h:commandButton>
-				<h:commandButton value="Aggiungi Preferiti"
-					action="#{richiestaController.aggiungiPreferiti}">
-					<f:ajax event="click" execute="@all" render="preferiti2" />
-				</h:commandButton>
+				<h:panelGroup id="comandi">
+					<h:commandButton value="Aggiungi Preferiti"
+						rendered="#{not(sessionController.isPreferito(p))}"
+						action="#{sessionController.aggiungiPreferiti(p.id)}">
+						<f:ajax event="click" execute="@all" render="preferiti2 comandi" />
+					</h:commandButton>
+				</h:panelGroup>
 				<hr />
 			</ui:repeat>
 		</h:panelGroup>
 	</h:form>
-	<h3>Sezione Admin</h3>
-	<h:panelGroup id="preferiti">
-		<ui:repeat rendered="#{richiestaController.admin}"
-			id="tabella-preferiti2" value="#{fotografiaController.fotografie}"
-			var="p">
+	<h:panelGroup id="preferiti" rendered="#{sessionController.admin}">
+		<h3>Sezione Admin</h3>
+		<ui:repeat id="tabella-preferiti2"
+			value="#{fotografiaController.fotografie}" var="p">
 			<h:outputLink value="http://localhost:8080/galleria/foto/#{p.id}">
 				<h:outputText value="Apri" />
 			</h:outputLink>    | 
@@ -68,7 +66,7 @@
 				<f:ajax event="click" execute="@all" render="preferiti" />
 			</h:commandButton>
 			<h:commandButton value="Aggiungi Preferiti"
-				action="#{richiestaController.aggiungiPreferiti(p.id)}">
+				action="#{sessionController.aggiungiPreferiti(p.id)}">
 				<f:ajax event="click" execute="@all" render="preferiti" />
 			</h:commandButton>
 			<hr />

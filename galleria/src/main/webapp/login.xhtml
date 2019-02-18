@@ -6,7 +6,8 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
-<f:event listener="#{sessionController.checkIsLogged()}" type="preRenderView" />
+<f:event listener="#{sessionController.checkIsLogged()}"
+	type="preRenderView" />
 
 <h:head>
 	<title>Login</title>
@@ -17,14 +18,14 @@
 	<h:form id="form-logout-login">
 		<h:link value="Home" outcome="home" />    |  
 		<h:link value="Registrati" outcome="registrazione" />    |  
-		<h:link value="Cerca" outcome="cerca" />    |  
 		<h:link value="Galleria" outcome="galleria" />    |  
 	</h:form>
-	<br/>
+	<br />
 	<h:form>
 
-		<h:inputText value="#{loginController.email}" />
-		<br />
+		<h3>E-Mail</h3>
+		<h:inputText id="inputName" value="#{loginController.email}" />
+		<h3>Password</h3>
 		<h:inputSecret value="#{loginController.password}" />
 		<br />
 		<h:commandButton value="Login" action="#{sessionController.login}"></h:commandButton>

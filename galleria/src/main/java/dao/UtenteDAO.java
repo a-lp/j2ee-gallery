@@ -72,12 +72,13 @@ public class UtenteDAO implements Serializable {
 
 	public void aggiungiPreferiti(Utente u, Fotografia f) {
 		u.getPreferiti().add(f);
+		update(u);
 	}
 
 	public Set<Fotografia> getPreferiti(Utente u) {
 		if (u == null)
 			return null;
-		return u.getPreferiti();
+		return em.find(Utente.class, u.getId()).getPreferiti();
 	}
 
 	public Set<Fotografia> getPreferiti(String email) {
@@ -89,5 +90,6 @@ public class UtenteDAO implements Serializable {
 
 	public void eliminaPreferito(Utente u, Fotografia foto) {
 		u.getPreferiti().remove(foto);
+		update(u);
 	}
 }
