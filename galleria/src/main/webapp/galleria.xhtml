@@ -28,6 +28,7 @@
 		<h:inputText id="ricerca-id" value="#{sessionController.ricerca}" />
 		<br />
 		<h:commandButton value="Cerca">
+		<f:ajax event="click" execute="@all" render="panelGroup" />
 		</h:commandButton>
 	</h:form>
 	<h3>Foto Cercata</h3>
@@ -45,7 +46,7 @@
 					<h:commandButton id="btnAdd" value="Aggiungi Preferiti"
 						rendered="#{not(sessionController.isPreferito(p))}"
 						action="#{sessionController.aggiungiPreferiti(p.id)}">
-						<f:ajax event="click" execute="@all" render="@all" />
+						<f:ajax event="click" execute="@all" render="preferiti panelGroup" />
 					</h:commandButton>
 				</h:panelGroup>
 				<hr />
@@ -64,9 +65,10 @@
 			<h:outputText value="#{p.tag}" />    | 
 			<h:commandButton value="Elimina"
 				action="#{fotografiaController.elimina(p.id)}">
-				<f:ajax event="click" execute="@all" render="preferiti" />
+				<f:ajax event="click" execute="@all" render="@all" />
 			</h:commandButton>
-			<h:commandButton value="Aggiungi Preferiti"
+			<h:commandButton id="btnAdmnAdd" value="Aggiungi Preferiti"
+				rendered="#{not(sessionController.isPreferito(p))}"
 				action="#{sessionController.aggiungiPreferiti(p.id)}">
 				<f:ajax event="click" execute="@all" render="preferiti" />
 			</h:commandButton>
