@@ -95,9 +95,10 @@ public class SessionController implements Serializable {
 		}
 	}
 
-	// TODO pulire la sessione
-	public void logout() {
-		this.utente = null;
+	public String logout() {
+		FacesContext fc = FacesContext.getCurrentInstance();
+		fc.getExternalContext().invalidateSession();
+		return "/home.xhtml?faces-redirect=true";
 	}
 
 	/**
@@ -143,6 +144,7 @@ public class SessionController implements Serializable {
 		return fdao.findAll();
 	}
 
+	// TODO gestire il cascade
 	public void eliminaFoto(Integer foto_id) {
 		fdao.elimina(foto_id);
 	}
@@ -167,8 +169,8 @@ public class SessionController implements Serializable {
 		u.getPreferiti().add(fdao.find(foto_id));
 		System.out.println("************" + foto_id + "\n********" + utente);
 		dao.update(u);
-		this.utente=u;
-		this.ricerca="";
+		this.utente = u;
+		this.ricerca = "";
 	}
 
 	public void eliminaPreferito(Integer foto_id) {
@@ -176,7 +178,7 @@ public class SessionController implements Serializable {
 		u.getPreferiti().remove(fdao.find(foto_id));
 		System.out.println("************" + foto_id + "\n********" + utente);
 		dao.update(u);
-		this.utente=u;
+		this.utente = u;
 	}
 
 	public Set<Fotografia> getPreferiti() {

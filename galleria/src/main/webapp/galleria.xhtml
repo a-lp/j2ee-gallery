@@ -12,14 +12,16 @@
 <h:body>
 	<h2>Ricerca Fotografie</h2>
 	<hr />
-	<h:link rendered="#{not sessionController.logged}" value="Login"
-		outcome="login" />
-	<h:commandLink rendered="#{sessionController.logged}" value="Logout"
-		outcome="login" action="#{sessionController.logout}" />
+	<h:form id="formNavigazione">
+		<h:link rendered="#{not sessionController.logged}" value="Login"
+			outcome="login" />
+		<h:commandLink rendered="#{sessionController.logged}" value="Logout"
+			action="#{sessionController.logout}" />
 		    |  
 		<h:link value="Home" outcome="home" />    |  
 		<h:link value="Registrati" outcome="registrazione" />    |  
-
+		<h:link value="Galleria" outcome="galleria" />    |  
+	</h:form>
 	<br />
 	<h:form id="form-ricerca">
 		<h3>Ricerca Fotografia</h3>
@@ -40,9 +42,7 @@
 			<h:outputText value="#{p.nome}" />    | 
 			<h:outputText value="#{p.tag}" />    | 
 				<h:panelGroup id="comandi">
-					<h:commandButton
-						id="btnAdd"
-						value="Aggiungi Preferiti"
+					<h:commandButton id="btnAdd" value="Aggiungi Preferiti"
 						rendered="#{not(sessionController.isPreferito(p))}"
 						action="#{sessionController.aggiungiPreferiti(p.id)}">
 						<f:ajax event="click" execute="@all" render="@all" />

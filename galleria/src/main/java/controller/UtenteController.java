@@ -20,6 +20,7 @@ public class UtenteController implements Serializable {
 	@Inject
 	LoginController richiesta;
 
+	//TODO gestire il cascade (utente)
 	public void elimina(String email) {
 		dao.elimina(email);
 	}
@@ -58,11 +59,4 @@ public class UtenteController implements Serializable {
 		Set<Fotografia> result = dao.getPreferiti(richiesta.getEmail());
 		return result;
 	}
-
-	/*
-	 * TODO fixare la rimozione (non funziona nei datatable ottenuti dalle ricerche
-	 * e nella home) public void eliminaPreferito(Integer foto_id) { System.out.
-	 * println("***********************************ELIMINA PREFERITO***************************"
-	 * ); dao.eliminaPreferito(richiesta.getEmail(),foto_id); }
-	 */
 }
