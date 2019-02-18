@@ -25,34 +25,32 @@
 	<br />
 	<h:form id="form-ricerca">
 		<h3>Ricerca Fotografia</h3>
-		<h:inputText id="ricerca-id" value="#{richiestaUtente.ricerca}" />
-			<br />
-			<h:commandButton value="Cerca">
-			</h:commandButton>
+		<h:inputText id="ricerca-id" value="#{richiestaController.ricerca}" />
+		<br />
+		<h:commandButton value="Cerca">
+		</h:commandButton>
 
-			<h3>Foto Cercata</h3>
-			<h:panelGroup id="preferiti2">
-				<ui:repeat id="tabellaRicerca" value="#{fotografiaController.byId}"
-					var="p">
-					<h:outputLink value="http://localhost:8080/galleria/foto/#{p.id}">
-						<h:outputText value="Apri" />
-					</h:outputLink>    | 
+		<h3>Foto Cercata</h3>
+		<h:panelGroup id="preferiti2">
+			<ui:repeat id="tabellaRicerca" value="#{richiestaController.byId}"
+				var="p">
+				<h:outputLink value="http://localhost:8080/galleria/foto/#{p.id}">
+					<h:outputText value="Apri" />
+				</h:outputLink>    | 
 			<h:outputText value="#{p.id}" />    | 
 			<h:outputText value="#{p.nome}" />    | 
 			<h:outputText value="#{p.tag}" />    | 
-			<h:form>
 					<h:commandButton value="Elimina"
-						action="#{fotografiaController.elimina(p.id)}">
-						<f:ajax event="click" execute="@all" render="preferiti2" />
-					</h:commandButton>
-					<h:commandButton value="Aggiungi Preferiti"
-						action="#{richiestaController.aggiungiPreferiti(p.id)}">
-						<f:ajax event="click" execute="@all" render="preferiti2" />
-					</h:commandButton>
-				</h:form>
+					action="#{richiestaController.elimina(p.id)}">
+					<f:ajax event="click" execute="@all" render="preferiti preferiti2" />
+				</h:commandButton>
+				<h:commandButton value="Aggiungi Preferiti"
+					action="#{richiestaController.aggiungiPreferiti}">
+					<f:ajax event="click" execute="@all" render="preferiti2" />
+				</h:commandButton>
 				<hr />
-				</ui:repeat>
-			</h:panelGroup>
+			</ui:repeat>
+		</h:panelGroup>
 	</h:form>
 	<h3>Sezione Admin</h3>
 	<h:panelGroup id="preferiti">
@@ -67,11 +65,11 @@
 			<h:outputText value="#{p.tag}" />    | 
 			<h:commandButton value="Elimina"
 				action="#{fotografiaController.elimina(p.id)}">
-				<f:ajax event="click" execute="@all" render="tabella2" />
+				<f:ajax event="click" execute="@all" render="preferiti" />
 			</h:commandButton>
 			<h:commandButton value="Aggiungi Preferiti"
 				action="#{richiestaController.aggiungiPreferiti(p.id)}">
-				<f:ajax event="click" execute="@all" render="tabella2" />
+				<f:ajax event="click" execute="@all" render="preferiti" />
 			</h:commandButton>
 			<hr />
 		</ui:repeat>

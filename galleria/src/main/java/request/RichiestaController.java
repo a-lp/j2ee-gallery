@@ -10,6 +10,7 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import controller.FotografiaController;
 import dao.FotografiaDAO;
 import dao.UtenteDAO;
 import database.Fotografia;
@@ -26,6 +27,19 @@ public class RichiestaController implements Serializable {
 	@Inject
 	FotografiaDAO fdao;
 	private Utente utenteLoggato;
+	private String ricerca = "";
+
+	public String getRicerca() {
+		return ricerca;
+	}
+
+	public void setRicerca(String ricerca) {
+		this.ricerca = ricerca;
+	}
+
+	public void setUtenteLoggato(Utente utenteLoggato) {
+		this.utenteLoggato = utenteLoggato;
+	}
 
 	public boolean isAdmin() {
 		if (!isLogged())
@@ -85,8 +99,11 @@ public class RichiestaController implements Serializable {
 			nav.performNavigation("home");
 		}
 	}
-	//TODO sistemare l'aggiunta ai preferiti da galleria.xhtml, in particolare dalla tabella dei risultati di ricerca. Il metodo non viene richiamato
-	public void aggiungiPreferiti(Integer foto_id) {
+
+	// TODO sistemare l'aggiunta ai preferiti da galleria.xhtml, in particolare
+	// dalla tabella dei risultati di ricerca. Il metodo non viene richiamato
+	public void aggiungiPreferiti() {
+		Integer foto_id = Integer.parseInt(this.ricerca);
 		System.out.println("*************AGG PREF: " + this.utenteLoggato.getEmail() + "," + foto_id);
 		dao.aggiungiPreferiti(this.utenteLoggato.getEmail(), foto_id);
 	}
@@ -97,14 +114,29 @@ public class RichiestaController implements Serializable {
 		System.out.println("***********************************ELIMINA PREFERITO***************************");
 		dao.eliminaPreferito(utenteLoggato.getEmail(), fdao.find(foto_id));
 	}
-	
+
 	public Set<Fotografia> getPreferiti() {
 		Set<Fotografia> result = dao.getPreferiti(utenteLoggato.getEmail());
 		return result;
 	}
-	
+
 	public List<Fotografia> getFotografie() {
 		return fdao.findAll();
+	}
+
+	public void elimina(Integer id) {
+		fdao.elimina(id);
+	}
+
+	public Fotografia getById() {
+		if ("".equals(this.ricerca) || this.ricerca == null)
+			return null;
+		Integer foto_id = Integer.parseInt(this.ricerca);
+		System.out.println("**********" + foto_id + "***********");
+		Fotografia f = fdao.find(foto_id); // TODO controllare che la ricerca sia un
+											// numero
+		System.out.println(f);
+		return f;
 	}
 
 }
