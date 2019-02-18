@@ -167,6 +167,8 @@ public class SessionController implements Serializable {
 		u.getPreferiti().add(fdao.find(foto_id));
 		System.out.println("************" + foto_id + "\n********" + utente);
 		dao.update(u);
+		this.utente=u;
+		this.ricerca="";
 	}
 
 	public void eliminaPreferito(Integer foto_id) {
@@ -174,6 +176,7 @@ public class SessionController implements Serializable {
 		u.getPreferiti().remove(fdao.find(foto_id));
 		System.out.println("************" + foto_id + "\n********" + utente);
 		dao.update(u);
+		this.utente=u;
 	}
 
 	public Set<Fotografia> getPreferiti() {
@@ -181,7 +184,7 @@ public class SessionController implements Serializable {
 	}
 
 	public boolean isPreferito(Fotografia f) {
-		return dao.find(this.utente.getId()).getPreferiti().contains(f);
+		return (dao.find(this.utente.getId()).getPreferiti().contains(f) || this.utente.getPreferiti().contains(f));
 	}
 
 }

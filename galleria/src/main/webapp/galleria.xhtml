@@ -28,7 +28,6 @@
 		<h:commandButton value="Cerca">
 		</h:commandButton>
 	</h:form>
-	Ricerca #{sessionController.ricerca}
 	<h3>Foto Cercata</h3>
 	<h:form id="panelGroup">
 		<h:panelGroup id="preferiti2">
@@ -41,10 +40,12 @@
 			<h:outputText value="#{p.nome}" />    | 
 			<h:outputText value="#{p.tag}" />    | 
 				<h:panelGroup id="comandi">
-					<h:commandButton value="Aggiungi Preferiti"
+					<h:commandButton
+						id="btnAdd"
+						value="Aggiungi Preferiti"
 						rendered="#{not(sessionController.isPreferito(p))}"
 						action="#{sessionController.aggiungiPreferiti(p.id)}">
-						<f:ajax event="click" execute="@all" render="preferiti2 comandi" />
+						<f:ajax event="click" execute="@all" render="@all" />
 					</h:commandButton>
 				</h:panelGroup>
 				<hr />
