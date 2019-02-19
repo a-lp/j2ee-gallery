@@ -1,7 +1,9 @@
 package dao;
 
 import java.io.Serializable;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -13,6 +15,7 @@ import javax.persistence.criteria.Root;
 
 import database.Fotografia;
 import database.Fotografia_;
+import database.Tag;
 
 @Stateless
 public class FotografiaDAO implements Serializable {
@@ -41,7 +44,8 @@ public class FotografiaDAO implements Serializable {
 
 	/**
 	 * Metodo per la ricerca di una fotografia con parametro id.
-	 * @param Integer 
+	 * 
+	 * @param Integer
 	 * @return Fotografia con id uguale al parametro o null.
 	 */
 	public Fotografia find(Integer id) {
@@ -55,8 +59,28 @@ public class FotografiaDAO implements Serializable {
 			return null;
 		}
 	}
-	
-	public List<Fotografia> findMax(int n){
+
+	public List<Fotografia> findByTag(Tag tag) {
+		List<Fotografia> fotografie = findAll();
+		/*if (fotografie != null) {
+			for (Fotografia foto : fotografie) {
+				if (!foto.getCategorie().contains(tag))
+					fotografie.remove(foto);
+			}
+		}*/
+		Iterator<Fotografia> iter = fotografie.iterator();
+
+		while (iter.hasNext()) {
+			Fotografia str = iter.next();
+
+			if (!str.getCategorie().contains(tag))
+				iter.remove();
+		}
+		System.out.println(fotografie);
+		return fotografie;
+	}
+
+	public List<Fotografia> findMax(int n) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Fotografia> q = cb.createQuery(Fotografia.class);
 		q.from(Fotografia.class);

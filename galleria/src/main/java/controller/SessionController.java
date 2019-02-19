@@ -160,7 +160,7 @@ public class SessionController implements Serializable {
 	}
 
 	public Fotografia getById() {
-		if ("".equals(this.ricerca) || this.ricerca == null)
+		if (this.ricerca == null || "".equals(this.ricerca))
 			return null;
 		try {
 			Integer foto_id = Integer.parseInt(this.ricerca);
@@ -168,6 +168,18 @@ public class SessionController implements Serializable {
 			return f;
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
+			System.out.println("La query inserita non è di tipo numerico");
+			return null;
+		}
+	}
+
+	public List<Fotografia> getByTag() {
+		if (this.tag == null || "".equals(this.tag.getTag()))
+			return null;
+		try {
+			List<Fotografia> f = fdao.findByTag(this.tag);
+			return f;
+		} catch (NumberFormatException e) {
 			System.out.println("La query inserita non è di tipo numerico");
 			return null;
 		}

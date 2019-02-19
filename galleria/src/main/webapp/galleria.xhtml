@@ -28,22 +28,20 @@
 		<h:inputText id="ricerca-id" value="#{sessionController.ricerca}" />
 		<br />
 		<h:commandButton value="Cerca">
-			<f:ajax event="click" execute="@all" render="panelGroup" />
+			<f:ajax event="click" execute="@all" render="@all" />
 		</h:commandButton>
 
 		<h:selectOneMenu value="#{sessionController.tag}">
 			<f:converter binding="#{tagConverter}" />
 			<f:selectItems value="#{tagDAO.allTag}" var="tag"
 				itemLabel="#{tag.tag}" itemValue="#{tag}" />
-			<f:ajax event="change" render="prova" execute="@all"/>
 		</h:selectOneMenu>
 	</h:form>
 
-	<h:outputText id="prova" value="Tag scelto: #{sessionController.tag.tag}"></h:outputText>
 	<h3>Foto Cercata</h3>
-	<h:form id="panelGroup">
-		<h:panelGroup id="preferiti2">
-			<ui:repeat id="tabellaRicerca" value="#{sessionController.byId}"
+	<h:form id="panelGroupId">
+		<h:panelGroup id="ricerca-id">
+			<ui:repeat id="tabellaRicercaId" value="#{sessionController.byId}"
 				var="p">
 				<h:outputLink value="http://localhost:8080/galleria/foto/#{p.id}">
 					<h:outputText value="Apri" />
@@ -51,17 +49,45 @@
 			<h:outputText value="#{p.id}" />    | 
 			<h:outputText value="#{p.nome}" />    | 
 			<h:outputText value="#{p.tag}" />    | 
-				<h:panelGroup id="comandi">
-					<h:commandButton id="btnAdd" value="Aggiungi Preferiti"
+				<h:panelGroup rendered="#{sessionController.logged}" id="comandi">
+					<h:commandButton id="btnAdd"
+						value="Aggiungi Preferiti"
 						rendered="#{not(sessionController.isPreferito(p))}"
 						action="#{sessionController.aggiungiPreferiti(p.id)}">
-						<f:ajax event="click" execute="@all" render="preferiti panelGroup" />
+						<f:ajax event="click" execute="@all"
+							render="preferiti panelGroupId" />
 					</h:commandButton>
 				</h:panelGroup>
 				<hr />
 			</ui:repeat>
 		</h:panelGroup>
 	</h:form>
+
+
+	<h:form id="panelGroupTag">
+		<h:panelGroup id="ricerca-tag">
+			<ui:repeat id="tabellaRicercaTag" value="#{sessionController.byTag}"
+				var="p">
+				<h:outputLink value="http://localhost:8080/galleria/foto/#{p.id}">
+					<h:outputText value="Apri" />
+				</h:outputLink>    | 
+			<h:outputText value="#{p.id}" />    | 
+			<h:outputText value="#{p.nome}" />    | 
+			<h:outputText value="#{p.tag}" />    | 
+				<h:panelGroup rendered="#{sessionController.logged}" id="comandi">
+					<h:commandButton id="btnAdd" value="Aggiungi Preferiti"
+						rendered="#{not(sessionController.isPreferito(p))}"
+						action="#{sessionController.aggiungiPreferiti(p.id)}">
+						<f:ajax event="click" execute="@all"
+							render="preferiti panelGroupTag panelGroupId" />
+					</h:commandButton>
+				</h:panelGroup>
+				<hr />
+			</ui:repeat>
+		</h:panelGroup>
+	</h:form>
+
+
 	<h:panelGroup id="preferiti" rendered="#{sessionController.admin}">
 		<h3>Sezione Admin</h3>
 		<ui:repeat id="tabella-preferiti2"
