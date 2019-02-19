@@ -11,7 +11,7 @@ public class Tag {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	@Column
+	@Column(unique = true)
 	private String tag;
 
 	public Tag() {
@@ -44,6 +44,7 @@ public class Tag {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((tag == null) ? 0 : tag.hashCode());
 		return result;
 	}
 
@@ -60,6 +61,11 @@ public class Tag {
 			if (other.id != null)
 				return false;
 		} else if (!id.equals(other.id))
+			return false;
+		if (tag == null) {
+			if (other.tag != null)
+				return false;
+		} else if (!tag.equals(other.tag))
 			return false;
 		return true;
 	}

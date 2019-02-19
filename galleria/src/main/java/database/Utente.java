@@ -25,8 +25,8 @@ public class Utente {
 	private String password;
 	@Column
 	private Short permessi = 1;
-	@ManyToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
-	@JoinTable(name="preferiti_utente", joinColumns=@JoinColumn(name="utente_id"), inverseJoinColumns=@JoinColumn(name="fotografia_id"))
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "preferiti_utente", joinColumns = @JoinColumn(name = "utente_id"), inverseJoinColumns = @JoinColumn(name = "fotografia_id"))
 	private Set<Fotografia> preferiti = new HashSet<Fotografia>();
 
 	public Utente() {
@@ -80,6 +80,55 @@ public class Utente {
 
 	public void setPreferiti(Set<Fotografia> preferiti) {
 		this.preferiti = preferiti;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((email == null) ? 0 : email.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((password == null) ? 0 : password.hashCode());
+		result = prime * result + ((permessi == null) ? 0 : permessi.hashCode());
+		result = prime * result + ((preferiti == null) ? 0 : preferiti.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Utente other = (Utente) obj;
+		if (email == null) {
+			if (other.email != null)
+				return false;
+		} else if (!email.equals(other.email))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (password == null) {
+			if (other.password != null)
+				return false;
+		} else if (!password.equals(other.password))
+			return false;
+		if (permessi == null) {
+			if (other.permessi != null)
+				return false;
+		} else if (!permessi.equals(other.permessi))
+			return false;
+		if (preferiti == null) {
+			if (other.preferiti != null)
+				return false;
+		} else if (!preferiti.equals(other.preferiti))
+			return false;
+		return true;
 	}
 
 }

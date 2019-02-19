@@ -55,7 +55,7 @@
 						rendered="#{not(sessionController.isPreferito(p))}"
 						action="#{sessionController.aggiungiPreferiti(p.id)}">
 						<f:ajax event="click" execute="@all"
-							render="preferiti panelGroupId" />
+							render="panelGroupTag panelGroupId" />
 					</h:commandButton>
 				</h:panelGroup>
 				<hr />
@@ -79,7 +79,7 @@
 						rendered="#{not(sessionController.isPreferito(p))}"
 						action="#{sessionController.aggiungiPreferiti(p.id)}">
 						<f:ajax event="click" execute="@all"
-							render="preferiti panelGroupTag panelGroupId" />
+							render="panelGroupTag panelGroupId" />
 					</h:commandButton>
 				</h:panelGroup>
 				<hr />

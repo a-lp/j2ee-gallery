@@ -189,16 +189,14 @@ public class SessionController implements Serializable {
 	public void aggiungiPreferiti(Integer foto_id) {
 		Utente u = dao.find(utente.getId());
 		u.getPreferiti().add(fdao.find(foto_id));
-		System.out.println("************" + foto_id + "\n********" + utente);
 		dao.update(u);
-		this.utente = u;
+		this.utente=u;
 		this.ricerca = "";
 	}
 
 	public void eliminaPreferito(Integer foto_id) {
 		Utente u = dao.find(utente.getId());
 		u.getPreferiti().remove(fdao.find(foto_id));
-		System.out.println("************" + foto_id + "\n********" + utente);
 		dao.update(u);
 		this.utente = u;
 	}

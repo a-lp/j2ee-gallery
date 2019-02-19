@@ -39,6 +39,7 @@ public class FotografiaDAO implements Serializable {
 
 	public void elimina(Integer id) {
 		Fotografia foto = em.find(Fotografia.class, id);
+		foto.getCategorie().clear();
 		em.remove(foto);
 	}
 
@@ -60,6 +61,7 @@ public class FotografiaDAO implements Serializable {
 		}
 	}
 
+	//TODO rifattorizzare
 	public List<Fotografia> findByTag(Tag tag) {
 		List<Fotografia> fotografie = findAll();
 		/*if (fotografie != null) {
