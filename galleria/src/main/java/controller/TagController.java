@@ -12,7 +12,7 @@ import database.Tag;
 
 @Named
 @SessionScoped
-public class TagController implements Serializable  {
+public class TagController implements Serializable {
 	@Inject
 	TagDAO dao;
 
@@ -32,6 +32,6 @@ public class TagController implements Serializable  {
 	}
 
 	public List<Tag> getTags() {
-		return dao.findAll();
+		return dao.getAllTag();
 	}
 }

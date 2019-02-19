@@ -28,9 +28,18 @@
 		<h:inputText id="ricerca-id" value="#{sessionController.ricerca}" />
 		<br />
 		<h:commandButton value="Cerca">
-		<f:ajax event="click" execute="@all" render="panelGroup" />
+			<f:ajax event="click" execute="@all" render="panelGroup" />
 		</h:commandButton>
+
+		<h:selectOneMenu value="#{sessionController.tag}">
+			<f:converter binding="#{tagConverter}" />
+			<f:selectItems value="#{tagDAO.allTag}" var="tag"
+				itemLabel="#{tag.tag}" itemValue="#{tag}" />
+			<f:ajax event="change" render="prova" execute="@all"/>
+		</h:selectOneMenu>
 	</h:form>
+
+	<h:outputText id="prova" value="Tag scelto: #{sessionController.tag.tag}"></h:outputText>
 	<h3>Foto Cercata</h3>
 	<h:form id="panelGroup">
 		<h:panelGroup id="preferiti2">

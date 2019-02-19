@@ -13,6 +13,7 @@ import javax.inject.Named;
 import dao.FotografiaDAO;
 import dao.UtenteDAO;
 import database.Fotografia;
+import database.Tag;
 import database.Utente;
 import utility.Password;
 
@@ -33,6 +34,7 @@ public class SessionController implements Serializable {
 	 * Query di ricerca.
 	 */
 	private String ricerca = "";
+	private Tag tag;
 
 	// ***************** SEZIONE METODI DI SERVIZIO *****************//
 
@@ -50,6 +52,14 @@ public class SessionController implements Serializable {
 
 	public Utente getUtenteLoggato() {
 		return utente;
+	}
+
+	public Tag getTag() {
+		return tag;
+	}
+
+	public void setTag(Tag tag) {
+		this.tag = tag;
 	}
 	// ***************** SEZIONE LOGIN *****************//
 
