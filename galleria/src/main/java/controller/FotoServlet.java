@@ -19,23 +19,21 @@ public class FotoServlet extends HttpServlet {
 	@Inject
 	FotografiaDAO dao;
 
-	//TODO gestire errori per path "/foto","/foto/", e "/foto/x" con x indice non trovato nel database
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// lettura URL
-		String[] url = req.getRequestURI().substring(1).split("/");
-		Integer id;
-		if(url.length>1) {			
-			try {
+		try {
+			String[] url = req.getRequestURI().substring(1).split("/");
+			Integer id;
+			if (url.length > 1) {
 				id = Integer.parseInt(url[2]);
 				// conversione foto
-				resp.setContentType("image/jpeg");
-				ServletOutputStream out;
-				out = resp.getOutputStream();
 				Fotografia f = dao.find(id);
-				if (f == null)
+				if (f == null) {
 					resp.getWriter().write("Errore: foto non trovata.");
-				else {
+				} else {
+					resp.setContentType("image/jpeg");
+					ServletOutputStream out;
+					out = resp.getOutputStream();
 					URL url_type = new URL(f.getUrl());
 					BufferedInputStream bin = new BufferedInputStream(url_type.openStream());
 					BufferedOutputStream bout = new BufferedOutputStream(out);
@@ -43,15 +41,17 @@ public class FotoServlet extends HttpServlet {
 					while ((ch = bin.read()) != -1) {
 						bout.write(ch);
 					}
-					
+
 					bin.close();
 					// fin.close();
 					bout.close();
 					out.close();
 				}
-			} catch (NumberFormatException e) {
-				resp.getWriter().write("Errore: l'id inserito non è di tipo numerico.\n" + url[0]+" - " + url[2]);
 			}
+		} catch (NumberFormatException e) {
+			resp.getWriter().write("Errore: l'id inserito non e' di tipo numerico.\n");
+		} catch (ArrayIndexOutOfBoundsException e) {
+			resp.getWriter().write("Errore: non e' stato inserito nessun id.\n");
 		}
 	}
 

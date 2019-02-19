@@ -154,7 +154,7 @@ public class SessionController implements Serializable {
 		return fdao.findAll();
 	}
 
-	// TODO gestire il cascade
+
 	public void eliminaFoto(Integer foto_id) {
 		fdao.elimina(foto_id);
 	}

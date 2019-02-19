@@ -20,7 +20,6 @@ public class UtenteController implements Serializable {
 	@Inject
 	LoginController richiesta;
 
-	//TODO gestire il cascade (utente)
 	public void elimina(String email) {
 		dao.elimina(email);
 	}
