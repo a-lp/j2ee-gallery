@@ -21,6 +21,7 @@ import utility.Password;
 
 
 //TODO riorganizzare i metodi tra i vari controller
+//TODO aggiungere il motore di ricerca lucene http://www.mastertheboss.com/jboss-frameworks/hibernate-jpa/hibernate-search/hibernate-search-and-jpa-tutorial?showall=&start=1
 @Named
 @SessionScoped
 public class SessionController implements Serializable {
