@@ -12,6 +12,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
+import database.Album;
 import database.Fotografia;
 import database.Utente;
 import database.Utente_;
@@ -91,5 +92,11 @@ public class UtenteDAO implements Serializable {
 	public void eliminaPreferito(Utente u, Fotografia foto) {
 		u.getPreferiti().remove(foto);
 		update(u);
+	}
+
+	public Set<Album> getAlbum(Utente utente) {
+		if (utente == null)
+			return null;
+		return em.find(Utente.class, utente.getId()).getAlbum();
 	}
 }

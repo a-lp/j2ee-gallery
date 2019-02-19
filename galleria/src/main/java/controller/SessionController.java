@@ -10,13 +10,17 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import dao.AlbumDAO;
 import dao.FotografiaDAO;
 import dao.UtenteDAO;
+import database.Album;
 import database.Fotografia;
 import database.Tag;
 import database.Utente;
 import utility.Password;
 
+
+//TODO riorganizzare i metodi tra i vari controller
 @Named
 @SessionScoped
 public class SessionController implements Serializable {
@@ -26,6 +30,8 @@ public class SessionController implements Serializable {
 	UtenteDAO dao;
 	@Inject
 	FotografiaDAO fdao;
+	@Inject
+	AlbumDAO adao;
 	/**
 	 * Utente loggato.
 	 */
@@ -208,5 +214,9 @@ public class SessionController implements Serializable {
 	public boolean isPreferito(Fotografia f) {
 		return (dao.find(this.utente.getId()).getPreferiti().contains(f) || this.utente.getPreferiti().contains(f));
 	}
-
+	
+	// ***************** SEZIONE ALBUM *****************//
+	public Set<Album> getAlbum() {
+		return dao.getAlbum(utente);
+	}
 }

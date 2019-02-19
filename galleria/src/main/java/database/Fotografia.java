@@ -30,7 +30,7 @@ public class Fotografia {
 	private Short altezza;
 	@Column
 	private Short larghezza;
-	@ManyToMany(cascade = { CascadeType.REMOVE}, fetch = FetchType.EAGER)
+	@ManyToMany(cascade = { CascadeType.REMOVE }, fetch = FetchType.EAGER)
 	@JoinColumn()
 	private Set<Tag> categorie; // TODO si può anche fare Embeddable
 	@Column
@@ -38,6 +38,9 @@ public class Fotografia {
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "preferiti_utente", joinColumns = @JoinColumn(name = "fotografia_id"), inverseJoinColumns = @JoinColumn(name = "utente_id"))
 	private Set<Utente> preferiti = new HashSet<Utente>();
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "album_fotografia", joinColumns = @JoinColumn(name = "fotografia_id"), inverseJoinColumns = @JoinColumn(name = "album_id"))
+	private Set<Album> album = new HashSet<Album>();
 
 	public Fotografia() {
 		super();
@@ -53,6 +56,22 @@ public class Fotografia {
 		this.larghezza = larghezza;
 		this.descrizione = descrizione;
 		this.categorie = categorie;
+	}
+
+	public Set<Utente> getPreferiti() {
+		return preferiti;
+	}
+
+	public void setPreferiti(Set<Utente> preferiti) {
+		this.preferiti = preferiti;
+	}
+
+	public Set<Album> getAlbum() {
+		return album;
+	}
+
+	public void setAlbum(Set<Album> album) {
+		this.album = album;
 	}
 
 	public Integer getId() {
@@ -106,13 +125,13 @@ public class Fotografia {
 	public Set<Tag> getCategorie() {
 		return categorie;
 	}
-	
+
 	public String getTag() {
-		String result="[";
-		for(Tag t : this.categorie) {
-			result+=t.getTag()+",";
+		String result = "[";
+		for (Tag t : this.categorie) {
+			result += t.getTag() + ",";
 		}
-		result=result.substring(0,result.length()-1)+"]";
+		result = result.substring(0, result.length() - 1) + "]";
 		return result;
 	}
 

@@ -28,6 +28,9 @@ public class Utente {
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "preferiti_utente", joinColumns = @JoinColumn(name = "utente_id"), inverseJoinColumns = @JoinColumn(name = "fotografia_id"))
 	private Set<Fotografia> preferiti = new HashSet<Fotografia>();
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "album_utente", joinColumns = @JoinColumn(name = "utente_id"), inverseJoinColumns = @JoinColumn(name = "album_id"))
+	private Set<Album> album = new HashSet<Album>();
 
 	public Utente() {
 		super();
@@ -40,6 +43,14 @@ public class Utente {
 		this.password = u.getPassword();
 		this.permessi = u.getPermessi();
 		this.preferiti = u.getPreferiti();
+	}
+
+	public Set<Album> getAlbum() {
+		return album;
+	}
+
+	public void setAlbum(Set<Album> album) {
+		this.album = album;
 	}
 
 	public Integer getId() {

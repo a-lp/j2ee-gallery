@@ -1,15 +1,21 @@
 package database;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
+//TODO rivedere struttura
 @Entity
 public class Album {
 	@Id
@@ -19,9 +25,29 @@ public class Album {
 	private String nome;
 	@Column
 	private String descrizione;
-	@ManyToMany
-	@JoinColumn
-	private List<Utente> utenti;
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "album_fotografia", joinColumns = @JoinColumn(name = "album_id"), inverseJoinColumns = @JoinColumn(name = "fotografia_id"))
+	private List<Fotografia> fotografie = new ArrayList<Fotografia>();
+
+	public Album() {
+		super();
+	}
+
+	public Album(Integer id, String nome, String descrizione, Set<Utente> utenti, List<Fotografia> fotografie) {
+		super();
+		this.id = id;
+		this.nome = nome;
+		this.descrizione = descrizione;
+		this.fotografie = fotografie;
+	}
+
+	public List<Fotografia> getFotografie() {
+		return fotografie;
+	}
+
+	public void setFotografie(List<Fotografia> fotografie) {
+		this.fotografie = fotografie;
+	}
 
 	public String getDescrizione() {
 		return descrizione;
@@ -29,25 +55,6 @@ public class Album {
 
 	public void setDescrizione(String descrizione) {
 		this.descrizione = descrizione;
-	}
-
-	public List<Utente> getUtenti() {
-		return utenti;
-	}
-
-	public void setUtenti(List<Utente> utenti) {
-		this.utenti = utenti;
-	}
-
-	public Album() {
-		super();
-	}
-
-	public Album(String nome, String descrizione, List<Utente> utenti) {
-		super();
-		this.nome = nome;
-		this.descrizione = descrizione;
-		this.utenti = utenti;
 	}
 
 	public Integer getId() {
@@ -69,6 +76,49 @@ public class Album {
 	@Override
 	public String toString() {
 		return "Album [id=" + id + ", nome=" + nome + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((descrizione == null) ? 0 : descrizione.hashCode());
+		result = prime * result + ((fotografie == null) ? 0 : fotografie.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Album other = (Album) obj;
+		if (descrizione == null) {
+			if (other.descrizione != null)
+				return false;
+		} else if (!descrizione.equals(other.descrizione))
+			return false;
+		if (fotografie == null) {
+			if (other.fotografie != null)
+				return false;
+		} else if (!fotografie.equals(other.fotografie))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (nome == null) {
+			if (other.nome != null)
+				return false;
+		} else if (!nome.equals(other.nome))
+			return false;
+		return true;
 	}
 
 }

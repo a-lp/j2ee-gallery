@@ -25,11 +25,10 @@
 	#{sessionController.logged? "loggato: ".concat(sessionController.utenteLoggato.email):""}
 	<br />
 	<h1>Preferiti</h1>
-	<h:panelGroup id="preferiti">
+	<h:panelGroup id="preferiti" rendered="#{sessionController.logged}">
 		<h:form id="elimina-preferito">
-			<ui:repeat rendered="#{sessionController.logged}"
-				id="tabella-preferiti" value="#{sessionController.preferiti}"
-				var="p">
+			<ui:repeat id="tabella-preferiti"
+				value="#{sessionController.preferiti}" var="p">
 				<h:outputLink value="http://localhost:8080/galleria/foto/#{p.id}">
 					<h:outputText value="Apri" />
 				</h:outputLink>    | 
@@ -43,5 +42,19 @@
 			</ui:repeat>
 		</h:form>
 	</h:panelGroup>
+
+	<h1>Album personali</h1>
+	<h:panelGroup id="album" rendered="#{sessionController.logged}">
+		<h:form id="album-form">
+			<ui:repeat id="tabella-album" value="#{sessionController.album}"
+				var="p">
+				<h:outputText value="#{p.id}" />    | 
+			<h:outputText value="#{p.nome}" />    | 
+			<h:outputText value="#{p.descrizione}" />    | 
+				<hr />
+			</ui:repeat>
+		</h:form>
+	</h:panelGroup>
+	
 </h:body>
 </html>
