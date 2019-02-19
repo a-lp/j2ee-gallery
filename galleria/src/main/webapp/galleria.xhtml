@@ -37,8 +37,8 @@
 				itemLabel="#{tag.tag}" itemValue="#{tag}" />
 		</h:selectOneMenu>
 	</h:form>
-
-	<h3>Foto Cercata</h3>
+	<hr/>
+	<h3>Foto Cercata - ID</h3>
 	<h:form id="panelGroupId">
 		<h:panelGroup id="ricerca-id">
 			<ui:repeat id="tabellaRicercaId" value="#{sessionController.byId}"
@@ -62,8 +62,8 @@
 			</ui:repeat>
 		</h:panelGroup>
 	</h:form>
-
-
+	<hr/>
+	<h3>Foto Cercata - Tag</h3>
 	<h:form id="panelGroupTag">
 		<h:panelGroup id="ricerca-tag">
 			<ui:repeat id="tabellaRicercaTag" value="#{sessionController.byTag}"
