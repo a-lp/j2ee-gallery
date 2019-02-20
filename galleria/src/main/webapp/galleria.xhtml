@@ -41,7 +41,7 @@
 	<h3>Foto Cercata - ID</h3>
 	<h:form id="panelGroupId">
 		<h:panelGroup id="ricerca-id">
-			<ui:repeat id="tabellaRicercaId" value="#{sessionController.byId}"
+			<ui:repeat id="tabellaRicercaId" value="#{sessionController.bySearch}"
 				var="p">
 				<h:outputLink value="http://localhost:8080/galleria/foto/#{p.id}">
 					<h:outputText value="Apri" />

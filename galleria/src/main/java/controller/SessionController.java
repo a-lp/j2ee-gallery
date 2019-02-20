@@ -19,9 +19,8 @@ import database.Tag;
 import database.Utente;
 import utility.Password;
 
-
 //TODO riorganizzare i metodi tra i vari controller
-//TODO aggiungere il motore di ricerca lucene http://www.mastertheboss.com/jboss-frameworks/hibernate-jpa/hibernate-search/hibernate-search-and-jpa-tutorial?showall=&start=1
+//TODO aggiungere il motore di ricerca lucene 
 @Named
 @SessionScoped
 public class SessionController implements Serializable {
@@ -161,7 +160,6 @@ public class SessionController implements Serializable {
 		return fdao.findAll();
 	}
 
-
 	public void eliminaFoto(Integer foto_id) {
 		fdao.elimina(foto_id);
 	}
@@ -191,13 +189,19 @@ public class SessionController implements Serializable {
 			return null;
 		}
 	}
+	
+	public List<Fotografia> getBySearch(){
+		if (this.ricerca == null || "".equals(this.ricerca))
+			return null;
+		return fdao.getBySearch(this.ricerca);
+	}
 
 	// ***************** SEZIONE PREFERITI *****************//
 	public void aggiungiPreferiti(Integer foto_id) {
 		Utente u = dao.find(utente.getId());
 		u.getPreferiti().add(fdao.find(foto_id));
 		dao.update(u);
-		this.utente=u;
+		this.utente = u;
 		this.ricerca = "";
 	}
 
@@ -215,7 +219,7 @@ public class SessionController implements Serializable {
 	public boolean isPreferito(Fotografia f) {
 		return (dao.find(this.utente.getId()).getPreferiti().contains(f) || this.utente.getPreferiti().contains(f));
 	}
-	
+
 	// ***************** SEZIONE ALBUM *****************//
 	public Set<Album> getAlbum() {
 		return dao.getAlbum(utente);

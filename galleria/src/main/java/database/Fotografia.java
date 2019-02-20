@@ -14,7 +14,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
+import org.hibernate.search.annotations.Analyze;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Index;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.Store;
+
 @Entity
+@Indexed
 public class Fotografia {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,6 +41,7 @@ public class Fotografia {
 	@JoinColumn()
 	private Set<Tag> categorie; // TODO si può anche fare Embeddable
 	@Column
+	@Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
 	private String descrizione;
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "preferiti_utente", joinColumns = @JoinColumn(name = "fotografia_id"), inverseJoinColumns = @JoinColumn(name = "utente_id"))

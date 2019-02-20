@@ -13,6 +13,9 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
+import org.hibernate.search.jpa.FullTextEntityManager;
+import org.hibernate.search.query.dsl.QueryBuilder;
+
 import database.Fotografia;
 import database.Fotografia_;
 import database.Tag;
@@ -61,15 +64,13 @@ public class FotografiaDAO implements Serializable {
 		}
 	}
 
-	//TODO rifattorizzare
+	// TODO rifattorizzare
 	public List<Fotografia> findByTag(Tag tag) {
 		List<Fotografia> fotografie = findAll();
-		/*if (fotografie != null) {
-			for (Fotografia foto : fotografie) {
-				if (!foto.getCategorie().contains(tag))
-					fotografie.remove(foto);
-			}
-		}*/
+		/*
+		 * if (fotografie != null) { for (Fotografia foto : fotografie) { if
+		 * (!foto.getCategorie().contains(tag)) fotografie.remove(foto); } }
+		 */
 		Iterator<Fotografia> iter = fotografie.iterator();
 
 		while (iter.hasNext()) {
@@ -87,5 +88,23 @@ public class FotografiaDAO implements Serializable {
 		CriteriaQuery<Fotografia> q = cb.createQuery(Fotografia.class);
 		q.from(Fotografia.class);
 		return em.createQuery(q).setFirstResult(0).setMaxResults(n).getResultList();
+	}
+
+	public List<Fotografia> getBySearch(String ricerca) {
+		FullTextEntityManager fullTextEntityManager = org.hibernate.search.jpa.Search.getFullTextEntityManager(em);
+
+		try {
+			fullTextEntityManager.createIndexer().startAndWait();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		QueryBuilder qb = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(Fotografia.class)
+				.get();
+		org.apache.lucene.search.Query query = qb.keyword().onFields("descrizione").matching(ricerca).createQuery();
+		javax.persistence.Query persistenceQuery = fullTextEntityManager.createFullTextQuery(query, Fotografia.class);
+		List<Fotografia> result = persistenceQuery.getResultList();
+		return result;
 	}
 }
