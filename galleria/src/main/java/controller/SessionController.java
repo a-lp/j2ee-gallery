@@ -19,8 +19,7 @@ import database.Tag;
 import database.Utente;
 import utility.Password;
 
-//TODO riorganizzare i metodi tra i vari controller
-//TODO aggiungere il motore di ricerca lucene 
+//TODO riorganizzare i metodi tra i vari controller 
 @Named
 @SessionScoped
 public class SessionController implements Serializable {

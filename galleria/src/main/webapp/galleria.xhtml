@@ -37,21 +37,20 @@
 				itemLabel="#{tag.tag}" itemValue="#{tag}" />
 		</h:selectOneMenu>
 	</h:form>
-	<hr/>
-	<h3>Foto Cercata - ID</h3>
+	<hr />
+	<h3>Foto Cercata</h3>
 	<h:form id="panelGroupId">
 		<h:panelGroup id="ricerca-id">
-			<ui:repeat id="tabellaRicercaId" value="#{sessionController.bySearch}"
-				var="p">
+			<ui:repeat id="tabellaRicercaId"
+				value="#{sessionController.bySearch}" var="p">
 				<h:outputLink value="http://localhost:8080/galleria/foto/#{p.id}">
 					<h:outputText value="Apri" />
 				</h:outputLink>    | 
-			<h:outputText value="#{p.id}" />    | 
 			<h:outputText value="#{p.nome}" />    | 
+			<h:outputText value="#{p.descrizione}" />    | 
 			<h:outputText value="#{p.tag}" />    | 
 				<h:panelGroup rendered="#{sessionController.logged}" id="comandi">
-					<h:commandButton id="btnAdd"
-						value="Aggiungi Preferiti"
+					<h:commandButton id="btnAdd" value="Aggiungi Preferiti"
 						rendered="#{not(sessionController.isPreferito(p))}"
 						action="#{sessionController.aggiungiPreferiti(p.id)}">
 						<f:ajax event="click" execute="@all"
@@ -62,8 +61,8 @@
 			</ui:repeat>
 		</h:panelGroup>
 	</h:form>
-	<hr/>
-	<h3>Foto Cercata - Tag</h3>
+	<hr />
+	<h3>Foto Cercata - Categoria</h3>
 	<h:form id="panelGroupTag">
 		<h:panelGroup id="ricerca-tag">
 			<ui:repeat id="tabellaRicercaTag" value="#{sessionController.byTag}"
@@ -71,8 +70,8 @@
 				<h:outputLink value="http://localhost:8080/galleria/foto/#{p.id}">
 					<h:outputText value="Apri" />
 				</h:outputLink>    | 
-			<h:outputText value="#{p.id}" />    | 
 			<h:outputText value="#{p.nome}" />    | 
+			<h:outputText value="#{p.descrizione}" />    | 
 			<h:outputText value="#{p.tag}" />    | 
 				<h:panelGroup rendered="#{sessionController.logged}" id="comandi">
 					<h:commandButton id="btnAdd" value="Aggiungi Preferiti"
