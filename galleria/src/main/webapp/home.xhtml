@@ -28,14 +28,14 @@
 	<h:panelGroup id="preferiti" rendered="#{sessionController.logged}">
 		<h:form id="elimina-preferito">
 			<ui:repeat id="tabella-preferiti"
-				value="#{sessionController.preferiti}" var="p">
+				value="#{utenteController.preferiti}" var="p">
 				<h:outputLink value="http://localhost:8080/galleria/foto/#{p.id}">
 					<h:outputText value="Apri" />
 				</h:outputLink>    | 
 			<h:outputText value="#{p.id}" />    | 
 			<h:outputText value="#{p.nome}" />    | 
 				<h:commandButton value="Elimina dai preferiti"
-					action="#{sessionController.eliminaPreferito(p.id)}">
+					action="#{utenteController.eliminaPreferito(p)}">
 					<f:ajax event="click" execute="@all" render="preferiti" />
 				</h:commandButton>
 				<hr />
@@ -46,7 +46,7 @@
 	<h1>Album personali</h1>
 	<h:panelGroup id="album" rendered="#{sessionController.logged}">
 		<h:form id="album-form">
-			<ui:repeat id="tabella-album" value="#{sessionController.album}"
+			<ui:repeat id="tabella-album" value="#{utenteController.album}"
 				var="p">
 				<h:outputText value="#{p.id}" />    | 
 			<h:outputText value="#{p.nome}" />    | 

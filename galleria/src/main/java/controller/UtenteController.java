@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import dao.UtenteDAO;
+import database.Album;
 import database.Fotografia;
 import database.Utente;
 
@@ -18,18 +19,15 @@ public class UtenteController implements Serializable {
 	@Inject
 	UtenteDAO dao;
 	@Inject
-	LoginController richiesta;
+	SessionController sessione;
 
 	public void elimina(String email) {
 		dao.elimina(email);
 	}
 
-	public String save() {
-		if (!"".equals(richiesta.getEmail()) && !"".equals(richiesta.getPassword()) && this.isValoreUnico()) {
-			Utente u = new Utente();
-			u.setEmail(richiesta.getEmail());
-			u.setPassword(richiesta.getPassword());
-			dao.add(u); // aggiungo nuovo richiesta
+	public String save(Utente u) {
+		if (u != null && isValoreUnico(u)) {
+			dao.add(u);
 			return "home";
 		}
 		return "registrazione";
@@ -42,20 +40,51 @@ public class UtenteController implements Serializable {
 		return result;
 	}
 
-	public Utente getByEmail() {
-		return dao.findByEmail(richiesta.getEmail());
+	public Utente getByEmail(String email) {
+		if (email == null && "".equals(email))
+			return null;
+		return dao.findByEmail(email);
 	}
 
-	public boolean isValoreUnico() {
-		return dao.findByEmail(richiesta.getEmail()) == null;
+	public Utente getById(Integer id) {
+		if (id == null && id > 0)
+			return null;
+		return dao.find(id);
+	}
+
+	public boolean isValoreUnico(Utente u) {
+		return dao.findByEmail(u.getEmail()) == null;
 	}
 
 	public Short getPermessi() {
-		return dao.getPermessi(richiesta.getEmail());
+		return dao.getPermessi(sessione.getUtenteLoggato().getEmail());
+	}
+
+	public void aggiungiPreferiti(Fotografia foto) {
+		Utente u = dao.find(sessione.getUtenteLoggato().getId());
+		u.getPreferiti().add(foto);
+		dao.update(u);
+		this.sessione.setUtenteLoggato(u);
+		this.sessione.setRicerca("");
+	}
+
+	public void eliminaPreferito(Fotografia foto) {
+		Utente u = dao.find(sessione.getUtenteLoggato().getId());
+		u.getPreferiti().remove(foto);
+		dao.update(u);
+		this.sessione.setUtenteLoggato(u);
 	}
 
 	public Set<Fotografia> getPreferiti() {
-		Set<Fotografia> result = dao.getPreferiti(richiesta.getEmail());
-		return result;
+		return dao.getPreferiti(sessione.getUtenteLoggato());
+	}
+
+	public boolean isPreferito(Fotografia f) {
+		return (dao.find(this.sessione.getUtenteLoggato().getId()).getPreferiti().contains(f)
+				|| this.sessione.getUtenteLoggato().getPreferiti().contains(f));
+	}
+
+	public Set<Album> getAlbum() {
+		return dao.getAlbum(this.sessione.getUtenteLoggato());
 	}
 }

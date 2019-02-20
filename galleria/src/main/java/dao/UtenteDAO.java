@@ -28,11 +28,6 @@ public class UtenteDAO implements Serializable {
 	}
 
 	public void add(Utente u) {
-		try {
-			u.setPassword(Password.getSaltedHash(u.getPassword())); // calcolo hashing della password
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 		em.persist(u);
 	}
 

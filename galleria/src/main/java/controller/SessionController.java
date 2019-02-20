@@ -12,7 +12,6 @@ import javax.inject.Named;
 
 import dao.AlbumDAO;
 import dao.FotografiaDAO;
-import dao.UtenteDAO;
 import database.Album;
 import database.Fotografia;
 import database.Tag;
@@ -26,7 +25,7 @@ public class SessionController implements Serializable {
 	@Inject
 	LoginController loginUtente;
 	@Inject
-	UtenteDAO dao;
+	UtenteController utenteController;
 	@Inject
 	FotografiaDAO fdao;
 	@Inject
@@ -34,7 +33,7 @@ public class SessionController implements Serializable {
 	/**
 	 * Utente loggato.
 	 */
-	private Utente utente;
+	private Utente utenteLoggato;
 	/**
 	 * Query di ricerca.
 	 */
@@ -51,12 +50,12 @@ public class SessionController implements Serializable {
 		this.ricerca = ricerca;
 	}
 
-	public void setUtenteLoggato(Utente utente) {
-		this.utente = utente;
+	public void setUtenteLoggato(Utente utenteLoggato) {
+		this.utenteLoggato = utenteLoggato;
 	}
 
 	public Utente getUtenteLoggato() {
-		return utente;
+		return utenteLoggato;
 	}
 
 	public Tag getTag() {
@@ -71,17 +70,18 @@ public class SessionController implements Serializable {
 	public boolean isAdmin() {
 		if (!isLogged())
 			return false;
-		return this.utente.getPermessi() == 99;
+		return this.utenteLoggato.getPermessi() == 99;
 	}
 
 	public String login() {
-		Utente tmp = dao.findByEmail(loginUtente.getEmail()); // controllo se nel database sono presenti le credenziali
-		// utente
+		Utente tmp = utenteController.getByEmail(loginUtente.getEmail()); // controllo se nel database sono presenti le
+																			// credenziali
+		// utenteLoggato
 		if (tmp != null) {
 			try {
 				if (Password.check(loginUtente.getPassword(), tmp.getPassword())) { // controllo che la password
 					// inserita sia corretta
-					this.utente = tmp;
+					this.utenteLoggato = tmp;
 					return "home";
 				}
 				return "login";
@@ -96,16 +96,16 @@ public class SessionController implements Serializable {
 	}
 
 	/**
-	 * Metodo per la verifica che un utente sia loggato.
+	 * Metodo per la verifica che un utenteLoggato sia loggato.
 	 * 
-	 * @return true se l'utente è loggato ed è presente nel database, false
+	 * @return true se l'utenteLoggato è loggato ed è presente nel database, false
 	 *         altrimenti
 	 */
 	public boolean isLogged() {
-		if (this.utente != null && (dao.find(utente.getId()) != null)) {
+		if (this.utenteLoggato != null && (utenteController.getById(utenteLoggato.getId()) != null)) {
 			return true;
 		} else {
-			this.utente = null;
+			this.utenteLoggato = null;
 			return false;
 		}
 	}
@@ -122,7 +122,7 @@ public class SessionController implements Serializable {
 	 */
 	public void checkIsLogged() {
 		FacesContext fc = FacesContext.getCurrentInstance();
-		if (this.utente != null) {
+		if (this.utenteLoggato != null) {
 			ConfigurableNavigationHandler nav = (ConfigurableNavigationHandler) fc.getApplication()
 					.getNavigationHandler();
 
@@ -131,26 +131,17 @@ public class SessionController implements Serializable {
 	}
 
 	public String registrati() {
-		if (!"".equals(loginUtente.getEmail()) && !"".equals(loginUtente.getPassword())
-				&& (dao.findByEmail(loginUtente.getEmail()) == null)) {
+		if (!"".equals(loginUtente.getEmail()) && !"".equals(loginUtente.getPassword())) {
 			Utente u = new Utente();
 			u.setEmail(loginUtente.getEmail());
-			u.setPassword(loginUtente.getPassword());
-			dao.add(u);
-			login();
-			return "home";
+			try {
+				u.setPassword(Password.getSaltedHash(loginUtente.getPassword()));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return utenteController.save(u);
 		}
 		return "registrazione";
-	}
-
-	// ***************** SEZIONE UTENTE *****************//
-	public Utente getByEmail() {
-		if ("".equals(ricerca))
-			return null;
-		else {
-			Utente u = dao.findByEmail(ricerca);
-			return u;
-		}
 	}
 
 	// ***************** SEZIONE FOTOGRAFIE *****************//
@@ -188,39 +179,11 @@ public class SessionController implements Serializable {
 			return null;
 		}
 	}
-	
-	public List<Fotografia> getBySearch(){
+
+	public List<Fotografia> getBySearch() {
 		if (this.ricerca == null || "".equals(this.ricerca))
 			return null;
 		return fdao.getBySearch(this.ricerca);
 	}
 
-	// ***************** SEZIONE PREFERITI *****************//
-	public void aggiungiPreferiti(Integer foto_id) {
-		Utente u = dao.find(utente.getId());
-		u.getPreferiti().add(fdao.find(foto_id));
-		dao.update(u);
-		this.utente = u;
-		this.ricerca = "";
-	}
-
-	public void eliminaPreferito(Integer foto_id) {
-		Utente u = dao.find(utente.getId());
-		u.getPreferiti().remove(fdao.find(foto_id));
-		dao.update(u);
-		this.utente = u;
-	}
-
-	public Set<Fotografia> getPreferiti() {
-		return dao.getPreferiti(utente);
-	}
-
-	public boolean isPreferito(Fotografia f) {
-		return (dao.find(this.utente.getId()).getPreferiti().contains(f) || this.utente.getPreferiti().contains(f));
-	}
-
-	// ***************** SEZIONE ALBUM *****************//
-	public Set<Album> getAlbum() {
-		return dao.getAlbum(utente);
-	}
 }

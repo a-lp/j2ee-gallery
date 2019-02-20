@@ -51,8 +51,8 @@
 			<h:outputText value="#{p.tag}" />    | 
 				<h:panelGroup rendered="#{sessionController.logged}" id="comandi">
 					<h:commandButton id="btnAdd" value="Aggiungi Preferiti"
-						rendered="#{not(sessionController.isPreferito(p))}"
-						action="#{sessionController.aggiungiPreferiti(p.id)}">
+						rendered="#{not(utenteController.isPreferito(p))}"
+						action="#{utenteController.aggiungiPreferiti(p)}">
 						<f:ajax event="click" execute="@all"
 							render="panelGroupTag panelGroupId" />
 					</h:commandButton>
@@ -75,8 +75,8 @@
 			<h:outputText value="#{p.tag}" />    | 
 				<h:panelGroup rendered="#{sessionController.logged}" id="comandi">
 					<h:commandButton id="btnAdd" value="Aggiungi Preferiti"
-						rendered="#{not(sessionController.isPreferito(p))}"
-						action="#{sessionController.aggiungiPreferiti(p.id)}">
+						rendered="#{not(utenteController.isPreferito(p))}"
+						action="#{utenteController.aggiungiPreferiti(p)}">
 						<f:ajax event="click" execute="@all"
 							render="panelGroupTag panelGroupId" />
 					</h:commandButton>
@@ -102,8 +102,8 @@
 				<f:ajax event="click" execute="@all" render="@all" />
 			</h:commandButton>
 			<h:commandButton id="btnAdmnAdd" value="Aggiungi Preferiti"
-				rendered="#{not(sessionController.isPreferito(p))}"
-				action="#{sessionController.aggiungiPreferiti(p.id)}">
+				rendered="#{not(utenteController.isPreferito(p))}"
+				action="#{utenteController.aggiungiPreferiti(p.id)}">
 				<f:ajax event="click" execute="@all" render="preferiti" />
 			</h:commandButton>
 			<hr />
