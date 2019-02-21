@@ -6,8 +6,6 @@ import java.util.List;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
 
 import dao.AlbumDAO;
 import database.Album;
@@ -47,11 +45,29 @@ public class AlbumController implements Serializable {
 			if (album != null) {
 				album.getFotografie().add(foto);
 				dao.update(album);
-				this.sessione.setAlbum(null);
 			} else
 				System.out.println("Album vuoto: " + album);
 		} else
 			System.out.println("Foto vuoto: " + foto);
+	}
+
+	public void rimuoviFoto(Fotografia foto) {
+		if (foto != null) {
+			Album album = dao.get(sessione.getAlbum().getId());
+			album.setFotografie(dao.getFotografie(album));
+			if (album != null) {
+				album.getFotografie().remove(foto);
+				dao.update(album);
+			} else
+				System.out.println("Album vuoto: " + album);
+		} else
+			System.out.println("Foto vuoto: " + foto);
+	}
+
+	public boolean contains(Fotografia p) {
+		Album album = dao.get(sessione.getAlbum().getId());
+		album.setFotografie(dao.getFotografie(album));
+		return album.getFotografie().contains(p);
 	}
 
 }

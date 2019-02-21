@@ -39,14 +39,14 @@ public class Fotografia {
 	private Short larghezza;
 	@ManyToMany(cascade = { CascadeType.REMOVE }, fetch = FetchType.EAGER)
 	@JoinColumn()
-	private Set<Tag> categorie; // TODO si può anche fare Embeddable
+	private Set<Tag> categorie;
 	@Column
 	@Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
 	private String descrizione;
-	@ManyToMany(fetch = FetchType.EAGER)
+	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "preferiti_utente", joinColumns = @JoinColumn(name = "fotografia_id"), inverseJoinColumns = @JoinColumn(name = "utente_id"))
 	private Set<Utente> preferiti = new HashSet<Utente>();
-	@ManyToMany(fetch = FetchType.EAGER)
+	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "album_fotografia", joinColumns = @JoinColumn(name = "fotografia_id"), inverseJoinColumns = @JoinColumn(name = "album_id"))
 	private Set<Album> album = new HashSet<Album>();
 

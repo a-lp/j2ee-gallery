@@ -95,8 +95,7 @@
 				<f:converter binding="#{albumConverter}" />
 				<f:selectItems value="#{albumDAO.allAlbum}" var="album"
 					itemLabel="#{album.nome}" itemValue="#{album}" />
-				<f:ajax event="valueChange" execute="@form"
-					render="@all" />
+				<f:ajax event="valueChange" execute="@form" render="@all" />
 			</h:selectOneMenu>
 			<br />
 			<hr />
@@ -118,11 +117,17 @@
 				action="#{utenteController.aggiungiPreferiti(p)}">
 				<f:ajax event="click" execute="@all" render="preferiti" />
 			</h:commandButton>
-			<h:panelGroup id="btnAdmnAddAlbum">
-				<h:commandButton rendered="#{not (sessionController.album==null)}"
+			<h:panelGroup id="btnAdmnAddAlbum"
+				rendered="#{(sessionController.album!=null) and (sessionController.album.nome!='')}">
+				<h:commandButton rendered="#{not (albumController.contains(p))}"
 					value="Aggiungi ad Album: #{sessionController.album.nome}"
 					action="#{albumController.aggiungiFoto(p)}">
-					<f:ajax event="click" execute="@all" />
+					<f:ajax event="click" execute="@all" render="@all" />
+				</h:commandButton>
+				<h:commandButton rendered="#{albumController.contains(p)}"
+					value="Rimuovi da Album: #{sessionController.album.nome}"
+					action="#{albumController.rimuoviFoto(p)}">
+					<f:ajax event="click" execute="@all" render="@all" />
 				</h:commandButton>
 			</h:panelGroup>
 			<hr />
