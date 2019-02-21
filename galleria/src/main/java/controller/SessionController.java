@@ -19,6 +19,7 @@ import database.Utente;
 import utility.Password;
 
 //TODO riorganizzare i metodi tra i vari controller 
+//TODO https://docs.oracle.com/javaee/6/api/javax/enterprise/context/ConversationScoped.html <-- rivedere conversation scope
 @Named
 @SessionScoped
 public class SessionController implements Serializable {
