@@ -1,5 +1,6 @@
 package controller;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 
@@ -110,12 +111,14 @@ public class SessionController implements Serializable {
 	 *         altrimenti
 	 */
 	public boolean isLogged() {
-		if (this.utenteLoggato != null && (utenteController.getById(utenteLoggato.getId()) != null)) {
+		if (this.utenteLoggato != null) {
+			if(utenteController.getById(utenteLoggato.getId()) == null) {
+				logout();				
+				return false;
+			}
 			return true;
-		} else {
-			this.utenteLoggato = null;
-			return false;
 		}
+		return false;
 	}
 
 	public String logout() {
@@ -129,12 +132,22 @@ public class SessionController implements Serializable {
 	 * pagina login.xhtml
 	 */
 	public void checkIsLogged() {
-		FacesContext fc = FacesContext.getCurrentInstance();
 		if (this.utenteLoggato != null) {
-			ConfigurableNavigationHandler nav = (ConfigurableNavigationHandler) fc.getApplication()
-					.getNavigationHandler();
+			try {
+				FacesContext.getCurrentInstance().getExternalContext().redirect("home.xhtml");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 
-			nav.performNavigation("home");
+	public void checkIsAdmin() {
+		if (!this.isAdmin()) {
+			try {
+				FacesContext.getCurrentInstance().getExternalContext().redirect("home.xhtml");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 

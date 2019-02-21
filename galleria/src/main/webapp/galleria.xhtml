@@ -21,9 +21,10 @@
 		<h:link value="Home" outcome="home" />    |  
 		<h:link value="Registrati" outcome="registrazione" />    |  
 		<h:link value="Galleria" outcome="galleria" />    |  
+		<h:link rendered="#{sessionController.admin}" value="Admin" outcome="admin"/>
 	</h:form>
 	<br />
-	
+
 	<h:form id="form-ricerca">
 		<h3>Ricerca Fotografia</h3>
 		<h:inputText id="ricerca-id" value="#{sessionController.ricerca}" />
@@ -33,7 +34,8 @@
 		</h:commandButton>
 	</h:form>
 	<h:form id="panelGroupId">
-		<h:outputText value="#{(sessionController.ricerca!=null)and(sessionController.bySearch==null)?'Nessuna foto trovata':''}"></h:outputText>
+		<h:outputText
+			value="#{(sessionController.ricerca!=null)and(sessionController.bySearch==null)?'Nessuna foto trovata':''}"></h:outputText>
 		<h:panelGroup id="ricerca-id">
 			<ui:repeat id="tabellaRicercaId"
 				value="#{sessionController.bySearch}" var="p">
@@ -63,8 +65,9 @@
 				itemLabel="#{tag.tag}" itemValue="#{tag}" />
 			<f:ajax event="valueChange" execute="@form" render="@all" />
 		</h:selectOneMenu>
-		<br/>
-		<h:outputText value="#{(sessionController.byTag==null)and(sessionController.tag!=null)?'Nessuna foto trovata':''}"></h:outputText>
+		<br />
+		<h:outputText
+			value="#{(sessionController.byTag==null)and(sessionController.tag!=null)?'Nessuna foto trovata':''}"></h:outputText>
 		<h:panelGroup id="ricerca-tag">
 			<ui:repeat id="tabellaRicercaTag" value="#{sessionController.byTag}"
 				var="p">
@@ -85,79 +88,6 @@
 			</ui:repeat>
 		</h:panelGroup>
 	</h:form>
-
-
-	<h:panelGroup id="preferiti" rendered="#{sessionController.admin}">
-		<h3>Foto Cercata - Album</h3>
-		<h:form id="albumSelect">
-			<h:selectOneMenu value="#{sessionController.album}">
-				<f:converter binding="#{albumConverter}" />
-				<f:selectItems value="#{albumDAO.allAlbum}" var="album"
-					itemLabel="#{album.nome}" itemValue="#{album}" />
-				<f:ajax event="valueChange" execute="@form" render="@all" />
-			</h:selectOneMenu>
-			<br />
-			<hr />
-		</h:form>
-		<h3>#{sessionController.album}</h3>
-		<ui:repeat
-			rendered="#{(sessionController.album!=null) and (sessionController.album.nome!='')}"
-			id="tabella-album" value="#{albumController.fotoByAlbum}" var="p">
-			<h:outputLink value="http://localhost:8080/galleria/foto/#{p.id}">
-				<h:outputText value="Apri" />
-			</h:outputLink>    | 
-			<h:outputText value="#{p.id}" />    | 
-			<h:outputText value="#{p.nome}" />    | 
-			<h:outputText value="#{p.tag}" />    | 
-			<h:commandButton value="Elimina"
-				action="#{fotografiaController.elimina(p.id)}">
-				<f:ajax event="click" execute="@all" render="@all" />
-			</h:commandButton>
-			<h:commandButton value="Rimuovi da Album"
-				action="#{albumController.rimuoviFoto(p)}">
-				<f:ajax event="click" execute="@all" render="@all" />
-			</h:commandButton>
-			<h:commandButton id="btnAdmnAdd" value="Aggiungi Preferiti"
-				rendered="#{not(utenteController.isPreferito(p))}"
-				action="#{utenteController.aggiungiPreferiti(p)}">
-				<f:ajax event="click" execute="@all" render="preferiti" />
-			</h:commandButton>
-			<hr />
-		</ui:repeat>
-		<h3>Tutte le Fotografie</h3>
-		<ui:repeat id="tabella-preferiti2"
-			value="#{fotografiaController.getMaxFotografie(10)}" var="p">
-			<h:outputLink value="http://localhost:8080/galleria/foto/#{p.id}">
-				<h:outputText value="Apri" />
-			</h:outputLink>    | 
-			<h:outputText value="#{p.id}" />    | 
-			<h:outputText value="#{p.nome}" />    | 
-			<h:outputText value="#{p.tag}" />    | 
-			<h:commandButton value="Elimina"
-				action="#{fotografiaController.elimina(p.id)}">
-				<f:ajax event="click" execute="@all" render="@all" />
-			</h:commandButton>
-			<h:commandButton id="btnAdmnAdd" value="Aggiungi Preferiti"
-				rendered="#{not(utenteController.isPreferito(p))}"
-				action="#{utenteController.aggiungiPreferiti(p)}">
-				<f:ajax event="click" execute="@all" render="preferiti" />
-			</h:commandButton>
-			<h:panelGroup id="btnAdmnAddAlbum"
-				rendered="#{(sessionController.album!=null) and (sessionController.album.nome!='')}">
-				<h:commandButton rendered="#{not (albumController.contains(p))}"
-					value="Aggiungi ad Album: #{sessionController.album.nome}"
-					action="#{albumController.aggiungiFoto(p)}">
-					<f:ajax event="click" execute="@all" render="@all" />
-				</h:commandButton>
-				<h:commandButton rendered="#{albumController.contains(p)}"
-					value="Rimuovi da Album: #{sessionController.album.nome}"
-					action="#{albumController.rimuoviFoto(p)}">
-					<f:ajax event="click" execute="@all" render="@all" />
-				</h:commandButton>
-			</h:panelGroup>
-			<hr />
-		</ui:repeat>
-	</h:panelGroup>
 
 </h:body>
 </html>

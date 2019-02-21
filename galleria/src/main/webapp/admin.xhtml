@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<f:event listener="#{sessionController.checkIsAdmin()}"
+	type="preRenderView" />
+
+<h:head>
+	<title>Admin</title>
+</h:head>
+
+<h:body>
+	<h1>Admin</h1>
+	<hr />
+	<h:form id="form-logout-login">
+		<h:link rendered="#{not sessionController.logged}" value="Login"
+			outcome="login" />
+		<h:commandLink rendered="#{sessionController.logged}" value="Logout"
+			outcome="login" action="#{sessionController.logout}" />
+		    |  
+		<h:link value="Home" outcome="home" />    |  
+		<h:link value="Registrati" outcome="registrazione" />    |  
+		<h:link value="Galleria" outcome="galleria" />    |  
+		<h:link rendered="#{sessionController.admin}" value="Admin"
+			outcome="admin" />
+	</h:form>
+	<br />
+
+	<h:panelGroup id="panelUtenti">
+		<h:form id="formUtenti">
+			Album 
+			<h:selectOneMenu value="#{sessionController.album}">
+				<f:converter binding="#{albumConverter}" />
+				<f:selectItems value="#{albumDAO.allAlbum}" var="album"
+					itemLabel="#{album.nome}" itemValue="#{album}" />
+				<f:ajax event="change" execute="@form" render="@all" />
+			</h:selectOneMenu>
+			<hr />
+			<h2>Sezione Utenti</h2>
+		</h:form>
+		<ui:repeat id="tabella-utenti"
+			value="#{utenteController.getNUtenti(10)}" var="p">
+			<br />
+			<h:outputText value="#{p.id}" />    | 
+			<h:outputText value="#{p.email}" />    | 
+			<h:commandButton value="Elimina" type="submit"
+				action="#{utenteController.elimina(p.email)}">
+				<f:ajax event="click" execute="@all" render="panelUtenti" />
+			</h:commandButton>
+			<h:panelGroup
+				rendered="#{(sessionController.album!=null) and (sessionController.album.nome!='')}">
+				<h:commandButton
+					rendered="#{not (utenteController.isAssignedAlbum(p))}"
+					value="Aggiungi ad Album"
+					action="#{utenteController.aggiungiAlbum(p)}">
+					<f:ajax event="click" execute="@all" render="panelUtenti" />
+				</h:commandButton>
+				<h:commandButton rendered="#{utenteController.isAssignedAlbum(p)}"
+					value="Rimuovi Album" action="#{utenteController.rimuoviAlbum(p)}">
+					<f:ajax event="click" execute="@all" render="panelUtenti" />
+				</h:commandButton>
+			</h:panelGroup>
+		</ui:repeat>
+	</h:panelGroup>
+
+	<br />
+	<hr />
+	<h:panelGroup id="panelFotografie">
+		<h2>Sezione Album</h2>
+		<h3>Album scelto:
+			#{sessionController.album.nome==""?"":sessionController.album}</h3>
+		<ui:repeat
+			rendered="#{(sessionController.album!=null) and (sessionController.album.nome!='')}"
+			id="tabellaAlbum" value="#{albumController.fotoByAlbum}" var="p">
+			<h:outputLink value="http://localhost:8080/galleria/foto/#{p.id}">
+				<h:outputText value="Apri" />
+			</h:outputLink>    | 
+			<h:outputText value="#{p.id}" />    | 
+			<h:outputText value="#{p.nome}" />    | 
+			<h:outputText value="#{p.tag}" />    | 
+			<h:commandButton value="Elimina"
+				action="#{fotografiaController.elimina(p.id)}">
+				<f:ajax event="click" execute="@all" render="panelFotografie" />
+			</h:commandButton>
+			<h:commandButton value="Rimuovi da Album"
+				action="#{albumController.rimuoviFoto(p)}">
+				<f:ajax event="click" execute="@all" render="panelFotografie" />
+			</h:commandButton>
+			<h:commandButton id="btnAdmnAdd" value="Aggiungi Preferiti"
+				rendered="#{not(utenteController.isPreferito(p))}"
+				action="#{utenteController.aggiungiPreferiti(p)}">
+				<f:ajax event="click" execute="@all" render="panelFotografie" />
+			</h:commandButton>
+			<hr />
+		</ui:repeat>
+		<h2>Tutte le Fotografie</h2>
+		<ui:repeat id="tabellaFotografie"
+			value="#{fotografiaController.getMaxFotografie(10)}" var="p">
+			<h:outputLink value="http://localhost:8080/galleria/foto/#{p.id}">
+				<h:outputText value="Apri" />
+			</h:outputLink>    | 
+			<h:outputText value="#{p.id}" />    | 
+			<h:outputText value="#{p.nome}" />    | 
+			<h:outputText value="#{p.tag}" />    | 
+			<h:commandButton value="Elimina"
+				action="#{fotografiaController.elimina(p.id)}">
+				<f:ajax event="click" execute="@all" render="panelFotografie" />
+			</h:commandButton>
+			<h:commandButton id="btnAdmnAdd" value="Aggiungi Preferiti"
+				rendered="#{not(utenteController.isPreferito(p))}"
+				action="#{utenteController.aggiungiPreferiti(p)}">
+				<f:ajax event="click" execute="@all" render="panelFotografie" />
+			</h:commandButton>
+			<h:panelGroup
+				rendered="#{(sessionController.album!=null) and (sessionController.album.nome!='')}">
+				<h:commandButton rendered="#{not (albumController.contains(p))}"
+					value="Aggiungi ad Album: #{sessionController.album.nome}"
+					action="#{albumController.aggiungiFoto(p)}">
+					<f:ajax event="click" execute="@all" render="panelFotografie" />
+				</h:commandButton>
+				<h:commandButton rendered="#{albumController.contains(p)}"
+					value="Rimuovi da Album: #{sessionController.album.nome}"
+					action="#{albumController.rimuoviFoto(p)}">
+					<f:ajax event="click" execute="@all" render="panelFotografie" />
+				</h:commandButton>
+			</h:panelGroup>
+			<hr />
+		</ui:repeat>
+	</h:panelGroup>
+</h:body>
+</html>

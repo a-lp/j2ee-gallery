@@ -20,6 +20,7 @@
 		<h:link value="Home" outcome="home" />    |  
 		<h:link value="Registrati" outcome="registrazione" />    |  
 		<h:link value="Galleria" outcome="galleria" />    |  
+		<h:link rendered="#{sessionController.admin}" value="Admin" outcome="admin"/>
 	</h:form>
 	<br />	
 	#{sessionController.logged? "loggato: ".concat(sessionController.utenteLoggato.email):""}
@@ -57,7 +58,8 @@
 			<br />
 			<hr />
 		</h:form>
-		<h3>#{sessionController.album}</h3>
+		<h3>#{sessionController.album.nome==""?"":sessionController.album.nome}</h3>
+		<h4>#{sessionController.album.nome==""?"":sessionController.album.descrizione}</h4>
 		<ui:repeat
 			rendered="#{(sessionController.album!=null) and (sessionController.album.nome!='')}"
 			id="tabella-album" value="#{albumController.fotoByAlbum}" var="p">
