@@ -30,6 +30,7 @@ public class Fotografia {
 	private String url; // non restituire la URL ma usare la servlet per convertirla in bytestream e
 						// restituire quello
 	@Column
+	@Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
 	private String nome;
 	@Column
 	private Double dimensione;

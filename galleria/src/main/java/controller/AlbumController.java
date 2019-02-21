@@ -45,10 +45,8 @@ public class AlbumController implements Serializable {
 			if (album != null) {
 				album.getFotografie().add(foto);
 				dao.update(album);
-			} else
-				System.out.println("Album vuoto: " + album);
-		} else
-			System.out.println("Foto vuoto: " + foto);
+			}
+		}
 	}
 
 	public void rimuoviFoto(Fotografia foto) {
@@ -68,6 +66,12 @@ public class AlbumController implements Serializable {
 		Album album = dao.get(sessione.getAlbum().getId());
 		album.setFotografie(dao.getFotografie(album));
 		return album.getFotografie().contains(p);
+	}
+
+	public List<Fotografia> getFotoByAlbum() {
+		Album album = dao.get(sessione.getAlbum().getId());
+		album.setFotografie(dao.getFotografie(album));
+		return album.getFotografie();
 	}
 
 }
