@@ -39,11 +39,20 @@ public class SessionController implements Serializable {
 	 */
 	private String ricerca = "";
 	private Tag tag;
+	private Album album;
 
 	// ***************** SEZIONE METODI DI SERVIZIO *****************//
 
 	public String getRicerca() {
 		return ricerca;
+	}
+
+	public Album getAlbum() {
+		return album;
+	}
+
+	public void setAlbum(Album album) {
+		this.album = album;
 	}
 
 	public void setRicerca(String ricerca) {
@@ -184,6 +193,19 @@ public class SessionController implements Serializable {
 		if (this.ricerca == null || "".equals(this.ricerca))
 			return null;
 		return fdao.getBySearch(this.ricerca);
+	}
+
+	public void aggiungiFoto(Fotografia foto) {
+		System.out.println(this.album + " - " + foto);
+		if (foto != null) {
+			Album album = adao.get(this.getAlbum().getId());
+			if (album != null) {
+				album.getFotografie().add(foto);
+				adao.update(album);
+			} else
+				System.out.println("Album vuoto: " + album);
+		} else
+			System.out.println("Foto vuoto: " + foto);
 	}
 
 }

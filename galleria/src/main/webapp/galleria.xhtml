@@ -38,6 +38,8 @@
 		</h:selectOneMenu>
 	</h:form>
 	<hr />
+	Tag: #{sessionController.tag}
+	
 	<h3>Foto Cercata</h3>
 	<h:form id="panelGroupId">
 		<h:panelGroup id="ricerca-id">
@@ -48,7 +50,6 @@
 				</h:outputLink>    | 
 			<h:outputText value="#{p.nome}" />    | 
 			<h:outputText value="#{p.descrizione}" />    | 
-			<h:outputText value="#{p.tag}" />    | 
 				<h:panelGroup rendered="#{sessionController.logged}" id="comandi">
 					<h:commandButton id="btnAdd" value="Aggiungi Preferiti"
 						rendered="#{not(utenteController.isPreferito(p))}"
@@ -72,7 +73,6 @@
 				</h:outputLink>    | 
 			<h:outputText value="#{p.nome}" />    | 
 			<h:outputText value="#{p.descrizione}" />    | 
-			<h:outputText value="#{p.tag}" />    | 
 				<h:panelGroup rendered="#{sessionController.logged}" id="comandi">
 					<h:commandButton id="btnAdd" value="Aggiungi Preferiti"
 						rendered="#{not(utenteController.isPreferito(p))}"
@@ -87,10 +87,22 @@
 	</h:form>
 
 
+
 	<h:panelGroup id="preferiti" rendered="#{sessionController.admin}">
 		<h3>Sezione Admin</h3>
+		<h:form id="albumSelect">
+			<h:selectOneMenu value="#{sessionController.album}">
+				<f:converter binding="#{albumConverter}" />
+				<f:selectItems value="#{albumDAO.allAlbum}" var="album"
+					itemLabel="#{album.nome}" itemValue="#{album}" />
+				<f:ajax event="valueChange" execute="@form"
+					render="@all" />
+			</h:selectOneMenu>
+			<br />
+			<hr />
+		</h:form>
 		<ui:repeat id="tabella-preferiti2"
-			value="#{fotografiaController.fotografie}" var="p">
+			value="#{fotografiaController.getMaxFotografie(10)}" var="p">
 			<h:outputLink value="http://localhost:8080/galleria/foto/#{p.id}">
 				<h:outputText value="Apri" />
 			</h:outputLink>    | 
@@ -103,9 +115,16 @@
 			</h:commandButton>
 			<h:commandButton id="btnAdmnAdd" value="Aggiungi Preferiti"
 				rendered="#{not(utenteController.isPreferito(p))}"
-				action="#{utenteController.aggiungiPreferiti(p.id)}">
+				action="#{utenteController.aggiungiPreferiti(p)}">
 				<f:ajax event="click" execute="@all" render="preferiti" />
 			</h:commandButton>
+			<h:panelGroup id="btnAdmnAddAlbum">
+				<h:commandButton rendered="#{not (sessionController.album==null)}"
+					value="Aggiungi ad Album: #{sessionController.album.nome}"
+					action="#{albumController.aggiungiFoto(p)}">
+					<f:ajax event="click" execute="@all" />
+				</h:commandButton>
+			</h:panelGroup>
 			<hr />
 		</ui:repeat>
 	</h:panelGroup>
