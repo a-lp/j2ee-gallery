@@ -80,4 +80,11 @@ public class UtenteDAO implements Serializable {
 		tmp.getAlbum().size();
 		return tmp.getAlbum();
 	}
+
+	public List<Utente> getNUtenti(int n) {
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<Utente> q = cb.createQuery(Utente.class);
+		q.from(Utente.class);
+		return em.createQuery(q).setFirstResult(0).setMaxResults(n).getResultList();
+	}
 }

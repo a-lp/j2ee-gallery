@@ -3,12 +3,14 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html">
-<head>
-<title>Registrazione</title>
-</head>
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
 
-<body>
+<h:head>
+	<title>Registrazione</title>
+</h:head>
+
+<h:body>
 	<h2>Registrazione utente</h2>
 	<hr />
 	<h:form id="form-logout-login">
@@ -35,25 +37,39 @@
 	<br />
 	<h:panelGroup rendered='#{sessionController.admin}'>
 		<h3>Sezione Admin</h3>
-		<h:dataTable id="tabella-utenti"
-			value="#{utenteController.utenti}" var="p">
-
+		<h:form id="albumSelect">
+			<h:selectOneMenu value="#{sessionController.album}">
+				<f:converter binding="#{albumConverter}" />
+				<f:selectItems value="#{albumDAO.allAlbum}" var="album"
+					itemLabel="#{album.nome}" itemValue="#{album}" />
+				<f:ajax event="change" execute="@form" render="@all" />
+			</h:selectOneMenu>
 			<br />
-			<h1>Tabella Utenti</h1>
-			<h:column>
-				<f:facet name="header">Email</f:facet> #{p.email} </h:column>
-			<h:column>
-				<f:facet name="header">Password</f:facet>#{p.password} </h:column>
-			<h:column>
-				<f:facet name="header">Permessi</f:facet>#{p.permessi} </h:column>
-			<h:column rendered="#{sessionController.admin}">
-				<h:form id="form">
-					<h:commandButton value="Elimina" type="submit"
-						action="#{utenteController.elimina(p.email)}">
-					</h:commandButton>
-				</h:form>
-			</h:column>
-		</h:dataTable>
+			<hr />
+		</h:form>
+		<ui:repeat id="tabella-utenti"
+			value="#{utenteController.getNUtenti(10)}" var="p">
+			<br />
+			<h:outputText value="#{p.id}" />    | 
+			<h:outputText value="#{p.email}" />    | 
+			<h:commandButton value="Elimina" type="submit"
+				action="#{utenteController.elimina(p.email)}">
+				<f:ajax event="click" execute="@all" render="@all" />
+			</h:commandButton>
+			<h:panelGroup
+				rendered="#{(sessionController.album!=null) and (sessionController.album.nome!='')}">
+				<h:commandButton
+					rendered="#{not (utenteController.isAssignedAlbum(p))}"
+					value="Aggiungi ad Album"
+					action="#{utenteController.aggiungiAlbum(p)}">
+					<f:ajax event="click" execute="@all" render="@all" />
+				</h:commandButton>
+				<h:commandButton rendered="#{utenteController.isAssignedAlbum(p)}"
+					value="Rimuovi Album" action="#{utenteController.rimuoviAlbum(p)}">
+					<f:ajax event="click" execute="@all" render="@all" />
+				</h:commandButton>
+			</h:panelGroup>
+		</ui:repeat>
 	</h:panelGroup>
-</body>
+</h:body>
 </html>

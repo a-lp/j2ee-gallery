@@ -8,6 +8,7 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import dao.AlbumDAO;
 import dao.UtenteDAO;
 import database.Album;
 import database.Fotografia;
@@ -18,6 +19,8 @@ import database.Utente;
 public class UtenteController implements Serializable {
 	@Inject
 	UtenteDAO dao;
+	@Inject
+	AlbumDAO adao;
 	@Inject
 	SessionController sessione;
 
@@ -35,6 +38,13 @@ public class UtenteController implements Serializable {
 
 	public List<Utente> getUtenti() {
 		List<Utente> result = dao.findAll();
+		if (result.size() == 0)
+			result = null;
+		return result;
+	}
+
+	public List<Utente> getNUtenti(int number) {
+		List<Utente> result = dao.getNUtenti(number);
 		if (result.size() == 0)
 			result = null;
 		return result;
@@ -93,6 +103,34 @@ public class UtenteController implements Serializable {
 	}
 
 	public Set<Album> getAlbum() {
-		return dao.getAlbum(this.sessione.getUtenteLoggato());
+		return dao.getAlbum(sessione.getUtenteLoggato());
+	}
+
+	public boolean isAssignedAlbum(Utente utente) {
+		Album tmp = sessione.getAlbum();
+		if (tmp != null) {
+			return dao.getAlbum(utente).contains(tmp);
+		}
+		return false;
+	}
+
+	public void aggiungiAlbum(Utente utente) {
+		Album tmp = sessione.getAlbum();
+		utente.setAlbum(dao.getAlbum(utente));
+		if (tmp != null) {
+			utente.getAlbum().add(tmp);
+			System.out.println(tmp);
+			dao.update(utente);
+		}
+	}
+
+	public void rimuoviAlbum(Utente utente) {
+		Album tmp = sessione.getAlbum();
+		utente.setAlbum(dao.getAlbum(utente));
+		if (tmp != null) {
+			utente.getAlbum().remove(tmp);
+			System.out.println(tmp);
+			dao.update(utente);
+		}
 	}
 }

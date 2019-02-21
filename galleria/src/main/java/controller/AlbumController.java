@@ -10,6 +10,7 @@ import javax.inject.Named;
 import dao.AlbumDAO;
 import database.Album;
 import database.Fotografia;
+import database.Utente;
 
 @Named
 @SessionScoped
@@ -67,6 +68,7 @@ public class AlbumController implements Serializable {
 		album.setFotografie(dao.getFotografie(album));
 		return album.getFotografie().contains(p);
 	}
+	
 
 	public List<Fotografia> getFotoByAlbum() {
 		Album album = dao.get(sessione.getAlbum().getId());
