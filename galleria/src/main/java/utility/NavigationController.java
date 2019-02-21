@@ -3,7 +3,6 @@ package utility;
 import java.io.Serializable;
 
 import javax.enterprise.context.RequestScoped;
-import javax.faces.annotation.ManagedProperty;
 import javax.inject.Named;
 
 @Named

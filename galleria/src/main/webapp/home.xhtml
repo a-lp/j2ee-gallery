@@ -45,16 +45,35 @@
 
 	<h1>Album personali</h1>
 	<h:panelGroup id="album" rendered="#{sessionController.logged}">
-		<h:form id="album-form">
-			<ui:repeat id="tabella-album" value="#{utenteController.album}"
-				var="p">
-				<h:outputText value="#{p.id}" />    | 
+		<h:form id="albumSelect">
+			<h:selectOneMenu value="#{sessionController.album}">
+				<f:converter binding="#{albumConverter}" />
+				<f:selectItems value="#{utenteController.album}" var="album"
+					itemLabel="#{album.nome}" itemValue="#{album}" />
+			</h:selectOneMenu>
+			<h:commandButton value="Visualizza">
+				<f:ajax event="click" execute="@all" render="album" />
+			</h:commandButton>
+			<br />
+			<hr />
+		</h:form>
+		<h3>#{sessionController.album}</h3>
+		<ui:repeat
+			rendered="#{(sessionController.album!=null) and (sessionController.album.nome!='')}"
+			id="tabella-album" value="#{albumController.fotoByAlbum}" var="p">
+			<h:outputLink value="http://localhost:8080/galleria/foto/#{p.id}">
+				<h:outputText value="Apri" />
+			</h:outputLink>    | 
 			<h:outputText value="#{p.nome}" />    | 
 			<h:outputText value="#{p.descrizione}" />    | 
-				<hr />
-			</ui:repeat>
-		</h:form>
+			<h:commandButton id="btnAdmnAdd" value="Aggiungi Preferiti"
+				rendered="#{not(utenteController.isPreferito(p))}"
+				action="#{utenteController.aggiungiPreferiti(p)}">
+				<f:ajax event="click" execute="@all" render="preferiti" />
+			</h:commandButton>
+			<hr />
+		</ui:repeat>
 	</h:panelGroup>
-	
+
 </h:body>
 </html>

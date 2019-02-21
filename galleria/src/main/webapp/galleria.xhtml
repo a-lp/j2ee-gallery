@@ -23,6 +23,7 @@
 		<h:link value="Galleria" outcome="galleria" />    |  
 	</h:form>
 	<br />
+	
 	<h:form id="form-ricerca">
 		<h3>Ricerca Fotografia</h3>
 		<h:inputText id="ricerca-id" value="#{sessionController.ricerca}" />
@@ -32,6 +33,7 @@
 		</h:commandButton>
 	</h:form>
 	<h:form id="panelGroupId">
+		<h:outputText value="#{(sessionController.ricerca!=null)and(sessionController.bySearch==null)?'Nessuna foto trovata':''}"></h:outputText>
 		<h:panelGroup id="ricerca-id">
 			<ui:repeat id="tabellaRicercaId"
 				value="#{sessionController.bySearch}" var="p">
@@ -62,6 +64,7 @@
 			<f:ajax event="valueChange" execute="@form" render="@all" />
 		</h:selectOneMenu>
 		<br/>
+		<h:outputText value="#{(sessionController.byTag==null)and(sessionController.tag!=null)?'Nessuna foto trovata':''}"></h:outputText>
 		<h:panelGroup id="ricerca-tag">
 			<ui:repeat id="tabellaRicercaTag" value="#{sessionController.byTag}"
 				var="p">
@@ -84,8 +87,8 @@
 	</h:form>
 
 
-	<h3>Foto Cercata - Album</h3>
 	<h:panelGroup id="preferiti" rendered="#{sessionController.admin}">
+		<h3>Foto Cercata - Album</h3>
 		<h:form id="albumSelect">
 			<h:selectOneMenu value="#{sessionController.album}">
 				<f:converter binding="#{albumConverter}" />

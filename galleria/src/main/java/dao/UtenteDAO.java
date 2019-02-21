@@ -16,7 +16,6 @@ import database.Album;
 import database.Fotografia;
 import database.Utente;
 import database.Utente_;
-import utility.Password;
 
 @Stateless
 public class UtenteDAO implements Serializable {
@@ -66,32 +65,19 @@ public class UtenteDAO implements Serializable {
 		return em.createQuery(q).getSingleResult().getPermessi();
 	}
 
-	public void aggiungiPreferiti(Utente u, Fotografia f) {
-		u.getPreferiti().add(f);
-		update(u);
-	}
-
-	public Set<Fotografia> getPreferiti(Utente u) {
-		if (u == null)
+	public Set<Fotografia> getPreferiti(Utente utente) {
+		if (utente == null)
 			return null;
-		return em.find(Utente.class, u.getId()).getPreferiti();
-	}
-
-	public Set<Fotografia> getPreferiti(String email) {
-		Utente u = findByEmail(email);
-		if (u == null)
-			return null;
-		return u.getPreferiti();
-	}
-
-	public void eliminaPreferito(Utente u, Fotografia foto) {
-		u.getPreferiti().remove(foto);
-		update(u);
+		Utente tmp = em.find(Utente.class, utente.getId());
+		tmp.getPreferiti().size();
+		return tmp.getPreferiti();
 	}
 
 	public Set<Album> getAlbum(Utente utente) {
 		if (utente == null)
 			return null;
-		return em.find(Utente.class, utente.getId()).getAlbum();
+		Utente tmp = em.find(Utente.class, utente.getId());
+		tmp.getAlbum().size();
+		return tmp.getAlbum();
 	}
 }

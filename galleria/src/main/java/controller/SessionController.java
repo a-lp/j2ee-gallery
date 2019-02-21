@@ -2,7 +2,6 @@ package controller;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.Set;
 
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.ConfigurableNavigationHandler;
@@ -37,7 +36,7 @@ public class SessionController implements Serializable {
 	/**
 	 * Query di ricerca.
 	 */
-	private String ricerca = "";
+	private String ricerca;
 	private Tag tag;
 	private Album album;
 
@@ -182,6 +181,8 @@ public class SessionController implements Serializable {
 			return null;
 		try {
 			List<Fotografia> f = fdao.findByTag(this.tag);
+			if (f.size() == 0)
+				return null;
 			return f;
 		} catch (NumberFormatException e) {
 			System.out.println("La query inserita non è di tipo numerico");
@@ -192,7 +193,10 @@ public class SessionController implements Serializable {
 	public List<Fotografia> getBySearch() {
 		if (this.ricerca == null || "".equals(this.ricerca))
 			return null;
-		return fdao.getBySearch(this.ricerca);
+		List<Fotografia> f = fdao.getBySearch(this.ricerca);
+		if (f.size() == 0)
+			return null;
+		return f;
 	}
 
 	public void aggiungiFoto(Fotografia foto) {

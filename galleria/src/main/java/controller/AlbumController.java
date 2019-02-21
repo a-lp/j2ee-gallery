@@ -71,6 +71,7 @@ public class AlbumController implements Serializable {
 	public List<Fotografia> getFotoByAlbum() {
 		Album album = dao.get(sessione.getAlbum().getId());
 		album.setFotografie(dao.getFotografie(album));
+		System.out.println(album.getFotografie());
 		return album.getFotografie();
 	}
 

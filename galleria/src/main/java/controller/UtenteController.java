@@ -25,9 +25,9 @@ public class UtenteController implements Serializable {
 		dao.elimina(email);
 	}
 
-	public String save(Utente u) {
-		if (u != null && isValoreUnico(u)) {
-			dao.add(u);
+	public String save(Utente utente) {
+		if (utente != null && isValoreUnico(utente)) {
+			dao.add(utente);
 			return "home";
 		}
 		return "registrazione";
@@ -52,8 +52,8 @@ public class UtenteController implements Serializable {
 		return dao.find(id);
 	}
 
-	public boolean isValoreUnico(Utente u) {
-		return dao.findByEmail(u.getEmail()) == null;
+	public boolean isValoreUnico(Utente utente) {
+		return dao.findByEmail(utente.getEmail()) == null;
 	}
 
 	public Short getPermessi() {
@@ -61,18 +61,27 @@ public class UtenteController implements Serializable {
 	}
 
 	public void aggiungiPreferiti(Fotografia foto) {
-		Utente u = dao.find(sessione.getUtenteLoggato().getId());
-		u.getPreferiti().add(foto);
-		dao.update(u);
-		this.sessione.setUtenteLoggato(u);
-		this.sessione.setRicerca("");
+		if (foto != null) {
+			Utente utente = dao.find(sessione.getUtenteLoggato().getId());
+			utente.setPreferiti(dao.getPreferiti(utente));
+			if (utente != null) {
+				utente.getPreferiti().add(foto);
+				dao.update(utente);
+				this.sessione.setUtenteLoggato(utente);
+			}
+		}
 	}
 
 	public void eliminaPreferito(Fotografia foto) {
-		Utente u = dao.find(sessione.getUtenteLoggato().getId());
-		u.getPreferiti().remove(foto);
-		dao.update(u);
-		this.sessione.setUtenteLoggato(u);
+		if (foto != null) {
+			Utente utente = dao.find(sessione.getUtenteLoggato().getId());
+			utente.setPreferiti(dao.getPreferiti(utente));
+			if (utente != null) {
+				utente.getPreferiti().remove(foto);
+				dao.update(utente);
+				this.sessione.setUtenteLoggato(utente);
+			}
+		}
 	}
 
 	public Set<Fotografia> getPreferiti() {
@@ -80,8 +89,7 @@ public class UtenteController implements Serializable {
 	}
 
 	public boolean isPreferito(Fotografia f) {
-		return (dao.find(this.sessione.getUtenteLoggato().getId()).getPreferiti().contains(f)
-				|| this.sessione.getUtenteLoggato().getPreferiti().contains(f));
+		return (getPreferiti().contains(f));
 	}
 
 	public Set<Album> getAlbum() {
