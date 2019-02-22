@@ -2,7 +2,9 @@ package controller;
 
 import java.io.Serializable;
 
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.Conversation;
+import javax.enterprise.context.ConversationScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import database.Album;
@@ -16,19 +18,33 @@ import database.Utente;
  *
  */
 @Named
-@RequestScoped
+@ConversationScoped
 public class RichiestaController implements Serializable {
+	@Inject
+	private Conversation conversation;
+
 	private Utente utente = new Utente();
 	private Album album = new Album();
 	private Fotografia fotografia = new Fotografia();
 	private Tag tag = new Tag();
 	private String ricerca;
 
+	public Conversation getConversation() {
+		return conversation;
+	}
+
+	public void setConversation(Conversation conversation) {
+		this.conversation = conversation;
+	}
+
 	public String getRicerca() {
 		return ricerca;
 	}
 
 	public void setRicerca(String ricerca) {
+		if (conversation.isTransient()) {
+			conversation.begin();
+		}
 		this.ricerca = ricerca;
 	}
 
@@ -37,6 +53,9 @@ public class RichiestaController implements Serializable {
 	}
 
 	public void setUtente(Utente utente) {
+		if (conversation.isTransient()) {
+			conversation.begin();
+		}
 		this.utente = utente;
 	}
 
@@ -45,6 +64,9 @@ public class RichiestaController implements Serializable {
 	}
 
 	public void setAlbum(Album album) {
+		if (conversation.isTransient()) {
+			conversation.begin();
+		}
 		this.album = album;
 	}
 
@@ -53,6 +75,9 @@ public class RichiestaController implements Serializable {
 	}
 
 	public void setFotografia(Fotografia fotografia) {
+		if (conversation.isTransient()) {
+			conversation.begin();
+		}
 		this.fotografia = fotografia;
 	}
 
@@ -61,6 +86,9 @@ public class RichiestaController implements Serializable {
 	}
 
 	public void setTag(Tag tag) {
+		if (conversation.isTransient()) {
+			conversation.begin();
+		}
 		this.tag = tag;
 	}
 

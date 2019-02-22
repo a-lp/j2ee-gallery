@@ -59,8 +59,9 @@ public class FotografiaController implements Serializable {
 	 *         trovato.
 	 */
 	public Fotografia getById() {
-		if ("".equals(richiestaController.getRicerca()) || richiestaController.getRicerca() == null)
+		if ("".equals(richiestaController.getRicerca()) || richiestaController.getRicerca() == null) {
 			return null;
+		}
 		try {
 			Fotografia f = dao.find(Integer.parseInt(richiestaController.getRicerca()));
 			return f;
@@ -78,7 +79,7 @@ public class FotografiaController implements Serializable {
 	public void save() {
 		Fotografia fotografia = new Fotografia();
 		fotografia.setUrl(richiestaController.getFotografia().getUrl());
-		if(dao.findByURL(fotografia.getUrl())==null){			
+		if (dao.findByURL(fotografia.getUrl()) == null) {
 			fotografia.setNome(richiestaController.getFotografia().getNome());
 			fotografia.setDescrizione(richiestaController.getFotografia().getDescrizione());
 			String[] tag = richiestaController.getRicerca().split(",");

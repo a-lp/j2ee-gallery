@@ -20,7 +20,8 @@
 		<h:link value="Home" outcome="home" />    |  
 		<h:link value="Registrati" outcome="registrazione" />    |  
 		<h:link value="Galleria" outcome="galleria" />    |  
-		<h:link rendered="#{sessionController.admin}" value="Admin" outcome="admin"/>
+		<h:link rendered="#{sessionController.admin}" value="Admin"
+			outcome="admin" />
 	</h:form>
 	<br />	
 	#{sessionController.logged? "loggato: ".concat(sessionController.utenteLoggato.email):""}
@@ -47,7 +48,7 @@
 	<h1>Album personali</h1>
 	<h:panelGroup id="album" rendered="#{sessionController.logged}">
 		<h:form id="albumSelect">
-			<h:selectOneMenu value="#{albumController.album}">
+			<h:selectOneMenu value="#{richiestaController.album}">
 				<f:converter binding="#{albumConverter}" />
 				<f:selectItems value="#{utenteController.album}" var="album"
 					itemLabel="#{album.nome}" itemValue="#{album}" />
@@ -58,21 +59,18 @@
 			<br />
 			<hr />
 		</h:form>
-		<h3>#{albumController.album.nome==""?"":albumController.album.nome}</h3>
-		<h4>#{albumController.album.nome==""?"":albumController.album.descrizione}</h4>
+		<h3>#{richiestaController.album.nome==""?"":richiestaController.album.nome}</h3>
+		<h4>#{richiestaController.album.nome==""?"":richiestaController.album.descrizione}</h4>
 		<ui:repeat
-			rendered="#{albumController.album.id!=null and albumController.album.nome!=''}"
-			id="tabella-album" value="#{albumController.fotoByAlbum}" var="p">
+			rendered="#{richiestaController.album.id!=null and richiestaController.album.nome!=''}"
+			id="tabella-album"
+			value="#{albumController.getFotoByAlbum(richiestaController.album)}"
+			var="p">
 			<h:outputLink value="http://localhost:8080/galleria/foto/#{p.id}">
 				<h:outputText value="Apri" />
 			</h:outputLink>    | 
 			<h:outputText value="#{p.nome}" />    | 
 			<h:outputText value="#{p.descrizione}" />    | 
-			<h:commandButton id="btnAdmnAdd" value="Aggiungi Preferiti"
-				rendered="#{not(utenteController.isPreferito(p))}"
-				action="#{utenteController.aggiungiPreferiti(p)}">
-				<f:ajax event="click" execute="@all" render="@all" />
-			</h:commandButton>
 			<hr />
 		</ui:repeat>
 	</h:panelGroup>
