@@ -15,10 +15,28 @@ import javax.servlet.http.HttpServletResponse;
 import dao.FotografiaDAO;
 import database.Fotografia;
 
+/**
+ * Classe per la gestione dei parametri richiesti dai client.
+ * 
+ * @author Armando La Placa
+ *
+ */
 public class FotoServlet extends HttpServlet {
 	@Inject
 	FotografiaDAO dao;
 
+	/**
+	 * Metodo per la gestione delle richieste al path galleria/foto/{id}. Viene
+	 * restituita l'immagine identificata dall'id passato nella URL. L'immagine
+	 * viene ricercata nel database, quindi si crea uno stream di dati per la
+	 * restituzione in output. Se l'immagine non è presente nel DB, viene mandato un
+	 * messaggio di errore in output.
+	 * 
+	 * @exception NumberFormatException          L'id inserito non è di tipo
+	 *                                           numerico.
+	 * @exception ArrayIndexOutOfBoundsException Il path inserito nella URL non è
+	 *                                           completo.
+	 */
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
@@ -26,14 +44,16 @@ public class FotoServlet extends HttpServlet {
 			Integer id;
 			if (url.length > 1) {
 				id = Integer.parseInt(url[2]);
-				// conversione foto
+				// ricerco la foto nel database.
 				Fotografia f = dao.find(id);
 				if (f == null) {
 					resp.getWriter().write("Errore: foto non trovata.");
 				} else {
+					// genero l'immagine da mandare in output.
 					resp.setContentType("image/jpeg");
 					ServletOutputStream out;
 					out = resp.getOutputStream();
+					// l'immagine originale viene scaricata dall'URL contenuto nel rispettivo campo.
 					URL url_type = new URL(f.getUrl());
 					BufferedInputStream bin = new BufferedInputStream(url_type.openStream());
 					BufferedOutputStream bout = new BufferedOutputStream(out);
@@ -43,7 +63,6 @@ public class FotoServlet extends HttpServlet {
 					}
 
 					bin.close();
-					// fin.close();
 					bout.close();
 					out.close();
 				}
