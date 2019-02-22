@@ -235,7 +235,8 @@ public class UtenteController implements Serializable {
 	 * presente, si registra un oggetto utente i cui campi sono compilati da form.
 	 * Sulla password viene applicato un hashing.
 	 * 
-	 * @return Pagina home.xhtml se la registazione va a buon fine, registrazione.xhtml altrimenti.
+	 * @return Pagina home.xhtml se la registazione va a buon fine,
+	 *         registrazione.xhtml altrimenti.
 	 */
 	public String registrati() {
 		if (!"".equals(richiestaController.getUtente().getEmail())

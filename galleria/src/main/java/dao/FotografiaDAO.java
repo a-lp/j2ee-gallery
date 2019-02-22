@@ -52,13 +52,16 @@ public class FotografiaDAO implements Serializable {
 		return em.find(Fotografia.class, id);
 	}
 
-	// TODO rifattorizzare
+	/**
+	 * Metodo per la ricerca di fotografie per categoria. Inizialmente viene creata
+	 * una lista contenente tutte le fotografie, quindi si eliminano quelle che non
+	 * presentano il tag passato a parametro.
+	 * 
+	 * @param tag Categoria che si vuole ricercare.
+	 * @return List<Fotografia> Fotografie con la categoria ricercata.
+	 */
 	public List<Fotografia> findByTag(Tag tag) {
 		List<Fotografia> fotografie = findAll();
-		/*
-		 * if (fotografie != null) { for (Fotografia foto : fotografie) { if
-		 * (!foto.getCategorie().contains(tag)) fotografie.remove(foto); } }
-		 */
 		Iterator<Fotografia> iter = fotografie.iterator();
 
 		while (iter.hasNext()) {
@@ -78,6 +81,16 @@ public class FotografiaDAO implements Serializable {
 		return em.createQuery(q).setFirstResult(0).setMaxResults(n).getResultList();
 	}
 
+	/**
+	 * Metodo per la ricerca di fotografie che rispettino una query di ricerca.
+	 * Utilizzando la libreria Hibernate Search, restringiamo il campo di ricerca
+	 * sui parametri nome, descrizione e categoria delle foto.
+	 * 
+	 * @param ricerca Query di ricerca. Può essere un nome, parte della descrizione
+	 *                o una categoria.
+	 * @return List<Fotografia> Lista di fotografie che rispettano il pattern di
+	 *         ricerca.
+	 */
 	public List<Fotografia> getBySearch(String ricerca) {
 		FullTextEntityManager fullTextEntityManager = org.hibernate.search.jpa.Search.getFullTextEntityManager(em);
 
@@ -90,6 +103,7 @@ public class FotografiaDAO implements Serializable {
 
 		QueryBuilder qb = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(Fotografia.class)
 				.get();
+		// imposto i campi di ricerca (questi devono essere annotati come @Field.
 		org.apache.lucene.search.Query query = qb.keyword().onFields("descrizione", "nome", "categorie.tag")
 				.matching(ricerca).createQuery();
 		javax.persistence.Query persistenceQuery = fullTextEntityManager.createFullTextQuery(query, Fotografia.class);

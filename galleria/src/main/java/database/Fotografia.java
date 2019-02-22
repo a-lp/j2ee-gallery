@@ -28,8 +28,7 @@ public class Fotografia {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	@Column(unique = true)
-	private String url; // non restituire la URL ma usare la servlet per convertirla in bytestream e
-						// restituire quello
+	private String url;
 	@Column
 	@Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
 	private String nome;
@@ -39,6 +38,8 @@ public class Fotografia {
 	private Short altezza;
 	@Column
 	private Short larghezza;
+	// le categorie vengono inserite insieme alle foto e rimangono invariate, quindi
+	// posso lasciare il cascade a REMOVE.
 	@ManyToMany(cascade = { CascadeType.REMOVE }, fetch = FetchType.EAGER)
 	@JoinColumn
 	@IndexedEmbedded

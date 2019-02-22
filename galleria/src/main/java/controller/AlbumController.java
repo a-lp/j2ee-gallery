@@ -22,9 +22,9 @@ import database.Fotografia;
 @SessionScoped
 public class AlbumController implements Serializable {
 	@Inject
-	AlbumDAO dao;	//proxy per l'esecuzione delle query
+	AlbumDAO dao; // proxy per l'esecuzione delle query
 	@Inject
-	RichiestaController richiestaController;	//proxy contenente i dati delle richieste degli utenti
+	RichiestaController richiestaController; // proxy contenente i dati delle richieste degli utenti
 	private Album album = new Album(); // oggetto di supporto
 
 	public Album getAlbum() {
@@ -136,7 +136,5 @@ public class AlbumController implements Serializable {
 	public Album get(Integer id) {
 		return dao.get(id);
 	}
-	
-	//TODO implementare metodo di rimozione album
 
 }
