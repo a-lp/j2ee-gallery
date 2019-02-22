@@ -33,8 +33,8 @@
 				<h:outputLink value="http://localhost:8080/galleria/foto/#{p.id}">
 					<h:outputText value="Apri" />
 				</h:outputLink>    | 
-			<h:outputText value="#{p.id}" />    | 
 			<h:outputText value="#{p.nome}" />    | 
+			<h:outputText value="#{p.descrizione}" />    | 
 				<h:commandButton value="Elimina dai preferiti"
 					action="#{utenteController.eliminaPreferito(p)}">
 					<f:ajax event="click" execute="@all" render="@all" />
