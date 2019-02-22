@@ -9,10 +9,13 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 import org.hibernate.search.jpa.FullTextEntityManager;
 import org.hibernate.search.query.dsl.QueryBuilder;
 
+import database.Fotografia;
+import database.Fotografia_;
 import database.Fotografia;
 import database.Tag;
 
@@ -109,5 +112,17 @@ public class FotografiaDAO implements Serializable {
 		javax.persistence.Query persistenceQuery = fullTextEntityManager.createFullTextQuery(query, Fotografia.class);
 		List<Fotografia> result = persistenceQuery.getResultList();
 		return result;
+	}
+
+	public Fotografia findByURL(String url) {
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<Fotografia> q = cb.createQuery(Fotografia.class);
+		Root<Fotografia> root = q.from(Fotografia.class);
+		q.where(cb.equal(root.get(Fotografia_.url), url));
+		try {
+			return em.createQuery(q).getSingleResult();
+		} catch (Exception e) {
+			return null;
+		}
 	}
 }
