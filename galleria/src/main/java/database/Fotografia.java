@@ -18,6 +18,7 @@ import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.Store;
 
 @Entity
@@ -39,8 +40,9 @@ public class Fotografia {
 	@Column
 	private Short larghezza;
 	@ManyToMany(cascade = { CascadeType.REMOVE }, fetch = FetchType.EAGER)
-	@JoinColumn()
-	private Set<Tag> categorie;
+	@JoinColumn
+	@IndexedEmbedded
+	private Set<Tag> categorie = new HashSet<Tag>();
 	@Column
 	@Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
 	private String descrizione;
@@ -136,6 +138,8 @@ public class Fotografia {
 	}
 
 	public String getTag() {
+		if (this.categorie.size() == 0)
+			return "";
 		String result = "[";
 		for (Tag t : this.categorie) {
 			result += t.getTag() + ",";

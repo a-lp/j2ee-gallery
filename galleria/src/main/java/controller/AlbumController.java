@@ -10,7 +10,6 @@ import javax.inject.Named;
 import dao.AlbumDAO;
 import database.Album;
 import database.Fotografia;
-import database.Utente;
 
 @Named
 @SessionScoped
@@ -18,8 +17,7 @@ public class AlbumController implements Serializable {
 	@Inject
 	AlbumDAO dao;
 	@Inject
-	SessionController sessione;
-
+	RichiestaController richiestaController;
 	private Album album = new Album();
 
 	public Album getAlbum() {
@@ -31,8 +29,11 @@ public class AlbumController implements Serializable {
 	}
 
 	public void save() {
-		dao.add(album);
-		album = new Album();
+		setAlbum(richiestaController.getAlbum());
+		if (dao.getByName(this.album.getNome()) == null) {
+			dao.add(album);
+		}
+		this.album = new Album();
 	}
 
 	public List<Album> getAlbums() {
@@ -41,7 +42,7 @@ public class AlbumController implements Serializable {
 
 	public void aggiungiFoto(Fotografia foto) {
 		if (foto != null) {
-			Album album = dao.get(sessione.getAlbum().getId());
+			Album album = dao.get(this.album.getId());
 			album.setFotografie(dao.getFotografie(album));
 			if (album != null) {
 				album.getFotografie().add(foto);
@@ -52,29 +53,34 @@ public class AlbumController implements Serializable {
 
 	public void rimuoviFoto(Fotografia foto) {
 		if (foto != null) {
-			Album album = dao.get(sessione.getAlbum().getId());
+			Album album = dao.get(this.album.getId());
 			album.setFotografie(dao.getFotografie(album));
 			if (album != null) {
 				album.getFotografie().remove(foto);
 				dao.update(album);
-			} else
-				System.out.println("Album vuoto: " + album);
-		} else
-			System.out.println("Foto vuoto: " + foto);
+			}
+		}
 	}
 
 	public boolean contains(Fotografia p) {
-		Album album = dao.get(sessione.getAlbum().getId());
+		Album album = dao.get(this.album.getId());
 		album.setFotografie(dao.getFotografie(album));
 		return album.getFotografie().contains(p);
 	}
-	
 
 	public List<Fotografia> getFotoByAlbum() {
-		Album album = dao.get(sessione.getAlbum().getId());
+		Album album = dao.get(this.album.getId());
 		album.setFotografie(dao.getFotografie(album));
 		System.out.println(album.getFotografie());
 		return album.getFotografie();
+	}
+
+	public void update(Album album2) {
+		dao.update(album2);
+	}
+
+	public Album get(Integer id) {
+		return dao.get(id);
 	}
 
 }

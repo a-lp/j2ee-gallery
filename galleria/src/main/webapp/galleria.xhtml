@@ -21,13 +21,14 @@
 		<h:link value="Home" outcome="home" />    |  
 		<h:link value="Registrati" outcome="registrazione" />    |  
 		<h:link value="Galleria" outcome="galleria" />    |  
-		<h:link rendered="#{sessionController.admin}" value="Admin" outcome="admin"/>
+		<h:link rendered="#{sessionController.admin}" value="Admin"
+			outcome="admin" />
 	</h:form>
 	<br />
 
 	<h:form id="form-ricerca">
 		<h3>Ricerca Fotografia</h3>
-		<h:inputText id="ricerca-id" value="#{sessionController.ricerca}" />
+		<h:inputText id="ricerca-id" value="#{richiestaController.ricerca}" />
 		<br />
 		<h:commandButton value="Cerca">
 			<f:ajax event="click" execute="@all" render="@all" />
@@ -35,10 +36,10 @@
 	</h:form>
 	<h:form id="panelGroupId">
 		<h:outputText
-			value="#{(sessionController.ricerca!=null)and(sessionController.bySearch==null)?'Nessuna foto trovata':''}"></h:outputText>
+			value="#{(richiestaController.ricerca!=null)and(fotografiaController.bySearch==null)?'Nessuna foto trovata':''}"></h:outputText>
 		<h:panelGroup id="ricerca-id">
 			<ui:repeat id="tabellaRicercaId"
-				value="#{sessionController.bySearch}" var="p">
+				value="#{fotografiaController.bySearch}" var="p">
 				<h:outputLink value="http://localhost:8080/galleria/foto/#{p.id}">
 					<h:outputText value="Apri" />
 				</h:outputLink>    | 
@@ -59,7 +60,7 @@
 	<hr />
 	<h3>Foto Cercata - Categoria</h3>
 	<h:form id="panelGroupTag">
-		<h:selectOneMenu value="#{sessionController.tag}">
+		<h:selectOneMenu value="#{richiestaController.tag}">
 			<f:converter binding="#{tagConverter}" />
 			<f:selectItems value="#{tagDAO.allTag}" var="tag"
 				itemLabel="#{tag.tag}" itemValue="#{tag}" />
@@ -67,10 +68,10 @@
 		</h:selectOneMenu>
 		<br />
 		<h:outputText
-			value="#{(sessionController.byTag==null)and(sessionController.tag!=null)?'Nessuna foto trovata':''}"></h:outputText>
+			value="#{(fotografiaController.byTag==null)and(richiestaController.tag!=null)?'Nessuna foto trovata':''}"></h:outputText>
 		<h:panelGroup id="ricerca-tag">
-			<ui:repeat id="tabellaRicercaTag" value="#{sessionController.byTag}"
-				var="p">
+			<ui:repeat id="tabellaRicercaTag"
+				value="#{fotografiaController.byTag}" var="p">
 				<h:outputLink value="http://localhost:8080/galleria/foto/#{p.id}">
 					<h:outputText value="Apri" />
 				</h:outputLink>    | 

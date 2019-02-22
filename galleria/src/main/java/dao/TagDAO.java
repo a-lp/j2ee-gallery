@@ -9,8 +9,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 import database.Tag;
+import database.Tag_;
 
 @Stateless
 @Named
@@ -19,7 +21,7 @@ public class TagDAO implements Serializable {
 	EntityManager em;
 
 	public void add(Tag u) {
-		em.persist(u); // controllo se è presente "u" nel database quindi aggiorno i suoi campi
+		em.persist(u);
 	}
 
 	public Tag get(Integer id) {
@@ -27,8 +29,7 @@ public class TagDAO implements Serializable {
 	}
 
 	public void update(Tag u) {
-
-		em.merge(u); // controllo se è presente "u" nel database quindi aggiorno i suoi campi
+		em.merge(u);
 	}
 
 	public List<Tag> getAllTag() {
@@ -37,5 +38,17 @@ public class TagDAO implements Serializable {
 		q.from(Tag.class);
 		List<Tag> tags = em.createQuery(q).getResultList();
 		return tags;
+	}
+
+	public Tag find(Tag tag) {
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<Tag> q = cb.createQuery(Tag.class);
+		Root<Tag> root = q.from(Tag.class);
+		q.where(cb.equal(root.get(Tag_.tag), tag.getTag()));
+		try {
+			return em.createQuery(q).getSingleResult();
+		} catch (Exception e) {
+			return null;
+		}
 	}
 }

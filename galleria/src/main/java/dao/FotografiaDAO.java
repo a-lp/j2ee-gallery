@@ -6,17 +6,14 @@ import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 
 import org.hibernate.search.jpa.FullTextEntityManager;
 import org.hibernate.search.query.dsl.QueryBuilder;
 
 import database.Fotografia;
-import database.Fotografia_;
 import database.Tag;
 
 @Stateless
@@ -52,15 +49,7 @@ public class FotografiaDAO implements Serializable {
 	 * @return Fotografia con id uguale al parametro o null.
 	 */
 	public Fotografia find(Integer id) {
-		try {
-			CriteriaBuilder cb = em.getCriteriaBuilder();
-			CriteriaQuery<Fotografia> q = cb.createQuery(Fotografia.class);
-			Root<Fotografia> root = q.from(Fotografia.class);
-			q.where(cb.equal(root.get(Fotografia_.id), id));
-			return em.createQuery(q).getSingleResult();
-		} catch (NoResultException e) {
-			return null;
-		}
+		return em.find(Fotografia.class, id);
 	}
 
 	// TODO rifattorizzare
@@ -101,7 +90,8 @@ public class FotografiaDAO implements Serializable {
 
 		QueryBuilder qb = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(Fotografia.class)
 				.get();
-		org.apache.lucene.search.Query query = qb.keyword().onFields("descrizione").matching(ricerca).createQuery();
+		org.apache.lucene.search.Query query = qb.keyword().onFields("descrizione", "nome", "categorie.tag")
+				.matching(ricerca).createQuery();
 		javax.persistence.Query persistenceQuery = fullTextEntityManager.createFullTextQuery(query, Fotografia.class);
 		List<Fotografia> result = persistenceQuery.getResultList();
 		return result;

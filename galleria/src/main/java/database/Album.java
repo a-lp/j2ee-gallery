@@ -14,13 +14,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
-//TODO rivedere struttura
 @Entity
 public class Album {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	@Column
+	@Column(unique = true)
 	private String nome;
 	@Column
 	private String descrizione;

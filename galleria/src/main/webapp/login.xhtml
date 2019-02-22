@@ -24,9 +24,9 @@
 	<h:form>
 
 		<h3>E-Mail</h3>
-		<h:inputText id="inputName" value="#{loginController.email}" />
+		<h:inputText id="inputName" value="#{richiestaController.utente.email}" />
 		<h3>Password</h3>
-		<h:inputSecret value="#{loginController.password}" />
+		<h:inputSecret value="#{richiestaController.utente.password}" />
 		<br />
 		<h:commandButton value="Login" action="#{sessionController.login}"></h:commandButton>
 	</h:form>

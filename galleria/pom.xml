@@ -16,6 +16,12 @@
 			<artifactId>javaee-api</artifactId>
 			<version>8.0</version>
 			<scope>provided</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>dom4j</groupId>
+					<artifactId>dom4j</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<!-- Scraper: https://mvnrepository.com/artifact/org.jsoup/jsoup -->
@@ -28,7 +34,7 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-jpamodelgen</artifactId>
-			<version>5.3.7.Final</version>
+			<version>5.4.1.Final</version>
 			<scope>provided</scope>
 		</dependency>
 
@@ -43,6 +49,7 @@
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-search</artifactId>
 			<version>4.1.1.Final</version>
+			<scope>provided</scope>
 		</dependency>
 
 
@@ -65,7 +72,6 @@
 				<configuration>
 					<username>wildfly</username>
 					<password>wildfly</password>
-
 				</configuration>
 			</plugin>
 		</plugins>

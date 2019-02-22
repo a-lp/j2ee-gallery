@@ -13,6 +13,7 @@ import dao.UtenteDAO;
 import database.Album;
 import database.Fotografia;
 import database.Utente;
+import utility.Password;
 
 @Named
 @SessionScoped
@@ -23,6 +24,10 @@ public class UtenteController implements Serializable {
 	AlbumDAO adao;
 	@Inject
 	SessionController sessione;
+	@Inject
+	RichiestaController richiestaController;
+	@Inject
+	AlbumController albumController;
 
 	public void elimina(String email) {
 		dao.elimina(email);
@@ -107,7 +112,7 @@ public class UtenteController implements Serializable {
 	}
 
 	public boolean isAssignedAlbum(Utente utente) {
-		Album tmp = sessione.getAlbum();
+		Album tmp = albumController.getAlbum();
 		if (tmp != null) {
 			return dao.getAlbum(utente).contains(tmp);
 		}
@@ -115,7 +120,7 @@ public class UtenteController implements Serializable {
 	}
 
 	public void aggiungiAlbum(Utente utente) {
-		Album tmp = sessione.getAlbum();
+		Album tmp = albumController.getAlbum();
 		utente.setAlbum(dao.getAlbum(utente));
 		if (tmp != null) {
 			utente.getAlbum().add(tmp);
@@ -125,12 +130,28 @@ public class UtenteController implements Serializable {
 	}
 
 	public void rimuoviAlbum(Utente utente) {
-		Album tmp = sessione.getAlbum();
+		Album tmp = albumController.getAlbum();
 		utente.setAlbum(dao.getAlbum(utente));
 		if (tmp != null) {
 			utente.getAlbum().remove(tmp);
 			System.out.println(tmp);
 			dao.update(utente);
 		}
+	}
+
+	public String registrati() {
+		if (!"".equals(richiestaController.getUtente().getEmail())
+				&& !"".equals(richiestaController.getUtente().getPassword())) {
+			Utente u = new Utente();
+			u.setEmail(richiestaController.getUtente().getEmail());
+			try {
+				u.setPassword(Password.getSaltedHash(richiestaController.getUtente().getPassword()));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			save(u);
+			return "home";
+		}
+		return "registrazione";
 	}
 }

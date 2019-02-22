@@ -16,19 +16,13 @@ public class TagController implements Serializable {
 	@Inject
 	TagDAO dao;
 
-	private Tag tag = new Tag();
-
-	public Tag getTag() {
-		return tag;
+	public Tag findTag(Tag tag) {
+		return dao.find(tag);
 	}
 
-	public void setTag(Tag tag) {
-		this.tag = tag;
-	}
-
-	public void save() {
-		dao.add(tag);
-		tag = new Tag();
+	public void save(Tag tag) {
+		if (dao.find(tag) == null)
+			dao.add(tag);
 	}
 
 	public List<Tag> getTags() {

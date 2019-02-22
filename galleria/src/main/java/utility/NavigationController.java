@@ -9,7 +9,7 @@ import javax.inject.Named;
 @RequestScoped
 public class NavigationController implements Serializable {
 	public String showPage(String page) {
-		if(page==null || page.equals(""))
+		if (page == null || page.equals(""))
 			return "home";
 		else
 			return page;
