@@ -8,6 +8,7 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import database.Album;
 import database.Utente;
 import utility.Password;
 

@@ -47,12 +47,6 @@ public class Fotografia {
 	@Column
 	@Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
 	private String descrizione;
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "preferiti_utente", joinColumns = @JoinColumn(name = "fotografia_id"), inverseJoinColumns = @JoinColumn(name = "utente_id"))
-	private Set<Utente> preferiti = new HashSet<Utente>();
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "album_fotografia", joinColumns = @JoinColumn(name = "fotografia_id"), inverseJoinColumns = @JoinColumn(name = "album_id"))
-	private Set<Album> album = new HashSet<Album>();
 
 	public Fotografia() {
 		super();
@@ -68,22 +62,6 @@ public class Fotografia {
 		this.larghezza = larghezza;
 		this.descrizione = descrizione;
 		this.categorie = categorie;
-	}
-
-	public Set<Utente> getPreferiti() {
-		return preferiti;
-	}
-
-	public void setPreferiti(Set<Utente> preferiti) {
-		this.preferiti = preferiti;
-	}
-
-	public Set<Album> getAlbum() {
-		return album;
-	}
-
-	public void setAlbum(Set<Album> album) {
-		this.album = album;
 	}
 
 	public Integer getId() {

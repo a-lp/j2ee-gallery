@@ -35,6 +35,15 @@ public class FotografiaDAO implements Serializable {
 		q.from(Fotografia.class);
 		return em.createQuery(q).getResultList();
 	}
+	
+	public List<Fotografia> findAllDetached() {
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<Fotografia> q = cb.createQuery(Fotografia.class);
+		q.from(Fotografia.class);
+		List<Fotografia> result = em.createQuery(q).getResultList();
+		em.detach(result);
+		return result;
+	}
 
 	public void elimina(Integer id) {
 		Fotografia foto = em.find(Fotografia.class, id);

@@ -115,6 +115,13 @@ public class AlbumController implements Serializable {
 		System.out.println(album.getFotografie());
 		return album.getFotografie();
 	}
+	
+	public List<Fotografia> getFotoByAlbum(Album album) {
+		album = dao.get(album.getId());
+		album.setFotografie(dao.getFotografie(album));
+		System.out.println(album.getFotografie());
+		return album.getFotografie();
+	}
 
 	/**
 	 * Metodo per aggiornare una entry della tabella Album nel DB con quella passata
