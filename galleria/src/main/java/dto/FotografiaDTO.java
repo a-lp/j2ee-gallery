@@ -3,10 +3,6 @@ package dto;
 import java.util.HashSet;
 import java.util.Set;
 
-import database.Album;
-import database.Tag;
-import database.Utente;
-
 public class FotografiaDTO {
 	private Integer id;
 	private String url;
