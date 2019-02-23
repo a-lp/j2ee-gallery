@@ -12,8 +12,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
 
 @Entity
+@NamedEntityGraph(name = "utenteLazy", attributeNodes = { @NamedAttributeNode("preferiti"),
+		@NamedAttributeNode("album") })
 public class Utente {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

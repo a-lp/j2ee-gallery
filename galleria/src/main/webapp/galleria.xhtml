@@ -64,8 +64,10 @@
 			<f:converter binding="#{tagConverter}" />
 			<f:selectItems value="#{tagDAO.allTag}" var="tag"
 				itemLabel="#{tag.tag}" itemValue="#{tag}" />
-			<f:ajax event="valueChange" execute="@form" render="@all" />
 		</h:selectOneMenu>
+		<h:commandButton value="Visualizza">
+			<f:ajax event="click" execute="@all" render="panelGroupTag" />
+		</h:commandButton>
 		<br />
 		<h:outputText
 			value="#{(fotografiaController.byTag==null)and(richiestaController.tag!=null)?'Nessuna foto trovata':''}"></h:outputText>

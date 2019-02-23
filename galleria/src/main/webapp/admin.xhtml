@@ -56,7 +56,9 @@
 			Descrizione: <h:inputText id="inputAlbumDescrizione"
 				value="#{richiestaController.album.descrizione}" />
 			<br />
-			<h:commandButton value="Salva" action="#{albumController.save}"></h:commandButton>
+			<h:commandButton value="Salva" action="#{albumController.save}">
+				<f:ajax event="click" execute="@all" render="@all" />
+			</h:commandButton>
 		</h:form>
 	</h:panelGroup>
 
@@ -74,7 +76,8 @@
 				action="#{utenteController.elimina(p.email)}">
 				<f:ajax event="click" execute="@all" render="panelUtenti" />
 			</h:commandButton>
-			<h:panelGroup rendered="#{albumController.album.id!=null and albumController.album.nome!=''}">
+			<h:panelGroup
+				rendered="#{albumController.album.id!=null and albumController.album.nome!=''}">
 				<h:commandButton
 					rendered="#{not (utenteController.isAssignedAlbum(p))}"
 					value="Aggiungi ad Album"
@@ -98,8 +101,10 @@
 			<f:converter binding="#{albumConverter}" />
 			<f:selectItems value="#{albumDAO.allAlbum}" var="album"
 				itemLabel="#{album.nome}" itemValue="#{album}" />
-			<f:ajax event="change" execute="@form" render="@all" />
 		</h:selectOneMenu>
+		<h:commandButton value="Visualizza">
+			<f:ajax event="click" execute="@form" render="@all" />
+		</h:commandButton>
 	</h:form>
 	<h3>Album scelto:
 		#{albumController.album.id==null?"":albumController.album}</h3>

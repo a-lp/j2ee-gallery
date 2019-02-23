@@ -78,25 +78,29 @@ public class FotografiaController implements Serializable {
 	 */
 	public void save() {
 		Fotografia fotografia = new Fotografia();
-		fotografia.setUrl(richiestaController.getFotografia().getUrl());
-		if (dao.findByURL(fotografia.getUrl()) == null) {
-			fotografia.setNome(richiestaController.getFotografia().getNome());
-			fotografia.setDescrizione(richiestaController.getFotografia().getDescrizione());
-			String[] tag = richiestaController.getRicerca().split(",");
-			if (tag.length > 0) {
-				for (String t : tag) {
-					t = t.trim().toLowerCase();
-					Tag tmp = new Tag(t);
-					Tag result = tagController.findTag(tmp);
-					if (result == null) { // se non trovo il tag, lo salvo in DB
-						tagController.save(tmp);
-						result = tagController.findTag(tmp);
+		if (richiestaController.getFotografia().getUrl() != null
+				&& (!"".equals(richiestaController.getFotografia().getUrl()))) {
+			fotografia.setUrl(richiestaController.getFotografia().getUrl());
+			if (dao.findByURL(fotografia.getUrl()) == null) {
+				fotografia.setNome(richiestaController.getFotografia().getNome());
+				fotografia.setDescrizione(richiestaController.getFotografia().getDescrizione());
+				String[] tag = richiestaController.getRicerca().split(",");
+				if (tag.length > 0) {
+					for (String t : tag) {
+						t = t.trim().toLowerCase();
+						Tag tmp = new Tag(t);
+						Tag result = tagController.findTag(tmp);
+						if (result == null) { // se non trovo il tag, lo salvo in DB
+							tagController.save(tmp);
+							result = tagController.findTag(tmp);
+						}
+						fotografia.getCategorie().add(result);
 					}
-					fotografia.getCategorie().add(result);
 				}
+				dao.add(fotografia);
+				richiestaController.setFotografia(new Fotografia());
+				richiestaController.setRicerca(null);
 			}
-			dao.add(fotografia);
-			this.fotografia = new Fotografia();
 		}
 	}
 

@@ -126,7 +126,6 @@ public class UtenteController implements Serializable {
 	 */
 	public void aggiungiPreferiti(Fotografia foto) {
 		if (foto != null) {
-			System.out.println("Preferiti: "+foto);
 			Utente utente = dao.find(sessione.getUtenteLoggato().getId());
 			utente.setPreferiti(dao.getPreferiti(utente));
 			if (utente != null) {

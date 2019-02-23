@@ -2,6 +2,7 @@ package controller;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
@@ -40,11 +41,16 @@ public class AlbumController implements Serializable {
 	 * controlla che non vi sia un album con lo stesso nome già memorizzato.
 	 */
 	public void save() {
-		setAlbum(richiestaController.getAlbum());
-		if (dao.getByName(this.album.getNome()) == null) {
-			dao.add(album);
+		Album album = new Album();
+		if (richiestaController.getAlbum().getNome() != null
+				&& (!"".equals(richiestaController.getAlbum().getNome()))) {
+			album.setNome(richiestaController.getAlbum().getNome());
+			album.setDescrizione(richiestaController.getAlbum().getDescrizione());
+			if (dao.getByName(album.getNome()) == null) {
+				dao.add(album);
+				richiestaController.setAlbum(new Album());
+			}
 		}
-		this.album = new Album();
 	}
 
 	/**
@@ -109,13 +115,13 @@ public class AlbumController implements Serializable {
 	 * 
 	 * @return List<Fotografia> dell'album.
 	 */
-	public List<Fotografia> getFotoByAlbum() {
+	public Set<Fotografia> getFotoByAlbum() {
 		Album album = dao.get(this.album.getId());
 		album.setFotografie(dao.getFotografie(album));
 		return album.getFotografie();
 	}
 
-	public List<Fotografia> getFotoByAlbum(Album album) {
+	public Set<Fotografia> getFotoByAlbum(Album album) {
 		return dao.getFotografie(album);
 	}
 

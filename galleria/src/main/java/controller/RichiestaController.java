@@ -21,7 +21,7 @@ import database.Utente;
 @ConversationScoped
 public class RichiestaController implements Serializable {
 	@Inject
-	private Conversation conversation;	//TODO quando si marka transient?
+	private Conversation conversation; // TODO quando si marka transient?
 
 	private Utente utente = new Utente();
 	private Album album = new Album();
@@ -57,10 +57,16 @@ public class RichiestaController implements Serializable {
 	}
 
 	public Album getAlbum() {
+		if (conversation.isTransient()) {
+			conversation.begin();
+		}
 		return album;
 	}
 
 	public void setAlbum(Album album) {
+		if (conversation.isTransient()) {
+			conversation.begin();
+		}
 		this.album = album;
 	}
 
@@ -69,6 +75,9 @@ public class RichiestaController implements Serializable {
 	}
 
 	public void setFotografia(Fotografia fotografia) {
+		if (conversation.isTransient()) {
+			conversation.begin();
+		}
 		this.fotografia = fotografia;
 	}
 
@@ -77,6 +86,7 @@ public class RichiestaController implements Serializable {
 	}
 
 	public void setTag(Tag tag) {
+		System.out.println("Transient: " + conversation.isTransient());
 		if (conversation.isTransient()) {
 			conversation.begin();
 		}

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import javax.ejb.Stateless;
+import javax.persistence.EntityGraph;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
@@ -35,23 +36,30 @@ public class UtenteDAO implements Serializable {
 	}
 
 	public List<Utente> findAll() {
+		EntityGraph<Utente> eg = (EntityGraph<Utente>) em.getEntityGraph("utenteLazy");
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Utente> q = cb.createQuery(Utente.class);
 		q.from(Utente.class);
-		return em.createQuery(q).getResultList();
+		return em.createQuery(q).setHint("javax.persistence.fetchgraph", eg).getResultList();
 	}
 
 	public Utente find(Integer id) {
-		return em.find(Utente.class, id);
+		EntityGraph<Utente> eg = (EntityGraph<Utente>) em.getEntityGraph("utenteLazy");
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<Utente> q = cb.createQuery(Utente.class);
+		Root<Utente> root = q.from(Utente.class);
+		q.where(cb.equal(root.get(Utente_.id), id));
+		return em.createQuery(q).setHint("javax.persistence.fetchgraph", eg).getSingleResult();
 	}
 
 	public Utente findByEmail(String email) {
 		try {
+			EntityGraph<Utente> eg = (EntityGraph<Utente>) em.getEntityGraph("utenteLazy");
 			CriteriaBuilder cb = em.getCriteriaBuilder();
 			CriteriaQuery<Utente> q = cb.createQuery(Utente.class);
 			Root<Utente> root = q.from(Utente.class);
 			q.where(cb.like(root.get(Utente_.email), email));
-			return em.createQuery(q).getSingleResult();
+			return em.createQuery(q).setHint("javax.persistence.fetchgraph", eg).getSingleResult();
 		} catch (NoResultException e) {
 			return null;
 		}
@@ -68,23 +76,23 @@ public class UtenteDAO implements Serializable {
 	public Set<Fotografia> getPreferiti(Utente utente) {
 		if (utente == null)
 			return null;
-		Utente tmp = em.find(Utente.class, utente.getId());
-		tmp.getPreferiti().size();
+		Utente tmp = find(utente.getId());
 		return tmp.getPreferiti();
 	}
 
 	public Set<Album> getAlbum(Utente utente) {
 		if (utente == null)
 			return null;
-		Utente tmp = em.find(Utente.class, utente.getId());
-		tmp.getAlbum().size();
+		Utente tmp = find(utente.getId());
 		return tmp.getAlbum();
 	}
 
 	public List<Utente> getNUtenti(int n) {
+		EntityGraph<Utente> eg = (EntityGraph<Utente>) em.getEntityGraph("utenteLazy");
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Utente> q = cb.createQuery(Utente.class);
 		q.from(Utente.class);
-		return em.createQuery(q).setFirstResult(0).setMaxResults(n).getResultList();
+		return em.createQuery(q).setHint("javax.persistence.fetchgraph", eg).setFirstResult(0).setMaxResults(n)
+				.getResultList();
 	}
 }

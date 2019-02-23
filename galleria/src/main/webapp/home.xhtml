@@ -38,7 +38,7 @@
 			<h:outputText value="#{p.descrizione}" />    | 
 				<h:commandButton value="Elimina dai preferiti"
 					action="#{utenteController.eliminaPreferito(p)}">
-					<f:ajax event="click" execute="@all" render="@all" />
+					<f:ajax event="click" execute="@all" render="preferiti" />
 				</h:commandButton>
 				<hr />
 			</ui:repeat>
@@ -59,20 +59,21 @@
 			<br />
 			<hr />
 		</h:form>
-		<h3>#{richiestaController.album.nome==""?"":richiestaController.album.nome}</h3>
-		<h4>#{richiestaController.album.nome==""?"":richiestaController.album.descrizione}</h4>
-		<ui:repeat
-			rendered="#{richiestaController.album.id!=null and richiestaController.album.nome!=''}"
-			id="tabella-album"
-			value="#{albumController.getFotoByAlbum(richiestaController.album)}"
-			var="p">
-			<h:outputLink value="http://localhost:8080/galleria/foto/#{p.id}">
-				<h:outputText value="Apri" />
-			</h:outputLink>    | 
+		<h:panelGroup rendered="#{richiestaController.album.id!=null and richiestaController.album.nome!=''}">
+			<h3>#{richiestaController.album.nome==""?"":richiestaController.album.nome}</h3>
+			<h4>#{richiestaController.album.nome==""?"":richiestaController.album.descrizione}</h4>
+			<ui:repeat
+				id="tabella-album"
+				value="#{albumController.getFotoByAlbum(richiestaController.album)}"
+				var="p">
+				<h:outputLink value="http://localhost:8080/galleria/foto/#{p.id}">
+					<h:outputText value="Apri" />
+				</h:outputLink>    | 
 			<h:outputText value="#{p.nome}" />    | 
 			<h:outputText value="#{p.descrizione}" />    | 
 			<hr />
-		</ui:repeat>
+			</ui:repeat>
+		</h:panelGroup>
 	</h:panelGroup>
 
 </h:body>

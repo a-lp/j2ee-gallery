@@ -16,7 +16,6 @@ import org.hibernate.search.query.dsl.QueryBuilder;
 
 import database.Fotografia;
 import database.Fotografia_;
-import database.Fotografia;
 import database.Tag;
 
 @Stateless

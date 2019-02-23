@@ -1,7 +1,6 @@
 package database;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -23,15 +22,15 @@ public class Album {
 	private String nome;
 	@Column
 	private String descrizione;
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "album_fotografia", joinColumns = @JoinColumn(name = "album_id"), inverseJoinColumns = @JoinColumn(name = "fotografia_id"))
-	private List<Fotografia> fotografie = new ArrayList<Fotografia>();
+	private Set<Fotografia> fotografie = new HashSet<Fotografia>();
 
 	public Album() {
 		super();
 	}
 
-	public Album(Integer id, String nome, String descrizione, Set<Utente> utenti, List<Fotografia> fotografie) {
+	public Album(Integer id, String nome, String descrizione, Set<Utente> utenti, Set<Fotografia> fotografie) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -39,11 +38,11 @@ public class Album {
 		this.fotografie = fotografie;
 	}
 
-	public List<Fotografia> getFotografie() {
+	public Set<Fotografia> getFotografie() {
 		return fotografie;
 	}
 
-	public void setFotografie(List<Fotografia> fotografie) {
+	public void setFotografie(Set<Fotografia> fotografie) {
 		this.fotografie = fotografie;
 	}
 

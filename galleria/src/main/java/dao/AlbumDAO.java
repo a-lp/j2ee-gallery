@@ -60,9 +60,8 @@ public class AlbumDAO implements Serializable {
 		return em.find(Utente.class, utente.getId()).getAlbum();
 	}
 
-	public List<Fotografia> getFotografie(Album album) {
+	public Set<Fotografia> getFotografie(Album album) {
 		Album tmp = em.find(Album.class, album.getId());
-		tmp.getFotografie().size();
 		return tmp.getFotografie();
 	}
 
