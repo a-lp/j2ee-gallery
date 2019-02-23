@@ -19,7 +19,7 @@ public class ConverterAlbum {
 
 	public AlbumDTO convertToDto(Album album) {
 		if (album == null)
-			return null;
+			return new AlbumDTO();
 		try {
 			AlbumDTO albumDTO = new AlbumDTO();
 			BeanUtils.copyProperties(albumDTO, album);
